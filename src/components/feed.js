@@ -32,10 +32,6 @@ export const feed = () => {
     createContainerButtons.className = 'container-buttons';
     feedSection.appendChild(createContainerButtons);
 
-    const logoutButton = document.createElement('button');
-    logoutButton.id = 'idlogoutButton'
-    logoutButton.innerHTML = '<i class="fa-solid fa-arrow-right-from-bracket fa-2xl"></i>';
-
     const perfilButton = document.createElement('button');
     perfilButton.type = 'button';
     perfilButton.id = 'idPerfilButton';
@@ -86,6 +82,7 @@ export const feed = () => {
         }
         else{
             savePosts(textPost).then().catch(error => console.log("fallo la promesa para postear", error));
+            textPost = '';
             alert('tu post ha sido publicado');
 
         }
