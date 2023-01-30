@@ -13,12 +13,8 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 
-<<<<<<< HEAD
-import { getFirestore, collection, getDocs, addDoc, query, orderBy, onSnapshot   } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-=======
 import { getFirestore, collection, getDocs, addDoc , query ,orderBy, onSnapshot, deleteDoc} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 // import { async } from "regenerator-runtime";
->>>>>>> 7f46d6d6f55df20cc774d66e818c15db9e815bd5
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
@@ -47,10 +43,7 @@ export const savePosts = async (descripcion) => await addDoc(collection(db, 'pos
 
 //-----------------------------Eliminando post---------------------------
 
- export const getPost = (callback) => { 
-  const qs = query(collection(db, 'posts'), orderBy( 'descripcion', 'asc'));
-  onSnapshot (qs,(callback))
-}
+
 
  // mostrar tiempo  del post 
 // const date = new Date().toLocaleDateString('es-es', {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'})
