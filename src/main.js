@@ -4,9 +4,6 @@ import { onNavigate } from "./js/routes.js";
 import { login, register, loginWithGoogle, verificarSendingMail, logOut } from "./lib/firebase/methodsAuth.js";
 
 
-/*logout importar*/
-
-
 const auth = getAuth();
 
 /*..................................AUTH CONTROLLER.................................*/

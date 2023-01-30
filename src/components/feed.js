@@ -1,8 +1,4 @@
-//import {  verificarSendingMail } from "../lib/firebase/methodsAuth.js";
-import { savePosts, getPost} from "../lib/firebase/methodsFirestore.js";
-
-//, unsub
-//postRefRT,
+import { savePosts, getPost } from "../lib/firebase/methodsFirestore.js";
 export const feed = () => {
 
     const feedSection = document.createElement('section');
@@ -26,7 +22,7 @@ export const feed = () => {
 
     const avatarImg = document.createElement('img');
     avatarImg.className = 'avatarImg';
-    avatarImg.src = '/components/imagen/avatar.png';
+    avatarImg.src = '/components/imagen/avatar3.png';
     perfil.appendChild(avatarImg);
 
     containerHeader.appendChild(perfil);
@@ -78,9 +74,9 @@ export const feed = () => {
     publicarPostButton.textContent = 'Post';
     formulario.appendChild(publicarPostButton);
 
-
     formulario.addEventListener('submit', (e) => {
         e.preventDefault();
+
         console.log('click');
         let textPost = document.getElementById('idUserPost').value;
         if (textPost === null || textPost === '' || textPost.length == 0) {
@@ -88,8 +84,9 @@ export const feed = () => {
         }
         else {
             savePosts(textPost).then().catch(error => console.log("fallo la promesa para postear", error));
+            textPost = '';
             alert('tu post ha sido publicado');
-            //unsub(textPost).then(result => console.log(result)).catch(error => console.log("fallo la promesa mostrar en tiempo real los posts existentes", error));
+            // unsub(textPost).then(result => console.log(result)).catch(error => console.log("fallo la promesa mostrar en tiempo real los posts existentes", error));
         }
 
         formulario.reset();
@@ -106,7 +103,7 @@ export const feed = () => {
 
 
 
-    //----------------------------MOSTRANDO POSTS EXISTENTES---------------------------------------------------------------------------------
+    //----------------------MOSTRANDO POSTS EXISTENTES-----------------------------
 
     const contenedorPosts = document.createElement('div');
     contenedorPosts.className = 'contenedor-posts';
@@ -127,18 +124,14 @@ export const feed = () => {
         //    if (user.uid === posts.uid) {
                 postCreado.innerHTML += `
          <div class = "container-post" id = "ContainerPost">
-             <div class = "parte-superior-post">
+             <div class = "parte-superior-post" id= "parteSuperior">
                  <button class ="boton-editar" id="botonEditar" ><i class="fa-solid fa-pencil fa-lg"></i> </button>
                  <button class ="boton-eliminar" id="botonEliminar"><i class="fa-solid fa-trash-can fa-lg"></i></button>
              </div>
-
-             <div class = "parte-inferior-post">
-                <!-- <h2 class = "titulo-post">${posts["titulo"]}</h2> -->
-                <h4 class = "descripcion-post"> ${posts["descripcion"]}</h4> 
-                <button type="button" class ="boton-like" id="botonLike">25 likes<i class="fa-solid fa-heart fa-lg"></i></button>
-                <h4 class = "fecha-post">${posts["fecha"]}</h4> 
-            </div>
-
+             <button type="button" class ="boton-like" id="botonLike"><i class="fa-solid fa-heart fa-lg"></i>15 likes</button>
+             <h2 class = "titulo-post">${posts["autor"]}</h2> 
+             <h3 class = "descripcion-post"> ${posts["descripcion"]}</h3> 
+             <h4 class = "fecha-post">${posts.date}</h4> 
          </div>  
          `
         //    } else {
@@ -162,11 +155,8 @@ export const feed = () => {
         })
 
         })
-
-    
-
-
-
+        
+    // .catch(error => console.log("fallo la promesa de firestore", error))
 
     //MODAL LOG OUT
     const modalLogOut = document.createElement('div');
@@ -179,8 +169,8 @@ export const feed = () => {
             <button type="button" class ="aceptar-logout" id="botonAceptar"> Ok </button>
             <button type="button" class ="close-modalLogout" id="botonCancelar"> Cancel </button>
 
-        </div>
-       `;
+       </div>
+      `;
     feedSection.appendChild(modalLogOut);
 
     const closeModal = () => {

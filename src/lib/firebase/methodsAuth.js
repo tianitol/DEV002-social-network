@@ -57,7 +57,6 @@ export const login = (auth, email, password) => {
         })
     }
 
-
     
 
    export const logOut = (auth) => {

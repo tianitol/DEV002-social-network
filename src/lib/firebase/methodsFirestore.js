@@ -13,12 +13,19 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 
+<<<<<<< HEAD
 import { getFirestore, collection, getDocs, addDoc, query, orderBy, onSnapshot   } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+=======
+import { getFirestore, collection, getDocs, addDoc , query ,orderBy, onSnapshot, deleteDoc} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+// import { async } from "regenerator-runtime";
+>>>>>>> 7f46d6d6f55df20cc774d66e818c15db9e815bd5
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
+
+
 // Obtener la data desde el firestore
-export const postsRef = async () => await getDocs(collection(db, 'posts')) 
+export const postsRef = async (id) => await getDocs(collection(db, 'posts', id)) 
 
 //console.log('postsRef',postsRef()); 
 
@@ -39,16 +46,22 @@ export const savePosts = async (descripcion) => await addDoc(collection(db, 'pos
 // const date = new Date().toLocaleDateString('es-es', {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'})
 
 //-----------------------------Eliminando post---------------------------
+
+ export const getPost = (callback) => { 
+  const qs = query(collection(db, 'posts'), orderBy( 'descripcion', 'asc'));
+  onSnapshot (qs,(callback))
+}
+
+ // mostrar tiempo  del post 
+// const date = new Date().toLocaleDateString('es-es', {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'})
+
+//-----------------------------Eliminando post---------------------------
  export const detelePost = async (id) => await deleteDoc(doc (db , 'post', id))
 
 
 
 //------------------------------Editando post-----------------------------
 // export const udpDatePost = async (id) => await updateDoc(doc(db, 'post', id))
-
-
-
-//------------------------------Editando post-----------------------------
 
 
 //------------------Agregando interacciones, me gusta <3 --------------------
@@ -79,17 +92,3 @@ export const savePosts = async (descripcion) => await addDoc(collection(db, 'pos
 // });
 
 
-// export const crearPost = (uid, titulo, descripcion) => {
-//   return this.db.collection('posts').add({  // adición de un post. También podemos utilizar nuestro propio Id usando:    .doc("key").set({      
-//     uid: uid,
-//     autor: autor,
-//     titulo: titulo,
-//     descripcion: descripcion,
-//     fecha: firebase.firestore.FieldValue.serverTimestamp()
-//   })
-//     .then(refDoc => { // si la inserción(creación del post) fue exitosa debería dar en la consola el id del post que debería venir del firestore
-//       console.log(`Id del post =>${refDoc.id}`)
-//     }).catch(error => {
-//       console.log(`Error de creación del post =>${error}`);
-//     })
-// };
