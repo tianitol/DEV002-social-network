@@ -206,8 +206,9 @@ export const feed = () => {
   const openDelete = modalDelete.querySelector('#botonEliminar')
   if(openDelete) { 
      openDelete.addEventListener('click', () => {openModalDelete()});
-     
+    
   }
+  
  
   
     const aceptarEliminar = modalDelete.querySelector('#Eliminar');
