@@ -84,6 +84,7 @@ export const feed = () => {
         }
         else {
             savePosts(textPost).then().catch(error => console.log("fallo la promesa para postear", error));
+            textPost = '';
             alert('tu post ha sido publicado');
             // unsub(textPost).then(result => console.log(result)).catch(error => console.log("fallo la promesa mostrar en tiempo real los posts existentes", error));
         }
@@ -220,7 +221,6 @@ export const feed = () => {
     if (closeDelete) 
     { closeDelete.addEventListener('click', () => { closeModalDelete() });
     }
-
 
 
     return feedSection;
