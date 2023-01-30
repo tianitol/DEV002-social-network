@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithP
 
 
 // construyendo un observador de Auth
-export const verifiedWithEmail = (auth) => {
+export const observador = (auth) => {
     onAuthStateChanged(auth, (user) => {
        
         if (user) {
@@ -27,6 +27,8 @@ export const verifiedWithEmail = (auth) => {
         }
     });
 }
+
+
 
 export const verificarSendingMail = (auth) => {
     sendEmailVerification(auth.currentUser)

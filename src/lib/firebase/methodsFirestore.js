@@ -13,7 +13,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 
-import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, query, orderBy, onSnapshot   } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
@@ -21,18 +21,30 @@ const db = getFirestore(app);
 export const postsRef = async () => await getDocs(collection(db, 'posts')) 
 
 //console.log('postsRef',postsRef()); 
-//---------------Generando nuevos post de forma dinámica----------------
 
 
 //---------------Generando nuevos post de forma dinámica----------------
 
-//utilizando método addDoc de firestore
+//utilizando método addDoc de firestore con onSnapshot(actualización en tiempo real)
 
-export const savePosts = async (descripcion) => await addDoc(collection(db, 'posts'), {descripcion})
+export const savePosts = async (descripcion) => await addDoc(collection(db, 'posts'), {descripcion}) 
+  
+
+ export const getPost = (callback) => { 
+  const qs = query(collection(db, 'posts'), orderBy( 'descripcion', 'asc'));
+  onSnapshot (qs,(callback))
+}
+
+ // mostrar tiempo  del post 
+// const date = new Date().toLocaleDateString('es-es', {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'})
+
+//-----------------------------Eliminando post---------------------------
+ export const detelePost = async (id) => await deleteDoc(doc (db , 'post', id))
 
 
 
-
+//------------------------------Editando post-----------------------------
+// export const udpDatePost = async (id) => await updateDoc(doc(db, 'post', id))
 
 
 
@@ -42,6 +54,18 @@ export const savePosts = async (descripcion) => await addDoc(collection(db, 'pos
 //------------------Agregando interacciones, me gusta <3 --------------------
 // La idea es generar un array con los UserID para que sólo pueda haber uno por usuario 
 // (click en boton <3 sea un push con if(UserID no se encuentre en el array) else(si UserID está presente) se borre del array)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
