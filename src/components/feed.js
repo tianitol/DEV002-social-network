@@ -1,4 +1,4 @@
-import { postsRef, savePosts, unsub } from "../lib/firebase/methodsFirestore.js";
+import { postsRef, savePosts} from "../lib/firebase/methodsFirestore.js";
 //postRefRT,
 //import { doc }from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 export const feed = () => {
@@ -88,7 +88,7 @@ export const feed = () => {
             savePosts(textPost).then().catch(error => console.log("fallo la promesa para postear", error));
             textPost = '';
             alert('tu post ha sido publicado');
-            unsub(textPost).then(result => console.log(result)).catch(error => console.log("fallo la promesa mostrar en tiempo real los posts existentes", error));
+          //  unsub(textPost).then(result => console.log(result)).catch(error => console.log("fallo la promesa mostrar en tiempo real los posts existentes", error));
         }
         
         formulario.reset();
