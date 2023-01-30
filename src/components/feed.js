@@ -1,4 +1,4 @@
-import { savePosts, getPost } from "../lib/firebase/methodsFirestore.js";
+import { savePosts, getPost, deletePost } from "../lib/firebase/methodsFirestore.js";
 export const feed = () => {
 
     const feedSection = document.createElement('section');
@@ -174,12 +174,12 @@ export const feed = () => {
     feedSection.appendChild(modalLogOut);
 
     const closeModal = () => {
-        console.log('cerrando');
+        // console.log('cerrando');
         modalLogOut.style.display = 'none';
     }
 
     const openModal = () => {
-        console.log('hello');
+        // console.log('hello');
         modalLogOut.style.display = 'flex';
     }
 
