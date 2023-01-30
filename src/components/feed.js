@@ -144,7 +144,6 @@ export const feed = () => {
     //    let valorPostCreado = getElementById('idUserPost').value;
 
 
-
     return feedSection;
 
 }
