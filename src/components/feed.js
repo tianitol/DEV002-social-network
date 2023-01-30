@@ -1,6 +1,4 @@
-import { postsRef, savePosts} from "../lib/firebase/methodsFirestore.js";
-//postRefRT,
-//import { doc }from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+import { savePosts, getPost } from "../lib/firebase/methodsFirestore.js";
 export const feed = () => {
 
     const feedSection = document.createElement('section');
@@ -24,7 +22,7 @@ export const feed = () => {
 
     const avatarImg = document.createElement('img');
     avatarImg.className = 'avatarImg';
-    avatarImg.src = '/components/imagen/avatar.png';
+    avatarImg.src = '/components/imagen/avatar3.png';
     perfil.appendChild(avatarImg);
 
     containerHeader.appendChild(perfil);
@@ -76,21 +74,21 @@ export const feed = () => {
     publicarPostButton.textContent = 'Post';
     formulario.appendChild(publicarPostButton);
 
-
     formulario.addEventListener('submit', (e) => {
         e.preventDefault();
+
         console.log('click');
         let textPost = document.getElementById('idUserPost').value;
-        if (textPost === null || textPost === '' || textPost.length == 0){
-           alert('escriba un mensaje');
+        if (textPost === null || textPost === '' || textPost.length == 0) {
+            alert('escriba un mensaje');
         }
-        else{
+        else {
             savePosts(textPost).then().catch(error => console.log("fallo la promesa para postear", error));
             textPost = '';
             alert('tu post ha sido publicado');
-          //  unsub(textPost).then(result => console.log(result)).catch(error => console.log("fallo la promesa mostrar en tiempo real los posts existentes", error));
+            // unsub(textPost).then(result => console.log(result)).catch(error => console.log("fallo la promesa mostrar en tiempo real los posts existentes", error));
         }
-        
+
         formulario.reset();
     });
 
@@ -105,7 +103,7 @@ export const feed = () => {
 
 
 
-//----------------------------MOSTRANDO POSTS EXISTENTES---------------------------------------------------------------------------------
+    //----------------------MOSTRANDO POSTS EXISTENTES-----------------------------
 
     const contenedorPosts = document.createElement('div');
     contenedorPosts.className = 'contenedor-posts';
@@ -114,95 +112,112 @@ export const feed = () => {
 
     // savePosts(textoUser.value).then().catch(error => console.log("fallo la promesa para postear", error));
 
-    postsRef()
-        // .postRefRT(postsCollection => {
 
-            //const posts = doc.data();
+    // postsRef()
+    getPost(postsCollection => {
+        postsCollection.forEach((item) => { /*para traer los posts de mi colección */
 
-            Query.forEach((doc) => { /*para traer los posts de mi colección */
+            const posts = item.data();
+            //console.log(posts);
+            //console.log(posts["fecha"]);
+            const postCreado = document.createElement('div');
+            postCreado.className = 'post-div';
+            postCreado.innerHTML = '';
 
-                const posts = doc.data();
-                //console.log(posts);
-                //console.log(posts["fecha"]);
-                const postCreado = document.createElement('div');
-                postCreado.className = 'post-div';
-                postCreado.innerHTML ='';
-
-                if(user.uid === posts.uid){
-                postCreado.innerHTML += `
+            postCreado.innerHTML = `
          <div class = "container-post" id = "ContainerPost">
-             <div class = "parte-superior-post">
+             <div class = "parte-superior-post" id= "parteSuperior">
                  <button class ="boton-editar" id="botonEditar" ><i class="fa-solid fa-pencil fa-lg"></i> </button>
                  <button class ="boton-eliminar" id="botonEliminar"><i class="fa-solid fa-trash-can fa-lg"></i></button>
              </div>
-
-             <div class = "parte-inferior-post">
-                <!-- <h2 class = "titulo-post">${posts["titulo"]}</h2> -->
-                <h4 class = "descripcion-post"> ${posts["descripcion"]}</h4> 
-                <button type="button" class ="boton-like" id="botonLike">25 likes<i class="fa-solid fa-heart fa-lg"></i></button>
-                <h4 class = "fecha-post">${posts["fecha"]}</h4> 
-            </div>
-
+             <button type="button" class ="boton-like" id="botonLike"><i class="fa-solid fa-heart fa-lg"></i>15 likes</button>
+             <h2 class = "titulo-post">${posts["autor"]}</h2> 
+             <h3 class = "descripcion-post"> ${posts["descripcion"]}</h3> 
+             <h4 class = "fecha-post">${posts.date}</h4> 
          </div>  
-         `
-                }else{
-                    postCreado.innerHTML += `
-                    <div class = "container-post" id = "ContainerPost">
-                        <div class = "parte-superior-post">
-                        </div>
-           
-                        <div class = "parte-inferior-post">
-                           <!-- <h2 class = "titulo-post">${posts["titulo"]}</h2> -->
-                           <h4 class = "descripcion-post"> ${posts["descripcion"]}</h4> 
-                           <button type="button" class ="boton-like" id="botonLike">25 likes<i class="fa-solid fa-heart fa-lg"></i></button>
-                           <h4 class = "fecha-post">${posts["fecha"]}</h4> 
-                       </div>
-           
-                    </div>  
-                    `
-                }
-         
-         ;
+         `;
+            contenedorPosts.append(postCreado);
 
-                contenedorPosts.append(postCreado);
-
-            });
-        
-
-
+        });
+    })
+    // .catch(error => console.log("fallo la promesa de firestore", error))
 
     //MODAL LOG OUT
-    const modalLogOut= document.createElement('div');
+    const modalLogOut = document.createElement('div');
     modalLogOut.className = 'modal';
     modalLogOut.id = 'idModalLogout';
 
-    modalLogOut.innerHTML =`
-        <div class="modal-container" id="modalContainerLogout">
-            <h3>Log out of Dad's Power?</h3>
-            <button type="button" class ="aceptar-logout" id="botonAceptar"> Ok </button>
-            <button type="button" class ="close-modalLogout" id="botonCancelar"> Cancel </button>
+    modalLogOut.innerHTML = `
+       <div class="modal-container" id="modalContainerLogout">
+           <h3>Log out of Dad's Power?</h3>
+           <button type="button" class ="aceptar-logout" id="botonAceptar"> Ok </button>
+           <button type="button" class ="close-modalLogout" id="botonCancelar"> Cancel </button>
 
-        </div>
-       `;
+       </div>
+      `;
     feedSection.appendChild(modalLogOut);
 
     const closeModal = () => {
         console.log('cerrando');
         modalLogOut.style.display = 'none';
-      }
-    
+    }
+
     const openModal = () => {
         console.log('hello');
         modalLogOut.style.display = 'flex';
-      }
+    }
 
-      logoutButton.addEventListener('click',  () =>{
+    logoutButton.addEventListener('click', () => {
         openModal();
-      });
-    
-   const closeModalLogout = modalLogOut.querySelector('#botonCancelar'); //no se puede usar getElementById porque aun no existe
-    if( closeModalLogout)
-    { closeModalLogout.addEventListener('click', () =>{closeModal()});}
+    });
+
+    const closeModalLogout = modalLogOut.querySelector('#botonCancelar'); //no se puede usar getElementById porque aun no existe
+    if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
+
+    // MODAL ELIMINAR
+
+    const modalDelete = document.createElement('div');
+    modalDelete.className = 'modal';
+    modalDelete.id = 'idModalDelete';
+
+    modalDelete.innerHTML = `
+    <div class="modal-container" id="modalContainerDelete">
+        <h3>Do you want to delete?</h3>
+        <button type="button" class ="aceptar-logout" id="botonAceptarEliminar"> Ok </button>
+        <button type="button" class ="close-modalLogout" id="botonCancelarEliminar"> Cancel </button>
+
+    </div>
+    `;
+    feedSection.appendChild(modalDelete);
+
+    const closeModalDelete = () => {
+        console.log('cerrando');
+        modalDelete.style.display = 'none';
+    }
+
+    const openModalDelete = () => {
+        console.log('hello');
+        modalDelete.style.display = 'flex';
+    }
+   
+  const openDelete = contenedorPosts.querySelector('#botonEliminar')
+  if(openDelete) { 
+     openDelete.addEventListener('click', () => {openModalDelete()});
+     console.log('clickii')
+  }
+ 
+  
+    const aceptarElimiar = modalDelete.querySelector('#botonAceptar');
+    if (aceptarElimiar){
+        aceptarElimiar.addEventListener('click', () => {
+            /*FUNCION ELIMINAR*/
+        });
+    }
+    const closeDelete = modalDelete.querySelector('#botonCancelar'); //no se puede usar getElementById porque aun no existe
+    if (closeDelete) 
+    { closeDelete.addEventListener('click', () => { closeModalDelete() });
+    }
+
 
     return feedSection;
 

@@ -4,9 +4,6 @@ import { onNavigate } from "./js/routes.js";
 import { login, register, loginWithGoogle, verificarSendingMail, logOut } from "./lib/firebase/methodsAuth.js";
 
 
-/*logout importar*/
-
-
 const auth = getAuth();
 
 /*..................................AUTH CONTROLLER.................................*/
@@ -116,7 +113,7 @@ if (signinForm) {
 };
 
 // LOGOUT
-const logoutButton = document.getElementById('idlogoutButton');
+const logoutButton = document.getElementById('botonAceptar');
 if (logoutButton) {
   logoutButton.addEventListener('click', () => {
     logOut(auth);
