@@ -204,7 +204,6 @@ export const feed = () => {
     if( closeModalLogout)
     { closeModalLogout.addEventListener('click', () =>{closeModal()});}
 
-
     return feedSection;
 
 }
