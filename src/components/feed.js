@@ -175,14 +175,14 @@ export const feed = () => {
 
             contenedorPosts.append(postCreado);
 
-            if (btnEliminar) {
-                btnEliminar.addEventListener('click', () => {
-                    console.log('click')
-                    openModalDelete();
+            // if (btnEliminar) {
+            //     btnEliminar.addEventListener('click', () => {
+            //         console.log('click')
+            //         openModalDelete();
                     
 
-                });
-            };
+            //     });
+            // };
         });
     })
     // .catch(error => console.log("fallo la promesa de firestore", error))
@@ -249,23 +249,23 @@ export const feed = () => {
 
 
 
-    const aceptarEliminar = contenedorPosts.querySelectorAll('.boton-aceptar');
-    aceptarEliminar.forEach(btn => {
+    // const aceptarEliminar = contenedorPosts.querySelectorAll('.boton-aceptar');
+    // aceptarEliminar.forEach(btn => {
 
-    })
-    if (aceptarEliminar) {
-        aceptarEliminar.addEventListener('click', () => {
+    // })
+    // if (aceptarEliminar) {
+    //     aceptarEliminar.addEventListener('click', () => {
             
-            deletePost()
-            .then().catch(error => console.log('falló la promesa para eliminar', error));
+    //         deletePost()
+    //         .then().catch(error => console.log('falló la promesa para eliminar', error));
 
-            closeModalDelete()
-        });
-    }
-    const closeDelete = modalDelete.querySelector('#botonCancelarEliminar'); //no se puede usar getElementById porque aun no existe
-    if (closeDelete) {
-        closeDelete.addEventListener('click', () => { closeModalDelete() });
-    }
+    //         closeModalDelete()
+    //     });
+    // }
+    // const closeDelete = modalDelete.querySelector('#botonCancelarEliminar'); //no se puede usar getElementById porque aun no existe
+    // if (closeDelete) {
+    //     closeDelete.addEventListener('click', () => { closeModalDelete() });
+    // }
 
 
     return feedSection;
