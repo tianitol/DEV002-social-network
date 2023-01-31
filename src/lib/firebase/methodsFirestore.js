@@ -21,7 +21,7 @@ const db = getFirestore(app);
 
 
 // Obtener la data desde el firestore
-export const postsRef = async (id) => await getDocs(collection(db, 'posts', id)) 
+//export const postsRef = async (id) => await getDocs(collection(db, 'posts', id)) 
 
 //Obtener data de un determinado post(para obtener el id del post y usarlo en la eliminación y actualización)
 export const obtenerPost = async (id) =>await getDoc(doc(db, 'posts', id));
@@ -30,8 +30,8 @@ export const obtenerPost = async (id) =>await getDoc(doc(db, 'posts', id));
 
 //utilizando método addDoc de firestore con onSnapshot(actualización en tiempo real)
 
-export const savePosts = async (descripcion) => await addDoc(collection(db, 'posts'),{descripcion}) 
-  
+export const savePosts = async (descripcion) => await addDoc(collection(db, 'posts'),{descripcion});
+export const saveUsers = async (usuario) => await addDoc(collection(db, 'users'), {usuario});
 
  export const getPost = (callback) => { 
   const qs = query(collection(db, 'posts'), orderBy( 'descripcion', 'asc'));

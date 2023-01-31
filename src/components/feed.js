@@ -110,65 +110,79 @@ export const feed = () => {
     contenedorPosts.className = 'contenedor-posts';
     feedSection.appendChild(contenedorPosts);
 
-
     // savePosts(textoUser.value).then().catch(error => console.log("fallo la promesa para postear", error));
 
     getPost(postsCollection => {
+        contenedorPosts.innerHTML = '';
         postsCollection.forEach((item) => { /*para traer los posts de mi colección */
             const posts = item.data();
             //console.log(posts);
             //console.log(posts["fecha"]);
             const postCreado = document.createElement('div');
             postCreado.className = 'post-div';
-            postCreado.innerHTML = '';
-            obtenerPost(item.id).then(console.log(item.id)).catch();
+            const divContainerPost = document.createElement('div');
+            divContainerPost.className = 'container-post';
+            divContainerPost.id = 'ContainerPost';
+            postCreado.appendChild(divContainerPost);
 
-            
-        //     verificarSendingMail(user => {
-        //    if (user.uid === posts.uid) {
-                postCreado.innerHTML += `
-         <div class = "container-post" id = "ContainerPost">
-             <div class = "parte-superior-post" id= "parteSuperior">
-                 <button class ="boton-editar" id="botonEditar" ><i class="fa-solid fa-pencil fa-lg"></i> </button>
-                 <button class ="boton-eliminar" id="botonEliminar"><i class="fa-solid fa-trash-can fa-lg"></i></button>
-             </div>
-             <button type="button" class ="boton-like" id="botonLike"><i class="fa-solid fa-heart fa-lg"></i>15 likes</button>
-             <h2 class = "titulo-post">${posts["autor"]}</h2> 
+            //div para botones likes-edit-delete
+            const divParteSuperior = document.createElement('div');
+            divParteSuperior.className = 'parte-superior-post';
+            divParteSuperior.id = 'parteSuperior';
+            divContainerPost.appendChild(divParteSuperior);
+
+            //botones de parte superior
+            const userPost = document.createElement('h2');
+            userPost.className = 'titulo-post';
+            userPost.innerHTML = `${posts["autor"]}`; //aquí debe ir enlazado al usuario registrado/logueado
+            divParteSuperior.appendChild(userPost);
+
+
+            const btnLike = document.createElement('button');
+            btnLike.type = 'button';
+            btnLike.className = 'boton-like';
+            btnLike.id = 'botonLike';
+            btnLike.innerHTML = '<i class="fa-solid fa-heart fa-lg"></i>15 likes';
+            divParteSuperior.appendChild(btnLike);
+
+            const btnEditar = document.createElement('button');
+            btnEditar.type = 'button';
+            btnEditar.className = 'boton-editar';
+            btnEditar.id = 'botonEditar';
+            btnEditar.innerHTML = '<i class="fa-solid fa-pencil fa-lg"></i>';
+            divParteSuperior.appendChild(btnEditar);
+
+            const btnEliminar = document.createElement('button');
+            btnEliminar.type = 'button';
+            btnEliminar.className = 'boton-eliminar';
+            btnEliminar.id = 'botonEliminar';
+            btnEliminar.innerHTML = '<i class="fa-solid fa-trash-can fa-lg"></i>';
+            divParteSuperior.appendChild(btnEliminar);
+
+            const divParteInferior = document.createElement('div');
+            divParteInferior.className = 'parte-inferior-post';
+            divContainerPost.appendChild(divParteInferior);
+
+            divParteInferior.innerHTML = '';
+            divParteInferior.innerHTML = `
+        
              <h3 class = "descripcion-post"> ${posts["descripcion"]}</h3> 
              <h4 class = "fecha-post">${posts.date}</h4> 
-         </div>  
-         `
-        //    } else {
-        //         postCreado.innerHTML += `
-        //             <div class = "container-post" id = "ContainerPost">
-        //                 <div class = "parte-superior-post">
-        //                 </div>
-           
-        //                 <div class = "parte-inferior-post">
-        //                    <!-- <h2 class = "titulo-post">${posts["titulo"]}</h2> -->
-        //                    <h4 class = "descripcion-post"> ${posts["descripcion"]}</h4> 
-        //                    <button type="button" class ="boton-like" id="botonLike">25 likes<i class="fa-solid fa-heart fa-lg"></i></button>
-        //                    <h4 class = "fecha-post">${posts["fecha"]}</h4> 
-        //                </div>
-           
-        //             </div>  
-        //             `
-        //     }
+          
+         `;
 
             contenedorPosts.append(postCreado);
 
+            // if (btnEliminar) {
+            //     btnEliminar.addEventListener('click', () => {
+            //         console.log('click')
+            //         openModalDelete();
+                    
 
-            if (botonEliminar) {
-                botonEliminar.addEventListener('click', () => { openModalDelete() });
-            }
-        
-        })
-
-        })
-
-
-
-
+            //     });
+            // };
+        });
+    })
     // .catch(error => console.log("fallo la promesa de firestore", error))
 
     //MODAL LOG OUT
@@ -287,6 +301,28 @@ export const feed = () => {
         console.log('hello');
         modalDelete.style.display = 'flex';
     }
+    
+
+
+
+
+    // const aceptarEliminar = contenedorPosts.querySelectorAll('.boton-aceptar');
+    // aceptarEliminar.forEach(btn => {
+
+    // })
+    // if (aceptarEliminar) {
+    //     aceptarEliminar.addEventListener('click', () => {
+            
+    //         deletePost()
+    //         .then().catch(error => console.log('falló la promesa para eliminar', error));
+
+    //         closeModalDelete()
+    //     });
+    // }
+    // const closeDelete = modalDelete.querySelector('#botonCancelarEliminar'); //no se puede usar getElementById porque aun no existe
+    // if (closeDelete) {
+    //     closeDelete.addEventListener('click', () => { closeModalDelete() });
+    // }
 
 
     // contenedorPosts.addEventListener('click', () => {
