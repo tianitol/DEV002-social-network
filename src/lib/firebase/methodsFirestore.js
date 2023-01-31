@@ -13,7 +13,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 
-import { getFirestore, collection, getDocs, addDoc , query ,orderBy, onSnapshot, deleteDoc ,doc} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc , query ,orderBy, onSnapshot, deleteDoc ,doc, getDoc} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 // import { async } from "regenerator-runtime";
 
 // Initialize Cloud Firestore and get a reference to the service
@@ -23,8 +23,8 @@ const db = getFirestore(app);
 // Obtener la data desde el firestore
 export const postsRef = async (id) => await getDocs(collection(db, 'posts', id)) 
 
-//console.log('postsRef',postsRef()); 
-
+//Obtener data de un determinado post(para obtener el id del post y usarlo en la eliminación y actualización)
+export const obtenerPost = async (id) =>await getDoc(doc(db, 'posts', id));
 
 //---------------Generando nuevos post de forma dinámica----------------
 

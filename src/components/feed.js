@@ -1,4 +1,4 @@
-import { savePosts, getPost, deletePost } from "../lib/firebase/methodsFirestore.js";
+import { savePosts, getPost, obtenerPost } from "../lib/firebase/methodsFirestore.js";
 export const feed = () => {
 
     const feedSection = document.createElement('section');
@@ -84,6 +84,7 @@ export const feed = () => {
         }
         else {
             savePosts(textPost).then().catch(error => console.log("fallo la promesa para postear", error));
+
             textPost = '';
             alert('tu post ha sido publicado');
             // unsub(textPost).then(result => console.log(result)).catch(error => console.log("fallo la promesa mostrar en tiempo real los posts existentes", error));
@@ -120,6 +121,9 @@ export const feed = () => {
             const postCreado = document.createElement('div');
             postCreado.className = 'post-div';
             postCreado.innerHTML = '';
+            obtenerPost(item.id).then(console.log(item.id)).catch();
+
+            
         //     verificarSendingMail(user => {
         //    if (user.uid === posts.uid) {
                 postCreado.innerHTML += `
@@ -152,10 +156,19 @@ export const feed = () => {
         //     }
 
             contenedorPosts.append(postCreado);
+
+
+            if (botonEliminar) {
+                botonEliminar.addEventListener('click', () => { openModalDelete() });
+            }
+        
         })
 
         })
-        
+
+
+
+
     // .catch(error => console.log("fallo la promesa de firestore", error))
 
     //MODAL LOG OUT
@@ -172,6 +185,7 @@ export const feed = () => {
        </div>
       `;
     feedSection.appendChild(modalLogOut);
+  
 
     const closeModal = () => {
         // console.log('cerrando');
@@ -191,17 +205,80 @@ export const feed = () => {
     if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
 
     // MODAL ELIMINAR
+
+
+
+
+
+//     const modalDelete = document.createElement('div');
+//     modalDelete.className = 'modal';
+//     modalDelete.id = 'idModalDelete';
+//     modalDelete.innerHTML = `
+//  <div class="modal-container" id="modalContainerDelete">
+//      <h3>Do you want to delete?</h3>
+//      <button type="button" class ="aceptar-logout" id="botonAceptarEliminar"> Ok </button>
+//      <button type="button" class ="close-modalLogout" id="botonCancelarEliminar"> Cancel </button>
+//  </div>
+//  `;
+
+
+
+
+
+
     const modalDelete = document.createElement('div');
     modalDelete.className = 'modal';
     modalDelete.id = 'idModalDelete';
-    modalDelete.innerHTML = `
- <div class="modal-container" id="modalContainerDelete">
-     <h3>Do you want to delete?</h3>
-     <button type="button" class ="aceptar-logout" id="botonAceptarEliminar"> Ok </button>
-     <button type="button" class ="close-modalLogout" id="botonCancelarEliminar"> Cancel </button>
- </div>
- `;
+
+    const modalDeleteContainer = document.createElement('div');
+    modalDeleteContainer.className = 'modal-container';
+    modalDeleteContainer.id = 'modalContainerDelete';
+    modalDelete.appendChild(modalDeleteContainer);
+
+    const h3 = document.createElement('h3')
+    h3.textContent='Do you want to delete?';
+    h3.className='h3modalDelete';
+    modalDeleteContainer.appendChild(h3);
+
+    const btnAceptarEliminar = document.createElement('button');
+    btnAceptarEliminar.type = 'button';
+    btnAceptarEliminar.className = 'aceptar-logout';
+    btnAceptarEliminar.id = 'botonAceptarEliminar';
+    btnAceptarEliminar.textContent = 'Ok';
+    modalDeleteContainer.appendChild(btnAceptarEliminar);
+
+    const btnCancelarEliminar = document.createElement('button');
+    btnCancelarEliminar.type = 'button';
+    btnCancelarEliminar.className = 'aceptar-logout';
+    btnCancelarEliminar.id = 'botonCancelarEliminar';
+    btnCancelarEliminar.textContent = 'Cancel';
+    btnCancelarEliminar.appendChild(btnAceptarEliminar);
+
+
+
     feedSection.appendChild(modalDelete);
+
+
+
+
+
+
+    const borrrarPost = contenedorPosts.querySelectorAll(".boton-eliminar");
+    borrrarPost.forEach((btn) => {
+         console.log('holis');
+        btn.addEventListener('click', ({ target: { post } }) => {
+            const result = confirm("¿Estás seguro de eliminar la publicación?")
+            if (result === false) {} 
+            else {deletePost(post.id)}
+        })
+    });
+
+
+
+
+
+
+
     const closeModalDelete = () => {
         console.log('cerrando');
         modalDelete.style.display = 'none';
@@ -212,21 +289,18 @@ export const feed = () => {
     }
 
 
-    contenedorPosts.addEventListener('click', () => {
-        openModalDelete()});
+    // contenedorPosts.addEventListener('click', () => {
+    //     openModalDelete()});
 
-    const openDelete = contenedorPosts.querySelector('#botonEliminar')
-    if (openDelete) {
-        console.log(openDelete);
-        openDelete.addEventListener('click', () => { openModalDelete() });
-        console.log('clickii')
-    }
+    //const openDelete = document.getElementById('botonEliminar')
+   // if (openDelete) {
+      //  openDelete.addEventListener('click', () => { openModalDelete() });
+   // }
 
 
     const aceptarElimiar = modalDelete.querySelector('#botonAceptar');
     if (aceptarElimiar) {
         aceptarElimiar.addEventListener('click', () => {
-
             /*FUNCION ELIMINAR*/
         });
     }

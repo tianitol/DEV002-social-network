@@ -608,6 +608,7 @@ input::placeholder {
   right: 8vh;
   color: #222222;
   cursor: pointer;
+  
 }
 
 .boton-eliminar {
@@ -624,9 +625,10 @@ input::placeholder {
   border: none;
   color: #FA79AA;
   background-color: transparent;
-  position: absolute;
-  margin-top: 110px;
-  right: 4vh;
+  position:relative;
+  left: 25vh;
+  top: 5vh;
+  /* right: 4vh; */
   font-size: 10px;
   font-family: 'roboto, sans-serif';
   cursor: pointer;
@@ -761,3 +763,4 @@ h4.fecha-post {
 
   
 }
+
