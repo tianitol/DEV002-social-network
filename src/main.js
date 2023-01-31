@@ -2,6 +2,7 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 import { onNavigate } from "./js/routes.js";
 import { login, register, loginWithGoogle, verificarSendingMail, logOut } from "./lib/firebase/methodsAuth.js";
+import { saveUsers } from "./lib/firebase/methodsFirestore.js";
 
 
 const auth = getAuth();
@@ -38,7 +39,8 @@ if (signupForm) {
       signupEmail = '';
     }
     const signupPassword = document.getElementById('idContraseñaSU').value;
-
+    const usuarioRegistrado = document.getElementById('idUsername').value;
+    saveUsers(usuarioRegistrado).then().catch(error => console.log('fallo la promesa para agregar usuario', error));
     // función de Firebase para registrar un usuario
     try {
       const resultado = await register(auth, valorCorreo, signupPassword);

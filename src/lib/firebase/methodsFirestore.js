@@ -13,7 +13,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 
-import { getFirestore, collection, getDocs, addDoc , query ,orderBy, onSnapshot, deleteDoc ,doc} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc , query ,orderBy, onSnapshot, deleteDoc ,doc} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 // import { async } from "regenerator-runtime";
 
 // Initialize Cloud Firestore and get a reference to the service
@@ -21,7 +21,7 @@ const db = getFirestore(app);
 
 
 // Obtener la data desde el firestore
-export const postsRef = async (id) => await getDocs(collection(db, 'posts', id)) 
+//export const postsRef = async (id) => await getDocs(collection(db, 'posts', id)) 
 
 //console.log('postsRef',postsRef()); 
 
@@ -30,8 +30,8 @@ export const postsRef = async (id) => await getDocs(collection(db, 'posts', id))
 
 //utilizando método addDoc de firestore con onSnapshot(actualización en tiempo real)
 
-export const savePosts = async (descripcion) => await addDoc(collection(db, 'posts'),{descripcion}) 
-  
+export const savePosts = async (descripcion) => await addDoc(collection(db, 'posts'),{descripcion});
+export const saveUsers = async (usuario) => await addDoc(collection(db, 'users'), {usuario});
 
  export const getPost = (callback) => { 
   const qs = query(collection(db, 'posts'), orderBy( 'descripcion', 'asc'));
@@ -42,8 +42,7 @@ export const savePosts = async (descripcion) => await addDoc(collection(db, 'pos
 // const date = new Date().toLocaleDateString('es-es', {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'})
 
 //-----------------------------Eliminando post---------------------------
- export const deletePost = async (id) => await deleteDoc(doc (db , 'post', id))
-
+ export const deletePost = async (id) => await deleteDoc(doc (db , 'post', id));
 
 
 //------------------------------Editando post-----------------------------
