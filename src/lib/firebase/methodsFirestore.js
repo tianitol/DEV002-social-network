@@ -55,7 +55,7 @@ export const deletePost = async (id) => await deleteDoc(doc(db, 'posts', id));
 
 //------------------------------Editando post-----------------------------
  //export const udpDatePost = async (id) => await updateDoc(doc(db, 'post', id))
- export const udpDatePost = async (id, newFile ) => await updateDoc(doc(db, 'post', id), newFile)
+ export const udpDatePost = async (id, newFile ) => await updateDoc(doc(db, 'posts', id), newFile)
 
 
 /* newFile debe ser el objeto que tengo que actualizar:
