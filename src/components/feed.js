@@ -88,7 +88,6 @@ export const feed = () => {
 
             textPost = '';
             alert('tu post ha sido publicado');
-            // unsub(textPost).then(result => console.log(result)).catch(error => console.log("fallo la promesa mostrar en tiempo real los posts existentes", error));
         }
 
         formulario.reset();
@@ -111,19 +110,18 @@ export const feed = () => {
     contenedorPosts.className = 'contenedor-posts';
     feedSection.appendChild(contenedorPosts);
 
-    // savePosts(textoUser.value).then().catch(error => console.log("fallo la promesa para postear", error));
 
     getPost(postsCollection => {
         contenedorPosts.innerHTML = '';
         postsCollection.forEach((item) => { /*para traer los posts de mi colección */
 
             let posts = item.data()
+            // console.log(item.id);
             posts = { ...posts, time: new Date(posts.date.seconds * 1000) }
+            console.log(posts.time);
+            const dateTime = getFecha(posts.time); /* trae la fecha como un timestamp, new Date lo convierte a fecha completa en inglés y con la función getFecha convertimos a formato d/m/y h:m */
 
-            const dateTime = getFecha(posts.time);
-            
-            //console.log(dateTime);
-            //console.log(posts["fecha"]);
+
             const postCreado = document.createElement('div');
             postCreado.className = 'post-div';
             const divContainerPost = document.createElement('div');
@@ -173,23 +171,19 @@ export const feed = () => {
             divParteInferior.innerHTML = `
         
              <h3 class = "descripcion-post"> ${posts["descripcion"]}</h3> 
-            <!-- <h4 class = "fecha-post">${new Date(Date.now())}</h4> -->
             <h4 class = "fecha-post">${dateTime}</h4>
 
          `;
 
-            // console.log(Date.now());
-            // var dateTodayServer = new Date(Date.now());
-            // console.log(dateTodayServer);
-            //  Timestamp.fromDate(new Date());   
-            //  console.log(Timestamp.fromDate(new Date()));
+            //  console.log(Date.now());
+            //  var dateTodayServer = new Date(Date.now());
+
 
             contenedorPosts.append(postCreado);
 
-            //if (btnEliminar) {
+            //----------------------ELIMINACIÓN DE UN POST SEGÚN ID DEL DOCUMENTO---------------------------------------
             btnEliminar.addEventListener('click', async () => {
                 console.log('click')
-                //openModalDelete();
                 const eliminar = confirm('Do you want to delete this message?');
                 if (eliminar) {
                     if (eliminar) {
@@ -199,9 +193,9 @@ export const feed = () => {
                             idPost = item.id;
                             console.log(idPost);
                         }
-                        // deletePost(idPost).then(console.log(deletePost(idPost))).catch();
+                        // deletePost(idPost).then(console.log(deletePost(idPost))).catch(); then resuelve de forma asíncrona y el try(síncrono) se le pone el await(hasta que se resuelva no pasa el código a siguientes instrucciones) para resolverlo
                         try {
-                            await deletePost(idPost);
+                            await deletePost(idPost,);
                             alert('eliminado con éxito');
 
 
@@ -210,13 +204,47 @@ export const feed = () => {
                         }
                         // console.log(deletePost(idPost));
 
-
                     }
                 };
             });
-        })
 
-    })
+
+            //----------------------EDICIÓN DE UN POST SEGÚN ID DEL DOCUMENTO---------------------------------------
+            btnEditar.addEventListener('click', async () => {
+                console.log('click')
+                let textPostEdit = document.getElementById('idUserPost').value;
+
+                const editar = confirm('Do you want to edit this message?');
+                if (editar) {
+                    if (editar) {
+                        // obtenerPost(item.id).then(console.log(item.id)).catch();
+                        let idPost = '';
+                        if (item.id) {
+                            idPost = item.id;
+                            console.log(idPost);
+                        }
+                        // deletePost(idPost).then(console.log(deletePost(idPost))).catch(); then resuelve de forma asíncrona y el try(síncrono) se le pone el await(hasta que se resuelva no pasa el código a siguientes instrucciones) para resolverlo
+                        try {
+                            await udpDatePost(idPost,);
+                            alert('editado con éxito');
+
+
+                        } catch (error) {
+                            alert('error al editar');
+                        }
+                        // console.log(deletePost(idPost));
+                    }
+                }
+            });
+
+            //----------------------------------------------------------------------------------------------------
+
+
+        });
+
+
+    });
+
     // .catch(error => console.log("fallo la promesa de firestore", error))
 
     //MODAL LOG OUT
@@ -259,12 +287,12 @@ export const feed = () => {
 }
 
 
-const getFecha = (dateTime) =>{
+const getFecha = (dateTime) => {
     const year = dateTime.getFullYear();
     const month = dateTime.getMonth() + 1 < 10 ? `0${dateTime.getMonth() + 1}` : dateTime.getMonth() + 1;
     const day = dateTime.getDate() < 10 ? `0${dateTime.getDate()}` : dateTime.getDate();
     const hour = dateTime.getHours();
-    const minutes = dateTime.getMinutes();
+    const minutes = dateTime.getMinutes() < 10 ? `0${dateTime.getMinutes()}` : dateTime.getMinutes();
 
     return `${day}/${month}/${year} ${hour}:${minutes}`;
 }
