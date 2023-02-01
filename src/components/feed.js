@@ -3,7 +3,6 @@ export const feed = () => {
 
     const feedSection = document.createElement('section');
     feedSection.className = 'section-feed';
-
     const containerHeader = document.createElement('div');
     containerHeader.className = 'feed-container-header';
 
@@ -16,6 +15,7 @@ export const feed = () => {
 
     containerHeader.appendChild(titulo);
 
+    
     const perfil = document.createElement('div')
     perfil.className = 'avatarUser';
 
@@ -23,6 +23,7 @@ export const feed = () => {
     const avatarImg = document.createElement('img');
     avatarImg.className = 'avatarImg';
     avatarImg.src = '/components/imagen/avatar3.png';
+    
     perfil.appendChild(avatarImg);
 
     containerHeader.appendChild(perfil);
@@ -109,12 +110,12 @@ export const feed = () => {
     contenedorPosts.className = 'contenedor-posts';
     feedSection.appendChild(contenedorPosts);
 
-
     // savePosts(textoUser.value).then().catch(error => console.log("fallo la promesa para postear", error));
 
 
     // postsRef()
     getPost(postsCollection => {
+        contenedorPosts.innerHTML = '';
         postsCollection.forEach((item) => { /*para traer los posts de mi colección */
 
             const posts = item.data();
@@ -122,23 +123,67 @@ export const feed = () => {
             //console.log(posts["fecha"]);
             const postCreado = document.createElement('div');
             postCreado.className = 'post-div';
-            postCreado.innerHTML = '';
-            postCreado.innerHTML = `
-         <div class = "container-post" id = "ContainerPost">
-             <div class = "parte-superior-post" id= "parteSuperior">
-                 <button class ="boton-editar" id="botonEditar" ><i class="fa-solid fa-pencil fa-lg"></i> </button>
-                 <button class ="boton-eliminar" id="botonEliminar"><i class="fa-solid fa-trash-can fa-lg"></i></button>
-             </div>
-             <button type="button" class ="boton-like" id="botonLike"><i class="fa-solid fa-heart fa-lg"></i>15 likes</button>
-             <h2 class = "titulo-post">${posts["autor"]}</h2> 
+            const divContainerPost = document.createElement('div');
+            divContainerPost.className = 'container-post';
+            divContainerPost.id = 'ContainerPost';
+            postCreado.appendChild(divContainerPost);
+
+            //div para botones likes-edit-delete
+            const divParteSuperior = document.createElement('div');
+            divParteSuperior.className = 'parte-superior-post';
+            divParteSuperior.id = 'parteSuperior';
+            divContainerPost.appendChild(divParteSuperior);
+
+            //botones de parte superior
+            const userPost = document.createElement('h2');
+            userPost.className = 'titulo-post';
+            userPost.innerHTML = `${posts.uid}`; //aquí debe ir enlazado al usuario registrado/logueado
+            divParteSuperior.appendChild(userPost);
+
+
+            const btnLike = document.createElement('button');
+            btnLike.type = 'button';
+            btnLike.className = 'boton-like';
+            btnLike.id = 'botonLike';
+            btnLike.innerHTML = '<i class="fa-solid fa-heart fa-lg"></i>15 likes';
+            divParteSuperior.appendChild(btnLike);
+
+            const btnEditar = document.createElement('button');
+            btnEditar.type = 'button';
+            btnEditar.className = 'boton-editar';
+            btnEditar.id = 'botonEditar';
+            btnEditar.innerHTML = '<i class="fa-solid fa-pencil fa-lg"></i>';
+            divParteSuperior.appendChild(btnEditar);
+
+            const btnEliminar = document.createElement('button');
+            btnEliminar.type = 'button';
+            btnEliminar.className = 'boton-eliminar';
+            btnEliminar.id = 'botonEliminar';
+            btnEliminar.innerHTML = '<i class="fa-solid fa-trash-can fa-lg"></i>';
+            divParteSuperior.appendChild(btnEliminar);
+
+            const divParteInferior = document.createElement('div');
+            divParteInferior.className = 'parte-inferior-post';
+            divContainerPost.appendChild(divParteInferior);
+
+            divParteInferior.innerHTML = '';
+            divParteInferior.innerHTML = `
+        
              <h3 class = "descripcion-post"> ${posts["descripcion"]}</h3> 
              <h4 class = "fecha-post">${posts.date}</h4> 
-         </div> 
           
          `;
-        
+
             contenedorPosts.append(postCreado);
 
+            if (btnEliminar) {
+                btnEliminar.addEventListener('click', () => {
+                    console.log('click')
+                    openModalDelete();
+                    
+
+                });
+            };
         });
     })
     // .catch(error => console.log("fallo la promesa de firestore", error))
@@ -184,7 +229,7 @@ export const feed = () => {
     modalDelete.innerHTML = `
     <div class="modal-container" id="modalContainerDelete">
         <h3 class="texto-delete">Do you want to delete?</h3>
-        <button type="button" class ="boton-aceptar" id="Eliminar"> Ok </button>
+        <button type="button" class ="boton-aceptar" ' id="Eliminar"> Ok </button>
         <button type="button" class ="boton-cancelar" id="botonCancelarEliminar"> Cancel </button>
 
     </div>
@@ -200,27 +245,21 @@ export const feed = () => {
         console.log('hello');
         modalDelete.style.display = 'flex';
     }
-    contenedorPosts.addEventListener('click', () => {
-       console.log('click')
-        openModalDelete();
-    });
-  const openDelete = modalDelete.querySelector('#botonEliminar')
-  if(openDelete) { 
-     openDelete.addEventListener('click', () => {openModalDelete()});
     
-  }
-  
- 
-  
-    const aceptarEliminar = modalDelete.querySelector('#Eliminar');
-    if (aceptarEliminar){
-        aceptarEliminar.addEventListener('click', () => { 
-        deletePost().then().catch(error => console.log('fallo la promesa',error));
-        closeModalDelete()});
-    }
+
+     
+    const aceptarEliminar = contenedorPosts.querySelectorAll('.boton-aceptar');
+      aceptarEliminar.forEach(btn => { 
+        console.log(aceptarEliminar)
+        btn.addEventListener('click', (e) => {
+       /*funcion delete*/ 
+            
+        });
+    
+});
     const closeDelete = modalDelete.querySelector('#botonCancelarEliminar'); //no se puede usar getElementById porque aun no existe
-    if (closeDelete) 
-    { closeDelete.addEventListener('click', () => { closeModalDelete() });
+    if (closeDelete) {
+        closeDelete.addEventListener('click', () => { closeModalDelete() });
     }
 
 
