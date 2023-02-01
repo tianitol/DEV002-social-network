@@ -214,7 +214,8 @@ export const feed = () => {
   
     const aceptarEliminar = modalDelete.querySelector('#Eliminar');
     if (aceptarEliminar){
-        aceptarEliminar.addEventListener('click', () => { deletePost();
+        aceptarEliminar.addEventListener('click', () => { 
+        deletePost().then().catch(error => console.log('fallo la promesa',error));
         closeModalDelete()});
     }
     const closeDelete = modalDelete.querySelector('#botonCancelarEliminar'); //no se puede usar getElementById porque aun no existe
