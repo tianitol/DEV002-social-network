@@ -71,7 +71,7 @@ if (signupForm) {
 // SIGN IN
 
 const signinForm = document.getElementById('formularioSI');
-if (signinForm) {
+if (signinForm) { console.log('prueba');
   signinForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const emailInput = document.getElementById('idCorreoSI').value;
