@@ -1,4 +1,4 @@
-import { savePosts, getPost, deletePost, obtenerPost, Timestamp } from "../lib/firebase/methodsFirestore.js";
+import { savePosts, getPost, deletePost, obtenerPost, updatePost, Timestamp } from "../lib/firebase/methodsFirestore.js";
 //obtenerPost
 export const feed = () => {
 
@@ -78,7 +78,6 @@ export const feed = () => {
     formulario.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        console.log('click');
         let textPost = document.getElementById('idUserPost').value;
         if (textPost === null || textPost === '' || textPost.length == 0) {
             alert('escriba un mensaje');
@@ -118,7 +117,7 @@ export const feed = () => {
             let posts = item.data()
             // console.log(item.id);
             posts = { ...posts, time: new Date(posts.date.seconds * 1000) }
-            console.log(posts.time);
+            //console.log(posts.time);
             const dateTime = getFecha(posts.time); /* trae la fecha como un timestamp, new Date lo convierte a fecha completa en inglés y con la función getFecha convertimos a formato d/m/y h:m */
 
 
@@ -183,7 +182,6 @@ export const feed = () => {
 
             //----------------------ELIMINACIÓN DE UN POST SEGÚN ID DEL DOCUMENTO---------------------------------------
             btnEliminar.addEventListener('click', async () => {
-                console.log('click')
                 const eliminar = confirm('Do you want to delete this message?');
                 if (eliminar) {
                     if (eliminar) {
@@ -191,12 +189,12 @@ export const feed = () => {
                         let idPost = '';
                         if (item.id) {
                             idPost = item.id;
-                            console.log(idPost);
+                            //console.log(idPost);
                         }
                         // deletePost(idPost).then(console.log(deletePost(idPost))).catch(); then resuelve de forma asíncrona y el try(síncrono) se le pone el await(hasta que se resuelva no pasa el código a siguientes instrucciones) para resolverlo
                         try {
                             await deletePost(idPost,);
-                            alert('eliminado con éxito');
+                            alert('el post ha sido eliminado');
 
 
                         } catch (error) {
@@ -207,7 +205,6 @@ export const feed = () => {
                     }
                 };
             });
-
 
             //----------------------EDICIÓN DE UN POST SEGÚN ID DEL DOCUMENTO---------------------------------------
             btnEditar.addEventListener('click', async () => {
@@ -225,11 +222,15 @@ export const feed = () => {
                         }
                         // deletePost(idPost).then(console.log(deletePost(idPost))).catch(); then resuelve de forma asíncrona y el try(síncrono) se le pone el await(hasta que se resuelva no pasa el código a siguientes instrucciones) para resolverlo
                         try {
-                            await udpDatePost(idPost,);
+                            await updatePost(idPost, {
+                                 "descripcion": textPostEdit,
+                                 "date": Timestamp.fromDate(new Date()),
+                                });
                             alert('editado con éxito');
 
 
                         } catch (error) {
+                            console.log(error)
                             alert('error al editar');
                         }
                         // console.log(deletePost(idPost));

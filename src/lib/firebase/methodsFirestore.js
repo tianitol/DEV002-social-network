@@ -13,9 +13,8 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 
-import { getFirestore, collection, getDocs, Timestamp, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-// import { async } from "regenerator-runtime";
-export { Timestamp };
+import { getFirestore, collection, getDocs, Timestamp, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+export {Timestamp} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
@@ -55,7 +54,7 @@ export const deletePost = async (id) => await deleteDoc(doc(db, 'posts', id));
 
 //------------------------------Editando post-----------------------------
  //export const udpDatePost = async (id) => await updateDoc(doc(db, 'post', id))
- export const udpDatePost = async (id, newFile ) => await updateDoc(doc(db, 'posts', id), newFile)
+ export const updatePost = async (id, newFile ) => await updateDoc(doc(db, 'posts', id), newFile)
 
 
 /* newFile debe ser el objeto que tengo que actualizar:
