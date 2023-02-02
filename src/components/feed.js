@@ -1,4 +1,5 @@
-import { savePosts, getPost, deletePost } from "../lib/firebase/methodsFirestore.js";
+import { savePosts, getPost, deletePost, obtenerPost, Timestamp } from "../lib/firebase/methodsFirestore.js";
+//obtenerPost
 export const feed = () => {
 
     const feedSection = document.createElement('section');
@@ -85,6 +86,7 @@ export const feed = () => {
         }
         else {
             savePosts(textPost).then().catch(error => console.log("fallo la promesa para postear", error));
+
             textPost = '';
             alert('tu post ha sido publicado');
             // unsub(textPost).then(result => console.log(result)).catch(error => console.log("fallo la promesa mostrar en tiempo real los posts existentes", error));
@@ -112,14 +114,16 @@ export const feed = () => {
 
     // savePosts(textoUser.value).then().catch(error => console.log("fallo la promesa para postear", error));
 
-
-    // postsRef()
     getPost(postsCollection => {
         contenedorPosts.innerHTML = '';
         postsCollection.forEach((item) => { /*para traer los posts de mi colección */
 
-            const posts = item.data();
-            //console.log(posts);
+            let posts = item.data()
+            posts = { ...posts, time: new Date(posts.date.seconds * 1000) }
+
+            const dateTime = getFecha(posts.time);
+            
+            //console.log(dateTime);
             //console.log(posts["fecha"]);
             const postCreado = document.createElement('div');
             postCreado.className = 'post-div';
@@ -170,21 +174,49 @@ export const feed = () => {
             divParteInferior.innerHTML = `
         
              <h3 class = "descripcion-post"> ${posts["descripcion"]}</h3> 
-             <h4 class = "fecha-post">${posts.date}</h4> 
-          
+            <!-- <h4 class = "fecha-post">${new Date(Date.now())}</h4> -->
+            <h4 class = "fecha-post">${dateTime}</h4>
+
          `;
+
+            // console.log(Date.now());
+            // var dateTodayServer = new Date(Date.now());
+            // console.log(dateTodayServer);
+            //  Timestamp.fromDate(new Date());   
+            //  console.log(Timestamp.fromDate(new Date()));
 
             contenedorPosts.append(postCreado);
 
-            if (btnEliminar) {
-                btnEliminar.addEventListener('click', () => {
-                    console.log('click')
-                    openModalDelete();
-                    
+            //if (btnEliminar) {
+            btnEliminar.addEventListener('click', async () => {
+                console.log('click')
+                //openModalDelete();
+                const eliminar = confirm('Do you want to delete this message?');
+                if (eliminar) {
+                    if (eliminar) {
+                        // obtenerPost(item.id).then(console.log(item.id)).catch();
+                        let idPost = '';
+                        if (item.id) {
+                            idPost = item.id;
+                            console.log(idPost);
+                        }
+                        // deletePost(idPost).then(console.log(deletePost(idPost))).catch();
+                        try {
+                            await deletePost(idPost);
+                            alert('eliminado con éxito');
 
-                });
-            };
-        });
+
+                        } catch (error) {
+                            alert('error al eliminar');
+                        }
+                        // console.log(deletePost(idPost));
+
+
+                    }
+                };
+            });
+        })
+
     })
     // .catch(error => console.log("fallo la promesa de firestore", error))
 
@@ -194,14 +226,15 @@ export const feed = () => {
     modalLogOut.id = 'idModalLogout';
 
     modalLogOut.innerHTML = `
-       <div class="modal-container" id="modalContainerLogout">
-           <h3 class=" texto-delete">Log out of Dad's Power?</h3>
-           <button type="button" class ="boton-aceptar" id="botonAceptar"> Ok </button>
-           <button type="button" class ="boton-cancelar" id="botonCancelar"> Cancel </button>
+        <div class="modal-container" id="modalContainerLogout">
+            <h3 class = ""titulo3>Log out of Dad's Power?</h3>
+            <button type="button" class ="aceptar-logout" id="botonAceptar"> Ok </button>
+            <button type="button" class ="close-modalLogout" id="botonCancelar"> Cancel </button>
 
        </div>
       `;
     feedSection.appendChild(modalLogOut);
+
 
     const closeModal = () => {
         // console.log('cerrando');
@@ -222,49 +255,141 @@ export const feed = () => {
 
     // MODAL ELIMINAR
 
+
+
+
+
+    //     const modalDelete = document.createElement('div');
+    //     modalDelete.className = 'modal';
+    //     modalDelete.id = 'idModalDelete';
+    //     modalDelete.innerHTML = `
+    //  <div class="modal-container" id="modalContainerDelete">
+    //      <h3>Do you want to delete?</h3>
+    //      <button type="button" class ="aceptar-logout" id="botonAceptarEliminar"> Ok </button>
+    //      <button type="button" class ="close-modalLogout" id="botonCancelarEliminar"> Cancel </button>
+    //  </div>
+    //  `;
+
+
+
+
+
+
     const modalDelete = document.createElement('div');
     modalDelete.className = 'modal';
     modalDelete.id = 'idModalDelete';
 
-    modalDelete.innerHTML = `
-    <div class="modal-container" id="modalContainerDelete">
-        <h3 class="texto-delete">Do you want to delete?</h3>
-        <button type="button" class ="boton-aceptar" ' id="Eliminar"> Ok </button>
-        <button type="button" class ="boton-cancelar" id="botonCancelarEliminar"> Cancel </button>
+    const modalDeleteContainer = document.createElement('div');
+    modalDeleteContainer.className = 'modal-container';
+    modalDeleteContainer.id = 'modalContainerDelete';
+    modalDelete.appendChild(modalDeleteContainer);
 
-    </div>
-    `;
+    const h3 = document.createElement('h3')
+    h3.textContent = 'Do you want to delete?';
+    h3.className = 'h3modalDelete';
+    modalDeleteContainer.appendChild(h3);
+
+    const btnAceptarEliminar = document.createElement('button');
+    btnAceptarEliminar.type = 'button';
+    btnAceptarEliminar.className = 'aceptar-logout';
+    btnAceptarEliminar.id = 'botonAceptarEliminar';
+    btnAceptarEliminar.textContent = 'Ok';
+    modalDeleteContainer.appendChild(btnAceptarEliminar);
+
+    const btnCancelarEliminar = document.createElement('button');
+    btnCancelarEliminar.type = 'button';
+    btnCancelarEliminar.className = 'aceptar-logout';
+    btnCancelarEliminar.id = 'botonCancelarEliminar';
+    btnCancelarEliminar.textContent = 'Cancel';
+    btnCancelarEliminar.appendChild(btnAceptarEliminar);
+
+
+
     feedSection.appendChild(modalDelete);
+
+
+
+
+
+
+    const borrrarPost = contenedorPosts.querySelectorAll(".boton-eliminar");
+    borrrarPost.forEach((btn) => {
+        console.log('holis');
+        btn.addEventListener('click', ({ target: { post } }) => {
+            const result = confirm("¿Estás seguro de eliminar la publicación?")
+            if (result === false) { }
+            else { deletePost(post.id) }
+        })
+    });
+
+
+
+
+
+
 
     const closeModalDelete = () => {
         console.log('cerrando');
         modalDelete.style.display = 'none';
     }
-
     const openModalDelete = () => {
         console.log('hello');
         modalDelete.style.display = 'flex';
     }
-    
 
-     
-    const aceptarEliminar = contenedorPosts.querySelectorAll('.boton-aceptar');
-      aceptarEliminar.forEach(btn => { 
-        console.log(aceptarEliminar)
-        btn.addEventListener('click', (e) => {
-       /*funcion delete*/ 
-            
+
+
+
+
+    // const aceptarEliminar = contenedorPosts.querySelectorAll('.boton-aceptar');
+    // aceptarEliminar.forEach(btn => {
+
+    // })
+    // if (aceptarEliminar) {
+    //     aceptarEliminar.addEventListener('click', () => {
+
+    //         deletePost()
+    //         .then().catch(error => console.log('falló la promesa para eliminar', error));
+
+    //         closeModalDelete()
+    //     });
+    // }
+    // const closeDelete = modalDelete.querySelector('#botonCancelarEliminar'); //no se puede usar getElementById porque aun no existe
+    // if (closeDelete) {
+    //     closeDelete.addEventListener('click', () => { closeModalDelete() });
+    // }
+
+
+    // contenedorPosts.addEventListener('click', () => {
+    //     openModalDelete()});
+
+    //const openDelete = document.getElementById('botonEliminar')
+    // if (openDelete) {
+    //  openDelete.addEventListener('click', () => { openModalDelete() });
+    // }
+
+
+    const aceptarElimiar = modalDelete.querySelector('#botonAceptar');
+    if (aceptarElimiar) {
+        aceptarElimiar.addEventListener('click', () => {
+            /*FUNCION ELIMINAR*/
         });
-    
-});
-    const closeDelete = modalDelete.querySelector('#botonCancelarEliminar'); //no se puede usar getElementById porque aun no existe
+    }
+    const closeDelete = modalDelete.querySelector('#botonCancelar'); //no se puede usar getElementById porque aun no existe
     if (closeDelete) {
         closeDelete.addEventListener('click', () => { closeModalDelete() });
     }
-
-
     return feedSection;
 
 }
 
 
+const getFecha = (dateTime) =>{
+    const year = dateTime.getFullYear();
+    const month = dateTime.getMonth() + 1 < 10 ? `0${dateTime.getMonth() + 1}` : dateTime.getMonth() + 1;
+    const day = dateTime.getDate() < 10 ? `0${dateTime.getDate()}` : dateTime.getDate();
+    const hour = dateTime.getHours();
+    const minutes = dateTime.getMinutes();
+
+    return `${day}/${month}/${year} ${hour}:${minutes}`;
+}

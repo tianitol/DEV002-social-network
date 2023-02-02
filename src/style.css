@@ -607,6 +607,7 @@ input::placeholder {
   right: 8vh;
   color: #222222;
   cursor: pointer;
+  
 }
 
 .boton-eliminar {
@@ -623,9 +624,10 @@ input::placeholder {
   border: none;
   color: #FA79AA;
   background-color: transparent;
-  position: absolute;
-  margin-top: 260px;
-  right: 4vh;
+  position:relative;
+  left: 15vh;
+  top: 5vh;
+  /* right: 4vh; */
   font-size: 10px;
   font-family: 'roboto, sans-serif';
   cursor: pointer;
@@ -753,16 +755,7 @@ h4.fecha-post {
 
 }
 
-.texto-delete {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 21px;
-  text-align: center;
-  margin-top: 35px;
 
-
-}
 
 /*--------------------------------------------Haciendo Responsive ------------------------------------*/
 @media (min-width: 750px ) {
@@ -923,7 +916,7 @@ h4.fecha-post {
   
   }
   
-  .boton-aceptar {
+  .aceptar-logout {
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(8px);
     border-bottom-left-radius: 15px;
@@ -931,14 +924,14 @@ h4.fecha-post {
     height: 45px;
     border: transparent;
     position: relative;
-    top: 95px;
+    top: 113px;
     left: -82px;
     color: rgba(201, 23, 23, 1);
     border: solid 1px rgba(82, 82, 92, 0.5);
     cursor: pointer;
   }
   
-  .boton-cancelar {
+  .close-modalLogout{
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(8px);
     border-bottom-right-radius: 15px;
@@ -946,7 +939,7 @@ h4.fecha-post {
     height: 45px;
     border: solid 1px rgba(82, 82, 92, 0.5);
     position: relative;
-    top: 50px;
+    top: 68px;
     left: 82px;
     color: rgba(82, 82, 92, 1);
     cursor: pointer;
@@ -979,12 +972,23 @@ h4.fecha-post {
     align-items: center;
   }
   
-
-  .tituloh2register-login {
+  
+  .titulo3 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    margin-top: 50px;
+    color: rgba(82, 82, 92, 1);
+  
+  
+  }
+  .tituloh2register-login{
     font-family: 'Fredoka One';
     width: 300px;
     height: 47px;
-    text-align: center;
+    text-align: right;
     font-style: normal;
     font-weight: 400;
     font-size: 35px;
@@ -993,8 +997,7 @@ h4.fecha-post {
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     margin: 0;
     position: absolute;
-    top: 70px;
-    left: 520px;
+    top: 50px;
+    left: 470px;
   }
-  
 }
