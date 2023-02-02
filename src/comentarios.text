@@ -271,3 +271,57 @@ h4.fecha-post {
 const logoutButton = document.createElement('button');
     logoutButton.id = 'idlogoutButton'
     logoutButton.innerHTML = '<i class="fa-solid fa-arrow-right-from-bracket fa-2xl"></i>';
+
+
+
+
+
+
+
+
+
+
+------PROBANDO CÓDIGO PARA ELIMINAR POST-------------------------------------
+     const borrrarPost = contenedorPosts.querySelectorAll(".boton-eliminar");
+    borrrarPost.forEach((btn) => {
+        console.log('holis');
+        btn.addEventListener('click', ({ target: { post } }) => {
+            const result = confirm("¿Estás seguro de eliminar la publicación?")
+            if (result === false) { }
+            else { deletePost(post.id) }
+        })
+    });
+
+
+
+
+
+
+
+
+    const aceptarEliminar = contenedorPosts.querySelectorAll('.boton-aceptar');
+    aceptarEliminar.forEach(btn => {
+
+    })
+    if (aceptarEliminar) {
+        aceptarEliminar.addEventListener('click', () => {
+
+            deletePost()
+            .then().catch(error => console.log('falló la promesa para eliminar', error));
+
+            closeModalDelete()
+        });
+    }
+    const closeDelete = modalDelete.querySelector('#botonCancelarEliminar'); //no se puede usar getElementById porque aun no existe
+    if (closeDelete) {
+        closeDelete.addEventListener('click', () => { closeModalDelete() });
+    }
+
+
+    contenedorPosts.addEventListener('click', () => {
+        openModalDelete()});
+
+    const openDelete = document.getElementById('botonEliminar')
+    if (openDelete) {
+     openDelete.addEventListener('click', () => { openModalDelete() });
+    }
