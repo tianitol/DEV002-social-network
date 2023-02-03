@@ -211,15 +211,18 @@ export const feed = () => {
             btnEditar.addEventListener('click', async () => {
                 console.log('click')
                 let textPostEdit = document.getElementById('idUserPost').value;
-
+                
+                 
                 const editar = confirm('Do you want to edit this message?');
                 if (editar) {
                     if (editar) {
+                        textPostEdit = item.data().descripcion;
                         // obtenerPost(item.id).then(console.log(item.id)).catch();
                         let idPost = '';
                         if (item.id) {
                             idPost = item.id;
                             console.log(idPost);
+                            console.log(item.data().descripcion)
                         }
                         // deletePost(idPost).then(console.log(deletePost(idPost))).catch(); then resuelve de forma asíncrona y el try(síncrono) se le pone el await(hasta que se resuelva no pasa el código a siguientes instrucciones) para resolverlo
                         try {
