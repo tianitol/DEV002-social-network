@@ -1,5 +1,5 @@
 // Import the functions of Firestore for posting
-import { auth } from "./init.js";
+import { auth } from './init.js';
 import { onNavigate } from "./js/routes.js";
 import { login, register, loginWithGoogle, verificarSendingMail, logOut } from "./lib/firebase/methodsAuth.js";
 import { saveUsers } from "./lib/firebase/methodsFirestore.js";
@@ -37,12 +37,18 @@ if (signupForm) {
       signupEmail = '';
     }
     const signupPassword = document.getElementById('idContraseñaSU').value;
+
+    //----obteniendo los datos del usuario ya registrado-----dentro del SIGN UP---
+    
     const usuarioRegistrado = document.getElementById('idUsername').value;
-    saveUsers(usuarioRegistrado).then().catch(error => console.log('fallo la promesa para agregar usuario', error));
+    //saveUsers(usuarioRegistrado).then().catch(error => console.log('fallo la promesa para agregar usuario', error));
+   
     // función de Firebase para registrar un usuario
     try {
       const resultado = await register(auth, valorCorreo, signupPassword);
       verificarSendingMail(auth)
+
+      saveUsers(usuarioRegistrado, auth.currentUser.uid, auth.currentUser.email).then().catch(error => console.log('fallo la promesa para agregar usuario', error));
       console.log(resultado);
       signupForm.reset();
       signupForm.querySelector('.message-error-email').innerHTML = '';

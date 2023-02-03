@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { app, 
-  getFirestore, collection, getDocs, Timestamp, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDoc, updateDoc,
+  getFirestore, collection, Timestamp, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDoc, updateDoc,
  } from "../../init.js";
 
 // con db obtenenemos la data base en firestore desde nuestra appa
@@ -10,13 +10,18 @@ const db = getFirestore(app);
 
 //Obtener data de un determinado post(para obtener el id del post y usarlo en la eliminación y actualización)
 export const obtenerPost = async (id) => await getDoc(doc(db, 'posts', id));
+export const obtenerUsuario = async (id) => await getDoc(doc(db, 'users', id));
 
+export const getUsuarios = (callback) => {
+  const qs = query(collection(db, 'users'));
+  onSnapshot(qs, (callback))
+}
 //---------------Generando nuevos post de forma dinámica----------------
 
 //utilizando método addDoc de firestore con onSnapshot(actualización en tiempo real)
 
-export const savePosts = async (descripcion) => await addDoc(collection(db, 'posts'), { descripcion, date: Timestamp.fromDate(new Date())}); /*se guarda la info con la hora de firebase */ 
-export const saveUsers = async (usuario) => await addDoc(collection(db, 'users'), { usuario });
+export const savePosts = async (descripcion, idUsuarioLogueado, nombreUsuario) => await addDoc(collection(db, 'posts'), { descripcion, date: Timestamp.fromDate(new Date()), idUsuarioLogueado, nombreUsuario}); /*se guarda la info con la hora de firebase */ 
+export const saveUsers = async (usuario, idUsuario, emailUsuario) => await addDoc(collection(db, 'users'), { usuario, idUsuario, emailUsuario });
 
 export const getPost = (callback) => {
   const qs = query(collection(db, 'posts'), orderBy('date', 'desc'));
