@@ -1,16 +1,20 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, sendEmailVerification } from '../../init'
+
+const user = auth.currentUser;
 
 
 // construyendo un observador de Auth
 export const observador = (auth) => {
     onAuthStateChanged(auth, (user) => {
-       
-        if (user) {
+       console.log(user);
+        if (user !==null) {
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/firebase.User
-            var email = user.email;
+            const email = user.email;
+            const displayName = user.displayName;
             const uid = user.uid; // código único del usuario asignado por Firebase
 
+            
             // El usuario se encuentra logueado
             console.log('auth:sign in');
 

@@ -1,4 +1,5 @@
-import { savePosts, getPost, deletePost, obtenerPost, updatePost, Timestamp } from "../lib/firebase/methodsFirestore.js";
+import { savePosts, getPost, deletePost, obtenerPost, updatePost } from "../lib/firebase/methodsFirestore.js";
+import { Timestamp } from "../init.js";
 //obtenerPost
 export const feed = () => {
 
@@ -139,7 +140,9 @@ export const feed = () => {
             userPost.className = 'titulo-post';
             userPost.innerHTML = `${posts["autor"]}`; //aquí debe ir enlazado al usuario registrado/logueado
             divParteSuperior.appendChild(userPost);
+            //console.log(posts);
 
+            obtenerPost(item.id).then(console.log(item._userDataWriter)).catch();
 
             const btnLike = document.createElement('button');
             btnLike.type = 'button';
@@ -220,6 +223,11 @@ export const feed = () => {
                 console.log('click')
                 //textPostEdit.innerText = item.data().descripcion;
                 descripcionPost.contentEditable = "true";
+                descripcionPost.style.backgroundColor = '#97cbdc';
+                descripcionPost.style.border = 'dotted';
+                descripcionPost.focus();
+
+
                 botonEnviarEditar.style.display = 'flex';  
            });
 
@@ -254,7 +262,18 @@ export const feed = () => {
             });
 
 
-            //----------------------------------------------------------------------------------------------------
+            //----------------------INTERACCIÓN LIKES--------------------------------------
+
+
+
+
+
+
+
+
+
+
+
 
 
         });

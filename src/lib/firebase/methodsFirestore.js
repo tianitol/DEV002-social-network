@@ -1,25 +1,11 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+import { app, 
+  getFirestore, collection, getDocs, Timestamp, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDoc, updateDoc,
+ } from "../../init.js";
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyAQKOcN9jLUCxn2zXz-mkJKV-BaeFjcKvo',
-  authDomain: 'redsocialnvj-47db7.firebaseapp.com',
-  projectId: 'redsocialnvj-47db7',
-  storageBucket: 'redsocialnvj-47db7.appspot.com',
-  messagingSenderId: '161909447570',
-  appId: '1:161909447570:web:b126b68b577520ab947f4b',
-};
-
-export const app = initializeApp(firebaseConfig);
-
-
-import { getFirestore, collection, getDocs, Timestamp, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-export {Timestamp} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-// Initialize Cloud Firestore and get a reference to the service
+// con db obtenenemos la data base en firestore desde nuestra appa
 const db = getFirestore(app);
 
-
-// Obtener la data desde el firestore
 //export const postsRef = async (id) => await getDocs(collection(db, 'posts', id)) 
 
 //Obtener data de un determinado post(para obtener el id del post y usarlo en la eliminación y actualización)
@@ -56,10 +42,10 @@ export const deletePost = async (id) => await deleteDoc(doc(db, 'posts', id));
  //export const udpDatePost = async (id) => await updateDoc(doc(db, 'post', id))
  export const updatePost = async (id, newFile ) => await updateDoc(doc(db, 'posts', id), newFile)
 
-
 /* newFile debe ser el objeto que tengo que actualizar:
 { descripcion, date: Timestamp.fromDate(new Date())}
 */
+
 
 
 //------------------Agregando interacciones, me gusta <3 --------------------

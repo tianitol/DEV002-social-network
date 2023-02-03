@@ -1,11 +1,9 @@
 // Import the functions of Firestore for posting
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+import { auth } from "./init.js";
 import { onNavigate } from "./js/routes.js";
 import { login, register, loginWithGoogle, verificarSendingMail, logOut } from "./lib/firebase/methodsAuth.js";
 import { saveUsers } from "./lib/firebase/methodsFirestore.js";
 
-
-const auth = getAuth();
 
 /*..................................AUTH CONTROLLER.................................*/
 
