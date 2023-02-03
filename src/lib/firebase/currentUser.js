@@ -8,7 +8,6 @@ const auth = getAuth();
             usuarioActual.email = user.email;
             usuarioActual.uid = user.uid;
             usuarioActual.displayName = user.displayName;
-            usuarioActual.petName = user.petName;
             usuarioActual.username = user.username;
         }
     })

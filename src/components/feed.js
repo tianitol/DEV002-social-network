@@ -1,5 +1,5 @@
 import { savePosts, getPost, deletePost, obtenerPost, updatePost } from "../lib/firebase/methodsFirestore.js";
-import { Timestamp } from "../init.js";
+import { Timestamp, auth } from "../init.js";
 //obtenerPost
 export const feed = () => {
 
@@ -142,7 +142,9 @@ export const feed = () => {
             divParteSuperior.appendChild(userPost);
             //console.log(posts);
 
-            obtenerPost(item.id).then(console.log(item._userDataWriter)).catch();
+           // obtenerPost(item.id).then(console.log(item._userDataWriter)).catch();
+//console.log(auth);
+console.log(auth.currentUser.displayName); //recoge el nombre solo si es logueado con google
 
             const btnLike = document.createElement('button');
             btnLike.type = 'button';

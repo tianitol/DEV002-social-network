@@ -42,6 +42,7 @@ if (signupForm) {
     // función de Firebase para registrar un usuario
     try {
       const resultado = await register(auth, valorCorreo, signupPassword);
+      //funcion para ctualizar el usuario con update profile
       verificarSendingMail(auth)
       console.log(resultado);
       signupForm.reset();
