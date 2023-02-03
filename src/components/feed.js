@@ -1,4 +1,4 @@
-import { savePosts, getPost, deletePost, obtenerPost, updatePost } from "../lib/firebase/methodsFirestore.js";
+import { savePosts, getPost, deletePost, obtenerPost, updatePost, obtenerUsuario, getUsuarios } from "../lib/firebase/methodsFirestore.js";
 import { Timestamp, auth } from "../init.js";
 //obtenerPost
 export const feed = () => {
@@ -76,6 +76,8 @@ export const feed = () => {
     publicarPostButton.textContent = 'Post';
     formulario.appendChild(publicarPostButton);
 
+    let usuarioActual = '';
+
     formulario.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -84,10 +86,29 @@ export const feed = () => {
             alert('escriba un mensaje');
         }
         else {
-            savePosts(textPost).then().catch(error => console.log("fallo la promesa para postear", error));
+           getUsuarios(usersCollection => {
+            usersCollection.forEach((itemUser) => {
 
+                let usuarios = itemUser.data();
+                console.log(usuarios);
+                if(auth.currentUser.uid === usuarios.idUsuario){
+                    usuarioActual = auth.currentUser.uid;
+                    const usuarioLogeado = usuarios.usuario
+                    savePosts(textPost, auth.currentUser.uid, usuarioLogeado).then().catch(error => console.log("fallo la promesa para postear", error));
+                    alert('tu post ha sido publicado');
+                    console.log(usuarioActual);
+                }
+                else {}
+
+               
+                
+                
+            
+            });
             textPost = '';
-            alert('tu post ha sido publicado');
+           })
+            
+            
         }
 
         formulario.reset();
