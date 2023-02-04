@@ -1,11 +1,11 @@
 import { savePosts, getPost, deletePost, obtenerPost, updatePost, obtenerUsuario, getUsuarios } from "../lib/firebase/methodsFirestore.js";
 import { Timestamp, auth } from "../init.js";
+import { onNavigate } from "../js/routes.js";
 //obtenerPost
 export const feed = () => {
 
     const feedSection = document.createElement('section');
     feedSection.className = 'section-feed';
-
     const containerHeader = document.createElement('div');
     containerHeader.className = 'feed-container-header';
 
@@ -24,7 +24,7 @@ export const feed = () => {
 
     const avatarImg = document.createElement('img');
     avatarImg.className = 'avatarImg';
-    avatarImg.src = '/components/imagen/avatar3.png';
+    avatarImg.src = '/components/imagen/avatar.png';
     perfil.appendChild(avatarImg);
 
     containerHeader.appendChild(perfil);
@@ -91,14 +91,18 @@ export const feed = () => {
 
                 let usuarios = itemUser.data();
                 console.log(usuarios);
-                if(auth.currentUser.uid === usuarios.idUsuario){
+                if (auth.currentUser == null) {
+                    alert('debes iniciar sesión para postear algo')
+                }
+               
+                else if  (auth.currentUser.uid === usuarios.idUsuario){
                     usuarioActual = auth.currentUser.uid;
                     const usuarioLogeado = usuarios.usuario
                     savePosts(textPost, auth.currentUser.uid, usuarioLogeado).then().catch(error => console.log("fallo la promesa para postear", error));
                     alert('tu post ha sido publicado');
                     console.log(usuarioActual);
                 }
-                else {}
+                else{}
 
                
                 
@@ -127,7 +131,39 @@ export const feed = () => {
 
     //----------------------MOSTRANDO POSTS EXISTENTES-----------------------------
 
+    
     const contenedorPosts = document.createElement('div');
+
+
+//----SE INTENTA BLOQUEAR EL MURO, VISIBLE SOLO PARA USUARIOS LOGUEADOS----
+    // se crea un boton para volver al inicio con onNavigate dandole el click
+//     const botonHome = document.createElement('button');
+//     botonHome.type = 'button';
+//     botonHome.className = 'home-btn';
+//     botonHome.textContent = 'go SignIn';
+//     botonHome.style.display = 'none';
+//     feedSection.appendChild(botonHome);
+
+//     if(auth.currentUser !== null) {
+//        contenedorPosts.style.display = 'block';
+//        createContainerButtons.style.display = 'block';
+
+//     }
+//     else {
+//         contenedorPosts.style.display = 'none';
+//         createContainerButtons.style.display = 'none';
+
+//         alert('debes iniciar sesión');
+//         botonHome.style.display = 'flex';
+
+//         botonHome.addEventListener('click', () => {
+//             console.log('yo, botonHome, hice click');
+// onNavigate('/login');
+// botonHome.style.display = 'none';
+//         })
+
+//     };
+
     contenedorPosts.className = 'contenedor-posts';
     feedSection.appendChild(contenedorPosts);
 
@@ -159,7 +195,7 @@ export const feed = () => {
             //botones de parte superior
             const userPost = document.createElement('h2');
             userPost.className = 'titulo-post';
-            userPost.innerHTML = `${posts["autor"]}`; //aquí debe ir enlazado al usuario registrado/logueado
+            userPost.innerHTML = `${posts["nombreUsuario"]}`; //aquí debe ir enlazado al usuario registrado/logueado
             divParteSuperior.appendChild(userPost);
             //console.log(posts);
 
@@ -339,7 +375,6 @@ export const feed = () => {
     if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
 
 
-   
     return feedSection;
 
 }

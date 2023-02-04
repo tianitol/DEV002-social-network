@@ -6,6 +6,7 @@ const user = auth.currentUser;
 // construyendo un observador de Auth
 export const observador = (auth) => {
     onAuthStateChanged(auth, (user) => {
+
        console.log(user);
         if (user !==null) {
             // User is signed in, see docs for a list of available properties
@@ -30,7 +31,7 @@ export const observador = (auth) => {
             console.log('auth: log out');
         }
     });
-}
+};
 
 
 
@@ -67,7 +68,7 @@ export const login = (auth, email, password) => {
         auth.signOut().then(() => {
             console.log('sign out');
         });
-    }
+    };
 
 
     export const loginWithGoogle = (auth) => {
@@ -79,8 +80,8 @@ export const login = (auth, email, password) => {
         .then(({ user }) => resolve(user))
         .catch(error => reject(error))
               
-        })
-    }
+        });
+    };
 
 
 
