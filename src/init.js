@@ -4,6 +4,7 @@ import { getFirestore, collection, getDocs, Timestamp, addDoc, query, orderBy, o
 
 import config from "./lib/firebase/config.js";
 
+
  const app = initializeApp(config);
  const auth = getAuth();
 

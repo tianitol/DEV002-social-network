@@ -1,5 +1,6 @@
 import { savePosts, getPost, deletePost, obtenerPost, updatePost, obtenerUsuario, getUsuarios } from "../lib/firebase/methodsFirestore.js";
 import { Timestamp, auth } from "../init.js";
+import { onNavigate } from "../js/routes.js";
 //obtenerPost
 export const feed = () => {
 
