@@ -683,7 +683,7 @@ h4.fecha-post {
   color: #d6d6db;
   text-shadow: 1px 0 1px #ffffff;
   border: none;
-  left: 290px;
+  left: 275px;
   top: 5px;
   cursor: pointer;
 
@@ -858,7 +858,7 @@ h4.fecha-post {
     color: #d6d6db;
     text-shadow: 1px 0 1px #ffffff;
     border: none;
-    left: 1190px;
+    left: 1175px;
     top: -25px;
     cursor: pointer;
   
@@ -964,6 +964,21 @@ h4.fecha-post {
     left: 500px;
     top: 140px;
     border-radius: 30px;
+  }
+
+  .post-btn-save{
+    position: relative;
+    background: #3b5998;
+    border-bottom-right-radius: 8px;
+    width: 50px;
+    height: 20px;
+    color: #d6d6db;
+    text-shadow: 1px 0 1px #ffffff;
+    border: none;
+    left: 1027px;
+    text-align: center;
+    top: 68px;
+    cursor: pointer;
   }
   
   .form {

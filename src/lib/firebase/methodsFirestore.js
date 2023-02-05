@@ -13,7 +13,8 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 
-import { getFirestore, collection, getDocs, Timestamp, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, Timestamp, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDoc, updateDoc, userArray,userArrayRemove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+import { async } from "regenerator-runtime";
 export {Timestamp} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
@@ -37,16 +38,6 @@ export const getPost = (callback) => {
   onSnapshot(qs, (callback))
 }
 
-// mostrar tiempo  del post 
-// const date = new Date().toLocaleDateString('es-es', {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'})
-
-//-----------------------------Eliminando post---------------------------
-
-
-
-// mostrar tiempo  del post 
-// const date = new Date().toLocaleDateString('es-es', {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'})
-
 //-----------------------------Eliminando post---------------------------
 export const deletePost = async (id) => await deleteDoc(doc(db, 'posts', id)); 
 
@@ -67,10 +58,10 @@ export const deletePost = async (id) => await deleteDoc(doc(db, 'posts', id));
 // (click en boton <3 sea un push con if(UserID no se encuentre en el array) else(si UserID está presente) se borre del array)
 
 
+export const likePost = async (id, likes , userLike)=> await updateDoc(doc(db, 'posts' , id), {contadorLikes: likes , userLike: userArray(userLike)} )
 
 
-
-
+export const dislikePost = async (id, likes ,userLike) => await updateDoc(doc(db , 'posts', id), {contadorLikes: likes , userLike: userArrayRemove(userLike) })
 
 
 

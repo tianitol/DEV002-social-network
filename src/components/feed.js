@@ -1,4 +1,4 @@
-import { savePosts, getPost, deletePost, obtenerPost, updatePost, Timestamp } from "../lib/firebase/methodsFirestore.js";
+import { savePosts, getPost, deletePost, updatePost, Timestamp } from "../lib/firebase/methodsFirestore.js";
 //obtenerPost
 export const feed = () => {
 
@@ -167,16 +167,15 @@ export const feed = () => {
             divParteInferior.className = 'parte-inferior-post';
             divContainerPost.appendChild(divParteInferior);
 
-            divParteInferior.innerHTML = '';
-            divParteInferior.innerHTML = `
-        
-             <h3 class = "descripcion-post"> ${posts["descripcion"]}</h3> 
-            <h4 class = "fecha-post">${dateTime}</h4>
+            const descripcionPost = document.createElement('h3');
+            descripcionPost.className = 'descripcion-post';
+            descripcionPost.innerHTML = `${posts["descripcion"]}`;
+            divParteInferior.appendChild(descripcionPost);
 
-         `;
-
-            //  console.log(Date.now());
-            //  var dateTodayServer = new Date(Date.now());
+            const fechaPost = document.createElement('h4');
+            fechaPost.className = 'fecha-post';
+            fechaPost.innerHTML = `${dateTime}`;
+            divParteInferior.appendChild(fechaPost);
 
 
             contenedorPosts.append(postCreado);
@@ -207,12 +206,26 @@ export const feed = () => {
                 };
             });
 
-            //----------------------EDICIÓN DE UN POST SEGÚN ID DEL DOCUMENTO---------------------------------------
-            btnEditar.addEventListener('click', async () => {
+            //----------------------EDICIÓN DE UN POST SEGÚN ID DEL DOCUMENTO--------------------------------------
+
+            //--------------botón que aparece para enviar el post editado (en el div de cada post)---------
+            const botonEnviarEditar = document.createElement('button');
+            botonEnviarEditar.type = 'button';
+            botonEnviarEditar.className = 'post-btn-save';
+            botonEnviarEditar.textContent = 'Save';
+            botonEnviarEditar.style.display = 'none';
+            divParteInferior.appendChild(botonEnviarEditar);
+            //----------------------------------------------------------------------------------
+
+            btnEditar.addEventListener('click', () => {
                 console.log('click')
-                let textPostEdit = document.getElementById('idUserPost').value;
-                
-                 
+                alert('Now you can edit your post by clicking on the phrase')
+                //textPostEdit.innerText = item.data().descripcion;
+                descripcionPost.contentEditable = "true";
+                botonEnviarEditar.style.display = 'flex';  
+           });
+
+           botonEnviarEditar.addEventListener('click', async () => {
                 const editar = confirm('Do you want to edit this message?');
                 if (editar) {
                     if (editar) {
@@ -221,26 +234,32 @@ export const feed = () => {
                         let idPost = '';
                         if (item.id) {
                             idPost = item.id;
-                            console.log(idPost);
-                            console.log(item.data().descripcion)
                         }
-                        // deletePost(idPost).then(console.log(deletePost(idPost))).catch(); then resuelve de forma asíncrona y el try(síncrono) se le pone el await(hasta que se resuelva no pasa el código a siguientes instrucciones) para resolverlo
+                        const textoEditado = descripcionPost.textContent;
                         try {
                             await updatePost(idPost, {
-                                 "descripcion": textPostEdit,
+                                 "descripcion": textoEditado,
                                  "date": Timestamp.fromDate(new Date()),
                                 });
+                                botonEnviarEditar.style.display = 'none'; //al dar click en SEND desaparece el boton
                             alert('editado con éxito');
-
-
                         } catch (error) {
-                            console.log(error)
+                            console.log(error);
                             alert('error al editar');
                         }
-                        // console.log(deletePost(idPost));
                     }
                 }
+                //console.log(item.data().descripcion); 
+                /*al consolear se obtiene la descripcion del post original, 
+                y no el texto post editar, ya que onSnapshot es más rápido que 
+                el proceso firestore para almacenar data desde la APP*/
+
             });
+                  btnLike.querySelectorAll('boton-like');
+                  btnLike.addEventListener('click' , ()=> {
+                    console.log('like')
+                  })
+
 
             //----------------------------------------------------------------------------------------------------
 
@@ -286,9 +305,7 @@ export const feed = () => {
     if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
 
 
-
-
-
+   
     return feedSection;
 
 }
