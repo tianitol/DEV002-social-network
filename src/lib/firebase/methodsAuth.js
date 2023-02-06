@@ -15,6 +15,33 @@ const user = auth.currentUser;
 //     return uid;
 // };
 
+// construyendo un observador de Auth
+export const verifiedWithEmail = (auth) => {
+    onAuthStateChanged(auth, (user) => {
+       
+        if (user) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/firebase.User
+            var email = user.email;
+            const uid = user.uid; // código único del usuario asignado por Firebase
+
+            // El usuario se encuentra logueado
+            console.log('auth:sign in');
+
+            var emailVerified = user.emailVerified;
+            if (emailVerified === false) {
+                console.log('Email no verificado');
+            } else {
+                console.log('Email verificado');
+            }
+            // ...
+        } else {
+            // el suusario no se encuentra logueado
+            console.log('auth: log out');
+        }
+    });
+}
+
 
 
 export const verificarSendingMail = (auth) => {

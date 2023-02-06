@@ -3,35 +3,8 @@ import { auth } from './init.js';
 import { onNavigate } from "./js/routes.js";
 import { login, register, loginWithGoogle, verificarSendingMail, logOut } from "./lib/firebase/methodsAuth.js";
 import { saveUsers } from "./lib/firebase/methodsFirestore.js";
-//, observador
-// const user = auth.currentUser;
-// observador (auth, user).then()
-//   if (user !==null) {
-//         // User is signed in, see docs for a list of available properties
-//         // https://firebase.google.com/docs/reference/js/firebase.User
-//         const email = user.email;
-//         const displayName = user.displayName;
-//         const uid = user.uid; // código único del usuario asignado por Firebase
+ 
 
-
-//         // El usuario se encuentra logueado
-//         console.log('auth:sign in');
-
-//             var emailVerified = user.emailVerified;
-//             if (emailVerified === false) {
-//                 console.log('Email no verificado');
-//             } else {
-//                 console.log('Email verificado');
-//             }
-//             // ...
-//         } else {
-//             // el suusario no se encuentra logueado
-//             console.log('auth: log out');
-//         }
-
-// .catch(error){
-// alert('error, no hay usuario')
-// }
 
 
 function validarCorreo(correo) {
