@@ -1,6 +1,6 @@
-import { savePosts, getPost, deletePost, updatePost,  getUsuarios } from "../lib/firebase/methodsFirestore.js";
+import { savePosts, getPost, deletePost, obtenerPost, updatePost, obtenerUsuario, getUsuarios } from "../lib/firebase/methodsFirestore.js";
 import { Timestamp, auth } from "../init.js";
-
+import { onNavigate } from "../js/routes.js";
 //obtenerPost
 export const feed = () => {
 
@@ -286,13 +286,17 @@ export const feed = () => {
 
             btnEditar.addEventListener('click', () => {
                 console.log('click')
-                alert('Now you can edit your post by clicking on the phrase')
                 //textPostEdit.innerText = item.data().descripcion;
                 descripcionPost.contentEditable = "true";
-                botonEnviarEditar.style.display = 'flex';
-            });
+                descripcionPost.style.backgroundColor = '#97cbdc';
+                descripcionPost.style.border = 'dotted';
+                descripcionPost.focus();
 
-            botonEnviarEditar.addEventListener('click', async () => {
+
+                botonEnviarEditar.style.display = 'flex';  
+           });
+
+           botonEnviarEditar.addEventListener('click', async () => {
                 const editar = confirm('Do you want to edit this message?');
                 if (editar) {
                     if (editar) {
@@ -324,9 +328,8 @@ export const feed = () => {
             });
 
 
-            //--------------------INTERACCIÓN LIKES--------------------------------------
-
-
+            //----------------------INTERACCIÓN LIKES--------------------------------------
+ 
             const botonLike = document.querySelectorAll('.boton-like')
             //  const botonLikeNumber = btnLike.querySelectorAll('number-like');
 
@@ -386,14 +389,6 @@ export const feed = () => {
                 // console.log('hello');
                 modalLogOut.style.display = 'flex';
             }
-
-            logoutButton.addEventListener('click', () => {
-                openModal();
-            });
-
-            const closeModalLogout = modalLogOut.querySelector('#botonCancelar'); //no se puede usar getElementById porque aun no existe
-            if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
-
 
     return feedSection;
 

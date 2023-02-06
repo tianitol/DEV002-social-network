@@ -146,6 +146,7 @@ if (signinForm) { console.log('prueba');
 
 // LOGOUT
 const logoutButton = document.getElementById('botonAceptar');
+console.log(logoutButton);
 if (logoutButton) {
   logoutButton.addEventListener('click', () => {
     logOut(auth);
