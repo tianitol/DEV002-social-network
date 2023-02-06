@@ -1,11 +1,11 @@
-import { savePosts, getPost, deletePost, updatePost, getUsuarios } from "../lib/firebase/methodsFirestore.js";
-import { Timestamp, auth } from "../init.js";
+import { savePosts, getPost, deletePost, obtenerPost, updatePost, obtenerUsuario, getUsuarios, toggleLike } from "../lib/firebase/methodsFirestore.js";
+import { Timestamp, auth} from "../init.js";
 import { onNavigate } from "../js/routes.js";
-//obtenerPost
 export const feed = () => {
 
     const feedSection = document.createElement('section');
     feedSection.className = 'section-feed';
+
     const containerHeader = document.createElement('div');
     containerHeader.className = 'feed-container-header';
 
@@ -27,6 +27,8 @@ export const feed = () => {
     avatarImg.className = 'avatarImg';
     avatarImg.src = '/components/imagen/avatar3.png';
     perfil.appendChild(avatarImg);
+
+   
 
     containerHeader.appendChild(perfil);
 
@@ -98,15 +100,13 @@ export const feed = () => {
 
                     else if (auth.currentUser.uid === usuarios.idUsuario) {
                         usuarioActual = auth.currentUser.uid;
-                        const usuarioLogeado = usuarios.usuario
+                        const usuarioLogeado = usuarios.usuario;
+                        console.log(usuarioLogeado);
                         savePosts(textPost, auth.currentUser.uid, usuarioLogeado).then().catch(error => console.log("fallo la promesa para postear", error));
                         alert('tu post ha sido publicado');
                         console.log(usuarioActual);
                     }
                     else { }
-
-
-
 
 
                 });
@@ -174,9 +174,9 @@ export const feed = () => {
         postsCollection.forEach((item) => { /*para traer los posts de mi colección */
 
             let posts = item.data()
-            // console.log(item.id);
+            //console.log(item.id);
             posts = { ...posts, time: new Date(posts.date.seconds * 1000) }
-            //console.log(posts.time);
+             console.log(posts);
             const dateTime = getFecha(posts.time); /* trae la fecha como un timestamp, new Date lo convierte a fecha completa en inglés y con la función getFecha convertimos a formato d/m/y h:m */
 
 
@@ -202,12 +202,24 @@ export const feed = () => {
 
             //obtenerPost(item.id).then(console.log(item._userDataWriter)).catch();
             //console.log(auth.currentUser);
-
             const btnLike = document.createElement('button');
             btnLike.type = 'button';
             btnLike.className = 'boton-like';
             btnLike.id = 'botonLike';
-            btnLike.innerHTML = '<i class="fa-solid fa-heart fa-lg"></i>';
+            btnLike.innerHTML = '<i class="fa-solid fa-heart fa-lg"></i>' + posts.likes.length + ' likes';
+            btnLike.addEventListener('click', (e) => {
+                //console.log('e',e);
+                toggleLike({
+                    uid: auth.currentUser.uid,
+                    post_id: item.id,
+                    newFile: {
+                        likes: posts.likes
+                    }
+
+                })
+                //console.log();
+
+            })
             divParteSuperior.appendChild(btnLike);
 
             // const numberLike = document.createElement('span')
@@ -259,7 +271,7 @@ export const feed = () => {
                         }
                         // deletePost(idPost).then(console.log(deletePost(idPost))).catch(); then resuelve de forma asíncrona y el try(síncrono) se le pone el await(hasta que se resuelva no pasa el código a siguientes instrucciones) para resolverlo
                         try {
-                            await deletePost(idPost,);
+                            await deletePost(idPost);
                             alert('el post ha sido eliminado');
 
 
@@ -271,6 +283,37 @@ export const feed = () => {
                     }
                 };
             });
+
+
+
+            //----------------------INTERACCIÓN LIKES--------------------------------------
+
+            // var arrayLikesUsuarios= posts.likes;
+            // console.log(posts.likes);
+            // var numeroLikes=0;
+            // function addLike(){
+            //     numeroLikes++;
+            //     console.log(numeroLikes)
+            // }
+
+            //var numeroLikes = arrayLikesUsuarios.length;
+            //const suma= item + 1;
+            //console.log(suma);
+            // console.log(numeroLikes);
+
+
+
+            //Likear(item.id,suma, auth.currentUser.uid)
+
+
+
+
+
+
+
+
+
+
 
             //----------------------EDICIÓN DE UN POST SEGÚN ID DEL DOCUMENTO--------------------------------------
 
@@ -310,6 +353,7 @@ export const feed = () => {
                             await updatePost(idPost, {
                                 "descripcion": textoEditado,
                                 "date": Timestamp.fromDate(new Date()),
+                                "likes": []
                             });
                             botonEnviarEditar.style.display = 'none'; //al dar click en SEND desaparece el boton
                             alert('editado con éxito');
@@ -327,58 +371,38 @@ export const feed = () => {
             });
 
 
-            //----------------------INTERACCIÓN LIKES--------------------------------------
 
 
+        });
 
 
+    });
 
-            //  botonLike.forEach(btn => {
-            //         btn.addEventListener('click', (e) => {
-            //             const idLikePost = e.target.idPost;
-            //             console.log(botonLike)
-            //             getPost(idLikePost)
-            //                 .then((document) => {
-            //                     const postLike = document.idPost
-            //                     console.log(postLike)
-            //                     if (!postLike.userLike.incluides(idLikePost)) {
-            //                         const likes = (postLike.contadorLikes) + 1;
-            //                         likePost(idLikePost, likes)
-            //                     } else {
-            //                         const likes = (postLike.contadorLikes) - 1;
-            //                         dislikePost(idLikePost, likes)
-            //                     }
-            //                 });
+    // .catch(error => console.log("fallo la promesa de firestore", error))
 
-            //         });
-            //     })
+    //MODAL LOG OUT
+    const modalLogOut = document.createElement('div');
+    modalLogOut.className = 'modal';
+    modalLogOut.id = 'idModalLogout';
 
-            // .catch(error => console.log("fallo la promesa de firestore", error))
-
-            //MODAL LOG OUT
-            const modalLogOut = document.createElement('div');
-            modalLogOut.className = 'modal';
-            modalLogOut.id = 'idModalLogout';
-
-            modalLogOut.innerHTML = `
+    modalLogOut.innerHTML = `
         <div class="modal-container" id="modalContainerLogout">
             <h3>Log out of Dad's Power?</h3>
             <button type="button" class ="aceptar-logout" id="botonAceptar"> Ok </button>
             <button type="button" class ="close-modalLogout" id="botonCancelar"> Cancel </button>
-
-         </div>
-        `;
-            feedSection.appendChild(modalLogOut);
+       </div>
+      `;
+    feedSection.appendChild(modalLogOut);
 
         return feedSection;
 
-    });
+    };
 
         
- });
+
 
     
-};
+
 
 
 

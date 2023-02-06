@@ -4,34 +4,16 @@ const user = auth.currentUser;
 
 
 // construyendo un observador de Auth
-export const observador = (auth) => {
-    onAuthStateChanged(auth, (user) => {
-
-       console.log(user);
-        if (user !==null) {
-            // User is signed in, see docs for a list of available properties
-            // https://firebase.google.com/docs/reference/js/firebase.User
-            const email = user.email;
-            const displayName = user.displayName;
-            const uid = user.uid; // código único del usuario asignado por Firebase
-
-            
-            // El usuario se encuentra logueado
-            console.log('auth:sign in');
-
-            var emailVerified = user.emailVerified;
-            if (emailVerified === false) {
-                console.log('Email no verificado');
-            } else {
-                console.log('Email verificado');
-            }
-            // ...
-        } else {
-            // el suusario no se encuentra logueado
-            console.log('auth: log out');
-        }
-    });
-};
+// export const observador = async (auth) => {
+//     let uid = null; 
+//      await onAuthStateChanged(auth, async(user) => {
+//        //console.log(user);
+//        console.log('user', user.uid)
+//        uid=user.uid;
+//        //return user.uid;
+//     });
+//     return uid;
+// };
 
 
 
