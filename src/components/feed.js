@@ -25,8 +25,7 @@ export const feed = () => {
 
     const avatarImg = document.createElement('img');
     avatarImg.className = 'avatarImg';
-    avatarImg.src = '/components/imagen/avatar3.png';
-
+    avatarImg.src = '/components/imagen/avatar.png';
     perfil.appendChild(avatarImg);
 
     containerHeader.appendChild(perfil);
@@ -329,17 +328,17 @@ export const feed = () => {
 
 
             //----------------------INTERACCIÓN LIKES--------------------------------------
- 
-            const botonLike = document.querySelectorAll('.boton-like')
-            //  const botonLikeNumber = btnLike.querySelectorAll('number-like');
 
-            //   botonLikeNumber.forEach(btn => {
-            //   if (btn.innerHTML === '0'){
-            //     btn.classList.add('hiden');
-            //   }else {
-            //     btn.classList.remove('hiden')
-            //   }
-            //   })
+
+
+
+
+
+
+
+
+
+
 
 
             botonLike.forEach(btn => {
@@ -378,17 +377,6 @@ export const feed = () => {
        </div>
       `;
             feedSection.appendChild(modalLogOut);
-
-
-            const closeModal = () => {
-                // console.log('cerrando');
-                modalLogOut.style.display = 'none';
-            }
-
-            const openModal = () => {
-                // console.log('hello');
-                modalLogOut.style.display = 'flex';
-            }
 
     return feedSection;
 
