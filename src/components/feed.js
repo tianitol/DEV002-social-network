@@ -1,4 +1,4 @@
-import { savePosts, getPost, deletePost, obtenerPost, updatePost, obtenerUsuario, getUsuarios } from "../lib/firebase/methodsFirestore.js";
+import { savePosts, getPost, deletePost, obtenerPost, updatePost, obtenerUsuario, getUsuarios, Likear } from "../lib/firebase/methodsFirestore.js";
 import { Timestamp, auth } from "../init.js";
 import { onNavigate } from "../js/routes.js";
 //obtenerPost
@@ -97,7 +97,8 @@ export const feed = () => {
                
                 else if  (auth.currentUser.uid === usuarios.idUsuario){
                     usuarioActual = auth.currentUser.uid;
-                    const usuarioLogeado = usuarios.usuario
+                    const usuarioLogeado = usuarios.usuario;
+                    console.log(usuarioLogeado);
                     savePosts(textPost, auth.currentUser.uid, usuarioLogeado).then().catch(error => console.log("fallo la promesa para postear", error));
                     alert('tu post ha sido publicado');
                     console.log(usuarioActual);
@@ -199,15 +200,14 @@ export const feed = () => {
             divParteSuperior.appendChild(userPost);
             //console.log(posts);
 
-           // obtenerPost(item.id).then(console.log(item._userDataWriter)).catch();
-//console.log(auth);
-console.log(auth.currentUser.displayName); //recoge el nombre solo si es logueado con google
+            //obtenerPost(item.id).then(console.log(item._userDataWriter)).catch();
+            //console.log(auth.currentUser);
 
             const btnLike = document.createElement('button');
             btnLike.type = 'button';
             btnLike.className = 'boton-like';
             btnLike.id = 'botonLike';
-            btnLike.innerHTML = '<i class="fa-solid fa-heart fa-lg"></i>15 likes';
+            btnLike.innerHTML = '<i class="fa-solid fa-heart fa-lg"></i>15 likes' +`${posts["numLikes"]}`;
             divParteSuperior.appendChild(btnLike);
 
             const btnEditar = document.createElement('button');
@@ -267,6 +267,38 @@ console.log(auth.currentUser.displayName); //recoge el nombre solo si es loguead
                 };
             });
 
+
+
+//----------------------INTERACCIÓN LIKES--------------------------------------
+
+var arrayLikesUsuarios= posts.likes;
+console.log(posts.likes);
+var numeroLikes=0;
+function addLike(){
+    numeroLikes++;
+    console.log(numeroLikes)
+}
+
+//var numeroLikes = arrayLikesUsuarios.length;
+//const suma= item + 1;
+//console.log(suma);
+btnLike.addEventListener('click',addLike())
+// console.log(numeroLikes);
+
+
+
+//Likear(item.id,suma, auth.currentUser.uid)
+
+
+
+
+
+
+
+
+
+
+
             //----------------------EDICIÓN DE UN POST SEGÚN ID DEL DOCUMENTO--------------------------------------
 
             //--------------botón que aparece para enviar el post editado (en el div de cada post)---------
@@ -304,6 +336,8 @@ console.log(auth.currentUser.displayName); //recoge el nombre solo si es loguead
                             await updatePost(idPost, {
                                  "descripcion": textoEditado,
                                  "date": Timestamp.fromDate(new Date()),
+                                 "numLikes":0,
+                                  "likesUser":[]
                                 });
                                 botonEnviarEditar.style.display = 'none'; //al dar click en SEND desaparece el boton
                             alert('editado con éxito');
@@ -321,19 +355,7 @@ console.log(auth.currentUser.displayName); //recoge el nombre solo si es loguead
             });
 
 
-            //----------------------INTERACCIÓN LIKES--------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
+            
 
         });
 
@@ -352,7 +374,6 @@ console.log(auth.currentUser.displayName); //recoge el nombre solo si es loguead
             <h3>Log out of Dad's Power?</h3>
             <button type="button" class ="aceptar-logout" id="botonAceptar"> Ok </button>
             <button type="button" class ="close-modalLogout" id="botonCancelar"> Cancel </button>
-
        </div>
       `;
     feedSection.appendChild(modalLogOut);

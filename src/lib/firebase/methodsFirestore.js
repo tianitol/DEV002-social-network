@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { app, 
-  getFirestore, collection, Timestamp, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDoc, updateDoc,
+  getFirestore, collection, Timestamp, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDoc, updateDoc, arrayUnion, arrayRemove
  } from "../../init.js";
 
 // con db obtenenemos la data base en firestore desde nuestra appa
@@ -20,28 +20,13 @@ export const getUsuarios = (callback) => {
 
 //utilizando método addDoc de firestore con onSnapshot(actualización en tiempo real)
 
-export const savePosts = async (descripcion, idUsuarioLogueado, nombreUsuario) => await addDoc(collection(db, 'posts'), { descripcion, date: Timestamp.fromDate(new Date()), idUsuarioLogueado, nombreUsuario}); /*se guarda la info con la hora de firebase */ 
+export const savePosts = async (descripcion, idUsuarioLogueado, nombreUsuario) => await addDoc(collection(db, 'posts'), { descripcion, date: Timestamp.fromDate(new Date()), idUsuarioLogueado, nombreUsuario, numLikes:0, likesUser:[]}); /*se guarda la info con la hora de firebase */ 
 export const saveUsers = async (usuario, idUsuario, emailUsuario) => await addDoc(collection(db, 'users'), { usuario, idUsuario, emailUsuario });
 
 export const getPost = (callback) => {
   const qs = query(collection(db, 'posts'), orderBy('date', 'desc'));
   onSnapshot(qs, (callback))
 }
-
-
-//para actualizar el perfil del usuario
-import { getAuth, updateProfile } from "firebase/auth";
-const auth = getAuth();
-updateProfile(auth.currentUser, {
-  displayName: "Jane Q. User", photoURL: "https://example.com/jane-q-user/profile.jpg"
-}).then(() => {
-  // Profile updated!
-  // ...
-}).catch((error) => {
-  // An error occurred
-  // ...
-});
-
 
 // mostrar tiempo  del post 
 // const date = new Date().toLocaleDateString('es-es', {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'})
@@ -74,7 +59,15 @@ export const deletePost = async (id) => await deleteDoc(doc(db, 'posts', id));
 
 
 
+export const Likear = (id, like, uid) => updateDoc(doc(db, 'posts', id), {
+  likes: like,
+  likesUser: arrayUnion(uid)
+})
 
+export const DisLikear = (id, like, uid) => updateDoc(doc(db, 'posts', id), {
+  likes: like,
+  likesUser: arrayRemove(uid)
+})
 
 
 
@@ -94,5 +87,12 @@ export const deletePost = async (id) => await deleteDoc(doc(db, 'posts', id));
 //   fecha: "22/01/2023",
 //   titulo: "3º post"
 // });
+
+
+
+
+
+
+
 
 
