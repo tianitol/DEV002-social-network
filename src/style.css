@@ -600,6 +600,12 @@ input::placeholder {
   align-items: center;
 }
 
+
+/* .parte-inferior-post{
+   display: flex; 
+  justify-content: flex-start; 
+} */
+
 .boton-editar {
   border: none;
   background-color: transparent;
@@ -661,7 +667,7 @@ h2.titulo-post {
 }
 
 h3.descripcion-post {
-  margin: 10px 0 0 20px;
+  margin: 20px 0 0 10px;
   color: #222222;
 }
 

@@ -1,4 +1,6 @@
-import { savePosts, getPost, deletePost, updatePost, Timestamp } from "../lib/firebase/methodsFirestore.js";
+import { savePosts, getPost, deletePost, updatePost, getUsuarios, likePost, dislikePost } from "../lib/firebase/methodsFirestore.js";
+import { Timestamp, auth } from "../init.js";
+
 //obtenerPost
 export const feed = () => {
 
@@ -16,7 +18,7 @@ export const feed = () => {
 
     containerHeader.appendChild(titulo);
 
-    
+
     const perfil = document.createElement('div')
     perfil.className = 'avatarUser';
 
@@ -24,7 +26,7 @@ export const feed = () => {
     const avatarImg = document.createElement('img');
     avatarImg.className = 'avatarImg';
     avatarImg.src = '/components/imagen/avatar3.png';
-    
+
     perfil.appendChild(avatarImg);
 
     containerHeader.appendChild(perfil);
@@ -76,6 +78,8 @@ export const feed = () => {
     publicarPostButton.textContent = 'Post';
     formulario.appendChild(publicarPostButton);
 
+    let usuarioActual = '';
+
     formulario.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -84,10 +88,33 @@ export const feed = () => {
             alert('escriba un mensaje');
         }
         else {
-            savePosts(textPost).then().catch(error => console.log("fallo la promesa para postear", error));
+            getUsuarios(usersCollection => {
+                usersCollection.forEach((itemUser) => {
 
-            textPost = '';
-            alert('tu post ha sido publicado');
+                    let usuarios = itemUser.data();
+                    console.log(usuarios);
+                    if (auth.currentUser == null) {
+                        alert('debes iniciar sesión para postear algo')
+                    }
+
+                    else if (auth.currentUser.uid === usuarios.idUsuario) {
+                        usuarioActual = auth.currentUser.uid;
+                        const usuarioLogeado = usuarios.usuario
+                        savePosts(textPost, auth.currentUser.uid, usuarioLogeado).then().catch(error => console.log("fallo la promesa para postear", error));
+                        alert('tu post ha sido publicado');
+                        console.log(usuarioActual);
+                    }
+                    else { }
+
+
+
+
+
+                });
+                textPost = '';
+            })
+
+
         }
 
         formulario.reset();
@@ -106,7 +133,39 @@ export const feed = () => {
 
     //----------------------MOSTRANDO POSTS EXISTENTES-----------------------------
 
+
     const contenedorPosts = document.createElement('div');
+
+
+    //----SE INTENTA BLOQUEAR EL MURO, VISIBLE SOLO PARA USUARIOS LOGUEADOS----
+    // se crea un boton para volver al inicio con onNavigate dandole el click
+    //     const botonHome = document.createElement('button');
+    //     botonHome.type = 'button';
+    //     botonHome.className = 'home-btn';
+    //     botonHome.textContent = 'go SignIn';
+    //     botonHome.style.display = 'none';
+    //     feedSection.appendChild(botonHome);
+
+    //     if(auth.currentUser !== null) {
+    //        contenedorPosts.style.display = 'block';
+    //        createContainerButtons.style.display = 'block';
+
+    //     }
+    //     else {
+    //         contenedorPosts.style.display = 'none';
+    //         createContainerButtons.style.display = 'none';
+
+    //         alert('debes iniciar sesión');
+    //         botonHome.style.display = 'flex';
+
+    //         botonHome.addEventListener('click', () => {
+    //             console.log('yo, botonHome, hice click');
+    // onNavigate('/login');
+    // botonHome.style.display = 'none';
+    //         })
+
+    //     };
+
     contenedorPosts.className = 'contenedor-posts';
     feedSection.appendChild(contenedorPosts);
 
@@ -140,14 +199,22 @@ export const feed = () => {
             userPost.className = 'titulo-post';
             userPost.innerHTML = `${posts.uid}`; //aquí debe ir enlazado al usuario registrado/logueado
             divParteSuperior.appendChild(userPost);
+            //console.log(posts);
 
+            //obtenerPost(item.id).then(console.log(item._userDataWriter)).catch();
+            //console.log(auth.currentUser);
 
             const btnLike = document.createElement('button');
             btnLike.type = 'button';
             btnLike.className = 'boton-like';
             btnLike.id = 'botonLike';
-            btnLike.innerHTML = '<i class="fa-solid fa-heart fa-lg"></i>15 likes';
+            btnLike.innerHTML = '<i class="fa-solid fa-heart fa-lg"></i>';
             divParteSuperior.appendChild(btnLike);
+
+            // const numberLike = document.createElement('span')
+            // numberLike.className = 'number-like';
+            // numberLike.innerHTML = "";
+            // divParteSuperior.appendChild(numberLike);
 
             const btnEditar = document.createElement('button');
             btnEditar.type = 'button';
@@ -222,10 +289,10 @@ export const feed = () => {
                 alert('Now you can edit your post by clicking on the phrase')
                 //textPostEdit.innerText = item.data().descripcion;
                 descripcionPost.contentEditable = "true";
-                botonEnviarEditar.style.display = 'flex';  
-           });
+                botonEnviarEditar.style.display = 'flex';
+            });
 
-           botonEnviarEditar.addEventListener('click', async () => {
+            botonEnviarEditar.addEventListener('click', async () => {
                 const editar = confirm('Do you want to edit this message?');
                 if (editar) {
                     if (editar) {
@@ -238,10 +305,10 @@ export const feed = () => {
                         const textoEditado = descripcionPost.textContent;
                         try {
                             await updatePost(idPost, {
-                                 "descripcion": textoEditado,
-                                 "date": Timestamp.fromDate(new Date()),
-                                });
-                                botonEnviarEditar.style.display = 'none'; //al dar click en SEND desaparece el boton
+                                "descripcion": textoEditado,
+                                "date": Timestamp.fromDate(new Date()),
+                            });
+                            botonEnviarEditar.style.display = 'none'; //al dar click en SEND desaparece el boton
                             alert('editado con éxito');
                         } catch (error) {
                             console.log(error);
@@ -255,28 +322,51 @@ export const feed = () => {
                 el proceso firestore para almacenar data desde la APP*/
 
             });
-                  btnLike.querySelectorAll('boton-like');
-                  btnLike.addEventListener('click' , ()=> {
-                    console.log('like')
-                  })
 
 
-            //----------------------------------------------------------------------------------------------------
+            //--------------------INTERACCIÓN LIKES--------------------------------------
 
 
-        });
+            const botonLike = document.querySelectorAll('.boton-like')
+            //  const botonLikeNumber = btnLike.querySelectorAll('number-like');
+
+            //   botonLikeNumber.forEach(btn => {
+            //   if (btn.innerHTML === '0'){
+            //     btn.classList.add('hiden');
+            //   }else {
+            //     btn.classList.remove('hiden')
+            //   }
+            //   })
 
 
-    });
+            botonLike.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idLikePost = e.target.idPost;
+                    console.log(botonLike)
+                    // getPost(idLikePost)
+                        // .then((document) => {
+                        //     const postLike = document.idPost
+                        //     console.log(postLike)
+                        //     if (!postLike.userLike.incluides(idLikePost)) {
+                        //         const likes = (postLike.contadorLikes) + 1;
+                        //         likePost(idLikePost, likes)
+                        //     } else {
+                        //         const likes = (postLike.contadorLikes) - 1;
+                        //         dislikePost(idLikePost, likes)
+                        //     }
+                        // });
 
-    // .catch(error => console.log("fallo la promesa de firestore", error))
+                });
+            })
 
-    //MODAL LOG OUT
-    const modalLogOut = document.createElement('div');
-    modalLogOut.className = 'modal';
-    modalLogOut.id = 'idModalLogout';
+            // .catch(error => console.log("fallo la promesa de firestore", error))
 
-    modalLogOut.innerHTML = `
+            //MODAL LOG OUT
+            const modalLogOut = document.createElement('div');
+            modalLogOut.className = 'modal';
+            modalLogOut.id = 'idModalLogout';
+
+            modalLogOut.innerHTML = `
         <div class="modal-container" id="modalContainerLogout">
             <h3>Log out of Dad's Power?</h3>
             <button type="button" class ="aceptar-logout" id="botonAceptar"> Ok </button>
@@ -284,33 +374,32 @@ export const feed = () => {
 
        </div>
       `;
-    feedSection.appendChild(modalLogOut);
+            feedSection.appendChild(modalLogOut);
 
 
-    const closeModal = () => {
-        // console.log('cerrando');
-        modalLogOut.style.display = 'none';
-    }
+            const closeModal = () => {
+                // console.log('cerrando');
+                modalLogOut.style.display = 'none';
+            }
 
-    const openModal = () => {
-        // console.log('hello');
-        modalLogOut.style.display = 'flex';
-    }
+            const openModal = () => {
+                // console.log('hello');
+                modalLogOut.style.display = 'flex';
+            }
 
-    logoutButton.addEventListener('click', () => {
-        openModal();
-    });
+            logoutButton.addEventListener('click', () => {
+                openModal();
+            });
 
-    const closeModalLogout = modalLogOut.querySelector('#botonCancelar'); //no se puede usar getElementById porque aun no existe
-    if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
-
-
-   
-    return feedSection;
-
-}
+            const closeModalLogout = modalLogOut.querySelector('#botonCancelar'); //no se puede usar getElementById porque aun no existe
+            if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
 
 
+
+            return feedSection;
+        })
+    })       
+} ;
 const getFecha = (dateTime) => {
     const year = dateTime.getFullYear();
     const month = dateTime.getMonth() + 1 < 10 ? `0${dateTime.getMonth() + 1}` : dateTime.getMonth() + 1;
@@ -319,4 +408,6 @@ const getFecha = (dateTime) => {
     const minutes = dateTime.getMinutes() < 10 ? `0${dateTime.getMinutes()}` : dateTime.getMinutes();
 
     return `${day}/${month}/${year} ${hour}:${minutes}`;
-}
+
+};      
+     

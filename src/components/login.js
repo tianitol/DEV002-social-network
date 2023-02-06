@@ -28,6 +28,7 @@ export const login = () => {
     inputEmail.className = 'email';
     inputEmail.id = 'idCorreoSI';
     inputEmail.placeholder = 'example@gmail.com'
+    inputEmail.required = 'true';
     formSI.appendChild(inputEmail);
 
     //considerar agregar una diferencia en el parrafo que se imprima el mensaje de error segun sea para mail o pass
@@ -46,6 +47,7 @@ export const login = () => {
     inputPasword.className = 'password';
     inputPasword.id = 'idContraseñaSI';
     inputPasword.placeholder = '******'
+    inputPasword.required = 'true';
     formSI.appendChild(inputPasword);
 
     //considerar agregar una diferencia en el parrafo que se imprima el mensaje de error segun sea para mail o pass
@@ -73,6 +75,7 @@ export const login = () => {
 
     buttonGoogle.appendChild(imagenGoogle);
     formSI.appendChild(buttonGoogle);
+  
 
     return signinSection;
 }

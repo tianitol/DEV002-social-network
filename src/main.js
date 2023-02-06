@@ -1,13 +1,37 @@
 // Import the functions of Firestore for posting
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+import { auth } from './init.js';
 import { onNavigate } from "./js/routes.js";
-import { login, register, loginWithGoogle, verificarSendingMail, logOut } from "./lib/firebase/methodsAuth.js";
+import { login, register, loginWithGoogle, verificarSendingMail, logOut, observador } from "./lib/firebase/methodsAuth.js";
 import { saveUsers } from "./lib/firebase/methodsFirestore.js";
 
+// const user = auth.currentUser;
+// observador (auth, user).then()
+//   if (user !==null) {
+//         // User is signed in, see docs for a list of available properties
+//         // https://firebase.google.com/docs/reference/js/firebase.User
+//         const email = user.email;
+//         const displayName = user.displayName;
+//         const uid = user.uid; // código único del usuario asignado por Firebase
 
-const auth = getAuth();
+        
+//         // El usuario se encuentra logueado
+//         console.log('auth:sign in');
 
-/*..................................AUTH CONTROLLER.................................*/
+//             var emailVerified = user.emailVerified;
+//             if (emailVerified === false) {
+//                 console.log('Email no verificado');
+//             } else {
+//                 console.log('Email verificado');
+//             }
+//             // ...
+//         } else {
+//             // el suusario no se encuentra logueado
+//             console.log('auth: log out');
+//         }
+
+// .catch(error){
+// alert('error, no hay usuario')
+// }
 
 
 function validarCorreo(correo) {
@@ -39,13 +63,19 @@ if (signupForm) {
       signupEmail = '';
     }
     const signupPassword = document.getElementById('idContraseñaSU').value;
+
+    //----obteniendo los datos del usuario ya registrado-----dentro del SIGN UP---
+
     const usuarioRegistrado = document.getElementById('idUsername').value;
-    saveUsers(usuarioRegistrado).then().catch(error => console.log('fallo la promesa para agregar usuario', error));
+    //saveUsers(usuarioRegistrado).then().catch(error => console.log('fallo la promesa para agregar usuario', error));
+   
     // función de Firebase para registrar un usuario
     try {
       const resultado = await register(auth, valorCorreo, signupPassword);
       verificarSendingMail(auth)
-      console.log(resultado);
+
+      saveUsers(usuarioRegistrado, auth.currentUser.uid, auth.currentUser.email).then().catch(error => console.log('fallo la promesa para agregar usuario', error));
+      alert('su correo ya ha sido verificado, inicie sesión');
       signupForm.reset();
       signupForm.querySelector('.message-error-email').innerHTML = '';
       signupForm.querySelector('.message-error-password').innerHTML = '';
@@ -116,6 +146,7 @@ if (signinForm) { console.log('prueba');
 
 // LOGOUT
 const logoutButton = document.getElementById('botonAceptar');
+
 if (logoutButton) {
   logoutButton.addEventListener('click', () => {
     logOut(auth);

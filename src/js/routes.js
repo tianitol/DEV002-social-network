@@ -26,11 +26,11 @@ export const onNavigate = (pathname) => { //se cambia la ruta
 };
 
 
- const componentes = routes[window.location.pathname];
+ const components = routes[window.location.pathname];
 
  window.onpopstate = () => {
-   rootDiv.appendChild(componentes());
+   rootDiv.appendChild(components());
  };
- rootDiv.appendChild(componentes());
+//  rootDiv.appendChild(components());
 
 

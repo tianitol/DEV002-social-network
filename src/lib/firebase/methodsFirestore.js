@@ -1,37 +1,27 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+import { app, 
+  getFirestore, collection, Timestamp, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDoc, updateDoc,
+ } from "../../init.js";
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyAQKOcN9jLUCxn2zXz-mkJKV-BaeFjcKvo',
-  authDomain: 'redsocialnvj-47db7.firebaseapp.com',
-  projectId: 'redsocialnvj-47db7',
-  storageBucket: 'redsocialnvj-47db7.appspot.com',
-  messagingSenderId: '161909447570',
-  appId: '1:161909447570:web:b126b68b577520ab947f4b',
-};
-
-export const app = initializeApp(firebaseConfig);
-
-
-import { getFirestore, collection, getDocs, Timestamp, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDoc, updateDoc, userArray,userArrayRemove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-import { async } from "regenerator-runtime";
-export {Timestamp} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-// Initialize Cloud Firestore and get a reference to the service
+// con db obtenenemos la data base en firestore desde nuestra appa
 const db = getFirestore(app);
 
-
-// Obtener la data desde el firestore
 //export const postsRef = async (id) => await getDocs(collection(db, 'posts', id)) 
 
 //Obtener data de un determinado post(para obtener el id del post y usarlo en la eliminación y actualización)
 export const obtenerPost = async (id) => await getDoc(doc(db, 'posts', id));
+export const obtenerUsuario = async (id) => await getDoc(doc(db, 'users', id));
 
+export const getUsuarios = (callback) => {
+  const qs = query(collection(db, 'users'));
+  onSnapshot(qs, (callback))
+}
 //---------------Generando nuevos post de forma dinámica----------------
 
 //utilizando método addDoc de firestore con onSnapshot(actualización en tiempo real)
 
-export const savePosts = async (descripcion) => await addDoc(collection(db, 'posts'), { descripcion, date: Timestamp.fromDate(new Date())}); /*se guarda la info con la hora de firebase */ 
-export const saveUsers = async (usuario) => await addDoc(collection(db, 'users'), { usuario });
+export const savePosts = async (descripcion, idUsuarioLogueado, nombreUsuario) => await addDoc(collection(db, 'posts'), { descripcion, date: Timestamp.fromDate(new Date()), idUsuarioLogueado, nombreUsuario}); /*se guarda la info con la hora de firebase */ 
+export const saveUsers = async (usuario, idUsuario, emailUsuario) => await addDoc(collection(db, 'users'), { usuario, idUsuario, emailUsuario });
 
 export const getPost = (callback) => {
   const qs = query(collection(db, 'posts'), orderBy('date', 'desc'));
@@ -47,10 +37,10 @@ export const deletePost = async (id) => await deleteDoc(doc(db, 'posts', id));
  //export const udpDatePost = async (id) => await updateDoc(doc(db, 'post', id))
  export const updatePost = async (id, newFile ) => await updateDoc(doc(db, 'posts', id), newFile)
 
-
 /* newFile debe ser el objeto que tengo que actualizar:
 { descripcion, date: Timestamp.fromDate(new Date())}
 */
+
 
 
 //------------------Agregando interacciones, me gusta <3 --------------------
