@@ -63,6 +63,10 @@ export const login = () => {
     buttonSI.id = 'btnEnviarSI';
     formSI.appendChild(buttonSI);
 
+    buttonSI.addEventListener("submit", (e) => {
+        e.preventDefault();
+    });
+
     const buttonGoogle = document.createElement('button');
     buttonGoogle.textContent = 'Sign in with Google'
     buttonGoogle.type = 'button';
