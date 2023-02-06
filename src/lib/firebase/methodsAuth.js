@@ -36,14 +36,24 @@ export const register = (auth, signupEmail, signupPassword) => {
             });
     }
 
-export const login = (auth, email, password) => {
-        return new Promise((resolve, reject) => {    //resolve para retornar el valor deseado cuando una función se ejecute y reject para cuando una función retorna un valor no deseado./
-            return signInWithEmailAndPassword(auth, email, password)
-                .then(({ user }) => resolve(user))   //desestructuración del objeto user/
-                .catch(error => reject(error))
-        })
-    }
+// export const login = (auth, email, password) => {
+//         return new Promise((resolve, reject) => {    //resolve para retornar el valor deseado cuando una función se ejecute y reject para cuando una función retorna un valor no deseado./
+//             return signInWithEmailAndPassword(auth, email, password)
+//                 .then(({ user }) => {
+//                     console.log(user);
+//                     resolve(user)})   //desestructuración del objeto user/
+//                 .catch(error => reject(error))
+//         })
+//     }
 
+export const login = async(auth, email, password) => {
+    try{
+       const user = await signInWithEmailAndPassword(auth, email, password)
+       return user.user;
+    }catch(error){
+       return error
+    }
+}
     
 
    export const logOut = (auth) => {

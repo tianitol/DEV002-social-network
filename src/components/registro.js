@@ -75,6 +75,11 @@ export const register = () => {
     buttonSU.id = 'btnEnviarSU';
     formSU.appendChild(buttonSU);
 
+    // const signupForm = document.getElementById('formularioSU');
+    // signupForm.addEventListener("submit", (e) => {
+    //     e.preventDefault();
+    //  });
+
     const tienesCuenta = document.createElement('p');
     tienesCuenta.className = 'p-tienes-cuenta-register';
     tienesCuenta.textContent = 'Already have an account ?';
