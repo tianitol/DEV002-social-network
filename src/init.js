@@ -7,6 +7,7 @@ import config from "./lib/firebase/config.js";
 
  const app = initializeApp(config);
  const auth = getAuth();
+ //console.log('auth', auth);
 
  export {initializeApp, app, auth,
      getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, sendEmailVerification, 

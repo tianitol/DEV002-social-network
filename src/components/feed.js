@@ -1,11 +1,30 @@
-import { savePosts, getPost, deletePost, obtenerPost, updatePost, obtenerUsuario, getUsuarios, Likear } from "../lib/firebase/methodsFirestore.js";
-import { Timestamp, auth } from "../init.js";
+import { savePosts, getPost, deletePost, obtenerPost, updatePost, obtenerUsuario, getUsuarios, toggleLike } from "../lib/firebase/methodsFirestore.js";
+import { Timestamp, auth, onAuthStateChanged } from "../init.js";
 import { onNavigate } from "../js/routes.js";
 //obtenerPost
-export const feed = () => {
+export const feed = async () => {
 
     const feedSection = document.createElement('section');
     feedSection.className = 'section-feed';
+
+
+    await onAuthStateChanged(auth, async(user) => {
+        //console.log(user);
+        console.log('user', user.uid)
+        //uid=user.uid;
+        //return user.uid;
+     });
+
+    console.log('auth', auth.currentUser);
+    // if(!auth.currentUser){
+    //     const emptyDiv = document.createElement('div');
+    //     emptyDiv.className = 'none-user';
+    //     onNavigate('/');
+    //      return emptyDiv;
+    //     //window.location.href= '/';
+    // }
+
+   
     const containerHeader = document.createElement('div');
     containerHeader.className = 'feed-container-header';
 
@@ -86,34 +105,31 @@ export const feed = () => {
             alert('escriba un mensaje');
         }
         else {
-           getUsuarios(usersCollection => {
-            usersCollection.forEach((itemUser) => {
+            getUsuarios(usersCollection => {
+                usersCollection.forEach((itemUser) => {
 
-                let usuarios = itemUser.data();
-                console.log(usuarios);
-                if (auth.currentUser == null) {
-                    alert('debes iniciar sesión para postear algo')
-                }
-               
-                else if  (auth.currentUser.uid === usuarios.idUsuario){
-                    usuarioActual = auth.currentUser.uid;
-                    const usuarioLogeado = usuarios.usuario;
-                    console.log(usuarioLogeado);
-                    savePosts(textPost, auth.currentUser.uid, usuarioLogeado).then().catch(error => console.log("fallo la promesa para postear", error));
-                    alert('tu post ha sido publicado');
-                    console.log(usuarioActual);
-                }
-                else{}
+                    let usuarios = itemUser.data();
+                    console.log(usuarios);
+                    if (auth.currentUser == null) {
+                        alert('debes iniciar sesión para postear algo')
+                    }
 
-               
-                
-                
-            
-            });
-            textPost = '';
-           })
-            
-            
+                    else if (auth.currentUser.uid === usuarios.idUsuario) {
+                        usuarioActual = auth.currentUser.uid;
+                        const usuarioLogeado = usuarios.usuario;
+                        console.log(usuarioLogeado);
+                        savePosts(textPost, auth.currentUser.uid, usuarioLogeado).then().catch(error => console.log("fallo la promesa para postear", error));
+                        alert('tu post ha sido publicado');
+                        console.log(usuarioActual);
+                    }
+                    else { }
+
+
+                });
+                textPost = '';
+            })
+
+
         }
 
         formulario.reset();
@@ -132,38 +148,38 @@ export const feed = () => {
 
     //----------------------MOSTRANDO POSTS EXISTENTES-----------------------------
 
-    
+
     const contenedorPosts = document.createElement('div');
 
 
-//----SE INTENTA BLOQUEAR EL MURO, VISIBLE SOLO PARA USUARIOS LOGUEADOS----
+    //----SE INTENTA BLOQUEAR EL MURO, VISIBLE SOLO PARA USUARIOS LOGUEADOS----
     // se crea un boton para volver al inicio con onNavigate dandole el click
-//     const botonHome = document.createElement('button');
-//     botonHome.type = 'button';
-//     botonHome.className = 'home-btn';
-//     botonHome.textContent = 'go SignIn';
-//     botonHome.style.display = 'none';
-//     feedSection.appendChild(botonHome);
+    //     const botonHome = document.createElement('button');
+    //     botonHome.type = 'button';
+    //     botonHome.className = 'home-btn';
+    //     botonHome.textContent = 'go SignIn';
+    //     botonHome.style.display = 'none';
+    //     feedSection.appendChild(botonHome);
 
-//     if(auth.currentUser !== null) {
-//        contenedorPosts.style.display = 'block';
-//        createContainerButtons.style.display = 'block';
+    //     if(auth.currentUser !== null) {
+    //        contenedorPosts.style.display = 'block';
+    //        createContainerButtons.style.display = 'block';
 
-//     }
-//     else {
-//         contenedorPosts.style.display = 'none';
-//         createContainerButtons.style.display = 'none';
+    //     }
+    //     else {
+    //         contenedorPosts.style.display = 'none';
+    //         createContainerButtons.style.display = 'none';
 
-//         alert('debes iniciar sesión');
-//         botonHome.style.display = 'flex';
+    //         alert('debes iniciar sesión');
+    //         botonHome.style.display = 'flex';
 
-//         botonHome.addEventListener('click', () => {
-//             console.log('yo, botonHome, hice click');
-// onNavigate('/login');
-// botonHome.style.display = 'none';
-//         })
+    //         botonHome.addEventListener('click', () => {
+    //             console.log('yo, botonHome, hice click');
+    // onNavigate('/login');
+    // botonHome.style.display = 'none';
+    //         })
 
-//     };
+    //     };
 
     contenedorPosts.className = 'contenedor-posts';
     feedSection.appendChild(contenedorPosts);
@@ -174,9 +190,9 @@ export const feed = () => {
         postsCollection.forEach((item) => { /*para traer los posts de mi colección */
 
             let posts = item.data()
-            // console.log(item.id);
+            //console.log(item.id);
             posts = { ...posts, time: new Date(posts.date.seconds * 1000) }
-            //console.log(posts.time);
+            // console.log(posts);
             const dateTime = getFecha(posts.time); /* trae la fecha como un timestamp, new Date lo convierte a fecha completa en inglés y con la función getFecha convertimos a formato d/m/y h:m */
 
 
@@ -207,7 +223,20 @@ export const feed = () => {
             btnLike.type = 'button';
             btnLike.className = 'boton-like';
             btnLike.id = 'botonLike';
-            btnLike.innerHTML = '<i class="fa-solid fa-heart fa-lg"></i>15 likes' +`${posts["numLikes"]}`;
+            btnLike.innerHTML = '<i class="fa-solid fa-heart fa-lg"></i>' + posts.likes.length + ' likes';
+            btnLike.addEventListener('click', (e) => {
+                //console.log('e',e);
+                toggleLike({
+                    uid: auth.currentUser.uid,
+                    post_id: item.id,
+                    newFile: {
+                        likes: posts.likes
+                    }
+
+                })
+                //console.log();
+
+            })
             divParteSuperior.appendChild(btnLike);
 
             const btnEditar = document.createElement('button');
@@ -254,7 +283,7 @@ export const feed = () => {
                         }
                         // deletePost(idPost).then(console.log(deletePost(idPost))).catch(); then resuelve de forma asíncrona y el try(síncrono) se le pone el await(hasta que se resuelva no pasa el código a siguientes instrucciones) para resolverlo
                         try {
-                            await deletePost(idPost,);
+                            await deletePost(idPost);
                             alert('el post ha sido eliminado');
 
 
@@ -269,25 +298,24 @@ export const feed = () => {
 
 
 
-//----------------------INTERACCIÓN LIKES--------------------------------------
+            //----------------------INTERACCIÓN LIKES--------------------------------------
 
-var arrayLikesUsuarios= posts.likes;
-console.log(posts.likes);
-var numeroLikes=0;
-function addLike(){
-    numeroLikes++;
-    console.log(numeroLikes)
-}
+            // var arrayLikesUsuarios= posts.likes;
+            // console.log(posts.likes);
+            // var numeroLikes=0;
+            // function addLike(){
+            //     numeroLikes++;
+            //     console.log(numeroLikes)
+            // }
 
-//var numeroLikes = arrayLikesUsuarios.length;
-//const suma= item + 1;
-//console.log(suma);
-btnLike.addEventListener('click',addLike())
-// console.log(numeroLikes);
-
+            //var numeroLikes = arrayLikesUsuarios.length;
+            //const suma= item + 1;
+            //console.log(suma);
+            // console.log(numeroLikes);
 
 
-//Likear(item.id,suma, auth.currentUser.uid)
+
+            //Likear(item.id,suma, auth.currentUser.uid)
 
 
 
@@ -319,10 +347,10 @@ btnLike.addEventListener('click',addLike())
                 descripcionPost.focus();
 
 
-                botonEnviarEditar.style.display = 'flex';  
-           });
+                botonEnviarEditar.style.display = 'flex';
+            });
 
-           botonEnviarEditar.addEventListener('click', async () => {
+            botonEnviarEditar.addEventListener('click', async () => {
                 const editar = confirm('Do you want to edit this message?');
                 if (editar) {
                     if (editar) {
@@ -334,12 +362,11 @@ btnLike.addEventListener('click',addLike())
                         const textoEditado = descripcionPost.textContent;
                         try {
                             await updatePost(idPost, {
-                                 "descripcion": textoEditado,
-                                 "date": Timestamp.fromDate(new Date()),
-                                 "numLikes":0,
-                                  "likesUser":[]
-                                });
-                                botonEnviarEditar.style.display = 'none'; //al dar click en SEND desaparece el boton
+                                "descripcion": textoEditado,
+                                "date": Timestamp.fromDate(new Date()),
+                                "likes": []
+                            });
+                            botonEnviarEditar.style.display = 'none'; //al dar click en SEND desaparece el boton
                             alert('editado con éxito');
                         } catch (error) {
                             console.log(error);
@@ -355,7 +382,7 @@ btnLike.addEventListener('click',addLike())
             });
 
 
-            
+
 
         });
 

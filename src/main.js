@@ -13,7 +13,7 @@ import { saveUsers } from "./lib/firebase/methodsFirestore.js";
 //         const displayName = user.displayName;
 //         const uid = user.uid; // código único del usuario asignado por Firebase
 
-        
+
 //         // El usuario se encuentra logueado
 //         console.log('auth:sign in');
 
@@ -68,14 +68,14 @@ if (signupForm) {
 
     const usuarioRegistrado = document.getElementById('idUsername').value;
     //saveUsers(usuarioRegistrado).then().catch(error => console.log('fallo la promesa para agregar usuario', error));
-   
+
     // función de Firebase para registrar un usuario
     try {
       const resultado = await register(auth, valorCorreo, signupPassword);
       verificarSendingMail(auth)
 
       saveUsers(usuarioRegistrado, auth.currentUser.uid, auth.currentUser.email).then().catch(error => console.log('fallo la promesa para agregar usuario', error));
-     // alert('su correo ya ha sido verificado, inicie sesión');
+      // alert('su correo ya ha sido verificado, inicie sesión');
       signupForm.reset();
       signupForm.querySelector('.message-error-email').innerHTML = '';
       signupForm.querySelector('.message-error-password').innerHTML = '';
@@ -101,8 +101,10 @@ if (signupForm) {
 // SIGN IN
 
 const signinForm = document.getElementById('formularioSI');
-if (signinForm) { console.log('prueba');
+if (signinForm) {
+  //console.log('prueba', signinForm);
   signinForm.addEventListener('submit', async (e) => {
+    console.log('click');
     e.preventDefault();
     const emailInput = document.getElementById('idCorreoSI').value;
     const passwordInput = document.getElementById('idContraseñaSI').value;
@@ -161,7 +163,7 @@ if (googleButton) {
   googleButton.addEventListener('click', async (e) => {
     e.preventDefault();
     try {
-      const {emailVerified, email}= await loginWithGoogle(auth);
+      const { emailVerified, email } = await loginWithGoogle(auth);
       signinForm.reset();
       if (emailVerified) {
         onNavigate('/feed');
@@ -174,8 +176,8 @@ if (googleButton) {
     }
 
     catch (error) {
-    
+
     };
   });
 
-  };
+};
