@@ -1,4 +1,5 @@
 import { savePosts, getPost, deletePost, obtenerPost, updatePost, obtenerUsuario, getUsuarios, toggleLike } from "../lib/firebase/methodsFirestore.js";
+import { logOut } from "../lib/firebase/methodsAuth.js";
 import { Timestamp, auth} from "../init.js";
 import { onNavigate } from "../js/routes.js";
 export const feed = () => {
@@ -394,18 +395,37 @@ export const feed = () => {
       `;
     feedSection.appendChild(modalLogOut);
 
-        return feedSection;
+    const closeModal = () => {
+        // console.log('cerrando');
+        modalLogOut.style.display = 'none';
+    }
 
-    };
+    const openModal = () => {
+        // console.log('hello');
+        modalLogOut.style.display = 'flex';
+    }
 
-        
+    logoutButton.addEventListener('click', () => {
+        openModal();
+        const aceptarLogout = document.getElementById('botonAceptar');
+        console.log(aceptarLogout);
+    //console.log(logoutButton);
+    if (aceptarLogout) {
+      aceptarLogout.addEventListener('click', () => {
+        logOut(auth);
+        onNavigate('/');
+    console.log('aceptar Logout');
+      });
+    }
+    });
 
 
-    
+
+    const closeModalLogout = modalLogOut.querySelector('#botonCancelar'); //no se puede usar getElementById porque aun no existe
+    if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
 
 
-
-
+};
 
 
 const getFecha = (dateTime) => {

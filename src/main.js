@@ -83,8 +83,7 @@ if (signinForm) {
     const passwordInput = document.getElementById('idContraseñaSI').value;
     try {
       const { emailVerified, email } = await login(auth, emailInput, passwordInput)
-
-      //console.log(emailVerified,email);
+      console.log(emailVerified,email);
       /* permitir acceder a la página a solo los usuarios que hayan verificado su cuenta a través del correo electrónico enviado */
       if (emailVerified) {
         onNavigate('/feed');
@@ -119,16 +118,6 @@ if (signinForm) {
   });
 };
 
-// LOGOUT
-const logoutButton = document.getElementById('botonAceptar');
-//console.log(logoutButton);
-if (logoutButton) {
-  logoutButton.addEventListener('click', () => {
-    logOut(auth);
-    onNavigate('/');
-
-  });
-}
 
 // GOOGLE LOGIN
 const googleButton = document.getElementById('entrarGoogle')
