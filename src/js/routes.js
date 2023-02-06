@@ -31,6 +31,6 @@ export const onNavigate = (pathname) => { //se cambia la ruta
  window.onpopstate = () => {
    rootDiv.appendChild(components());
  };
-//  rootDiv.appendChild(components());
+rootDiv.appendChild(components());
 
 

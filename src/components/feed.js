@@ -1,4 +1,4 @@
-import { savePosts, getPost, deletePost, updatePost, getUsuarios, likePost, dislikePost } from "../lib/firebase/methodsFirestore.js";
+import { savePosts, getPost, deletePost, updatePost,  getUsuarios } from "../lib/firebase/methodsFirestore.js";
 import { Timestamp, auth } from "../init.js";
 
 //obtenerPost
@@ -88,33 +88,33 @@ export const feed = () => {
             alert('escriba un mensaje');
         }
         else {
-            getUsuarios(usersCollection => {
-                usersCollection.forEach((itemUser) => {
+           getUsuarios(usersCollection => {
+            usersCollection.forEach((itemUser) => {
 
-                    let usuarios = itemUser.data();
-                    console.log(usuarios);
-                    if (auth.currentUser == null) {
-                        alert('debes iniciar sesión para postear algo')
-                    }
+                let usuarios = itemUser.data();
+                console.log(usuarios);
+                if (auth.currentUser == null) {
+                    alert('debes iniciar sesión para postear algo')
+                }
+               
+                else if  (auth.currentUser.uid === usuarios.idUsuario){
+                    usuarioActual = auth.currentUser.uid;
+                    const usuarioLogeado = usuarios.usuario
+                    savePosts(textPost, auth.currentUser.uid, usuarioLogeado).then().catch(error => console.log("fallo la promesa para postear", error));
+                    alert('tu post ha sido publicado');
+                    console.log(usuarioActual);
+                }
+                else{}
 
-                    else if (auth.currentUser.uid === usuarios.idUsuario) {
-                        usuarioActual = auth.currentUser.uid;
-                        const usuarioLogeado = usuarios.usuario
-                        savePosts(textPost, auth.currentUser.uid, usuarioLogeado).then().catch(error => console.log("fallo la promesa para postear", error));
-                        alert('tu post ha sido publicado');
-                        console.log(usuarioActual);
-                    }
-                    else { }
-
-
-
-
-
-                });
-                textPost = '';
-            })
-
-
+               
+                
+                
+            
+            });
+            textPost = '';
+           })
+            
+            
         }
 
         formulario.reset();
@@ -133,38 +133,38 @@ export const feed = () => {
 
     //----------------------MOSTRANDO POSTS EXISTENTES-----------------------------
 
-
+    
     const contenedorPosts = document.createElement('div');
 
 
-    //----SE INTENTA BLOQUEAR EL MURO, VISIBLE SOLO PARA USUARIOS LOGUEADOS----
+//----SE INTENTA BLOQUEAR EL MURO, VISIBLE SOLO PARA USUARIOS LOGUEADOS----
     // se crea un boton para volver al inicio con onNavigate dandole el click
-    //     const botonHome = document.createElement('button');
-    //     botonHome.type = 'button';
-    //     botonHome.className = 'home-btn';
-    //     botonHome.textContent = 'go SignIn';
-    //     botonHome.style.display = 'none';
-    //     feedSection.appendChild(botonHome);
+//     const botonHome = document.createElement('button');
+//     botonHome.type = 'button';
+//     botonHome.className = 'home-btn';
+//     botonHome.textContent = 'go SignIn';
+//     botonHome.style.display = 'none';
+//     feedSection.appendChild(botonHome);
 
-    //     if(auth.currentUser !== null) {
-    //        contenedorPosts.style.display = 'block';
-    //        createContainerButtons.style.display = 'block';
+//     if(auth.currentUser !== null) {
+//        contenedorPosts.style.display = 'block';
+//        createContainerButtons.style.display = 'block';
 
-    //     }
-    //     else {
-    //         contenedorPosts.style.display = 'none';
-    //         createContainerButtons.style.display = 'none';
+//     }
+//     else {
+//         contenedorPosts.style.display = 'none';
+//         createContainerButtons.style.display = 'none';
 
-    //         alert('debes iniciar sesión');
-    //         botonHome.style.display = 'flex';
+//         alert('debes iniciar sesión');
+//         botonHome.style.display = 'flex';
 
-    //         botonHome.addEventListener('click', () => {
-    //             console.log('yo, botonHome, hice click');
-    // onNavigate('/login');
-    // botonHome.style.display = 'none';
-    //         })
+//         botonHome.addEventListener('click', () => {
+//             console.log('yo, botonHome, hice click');
+// onNavigate('/login');
+// botonHome.style.display = 'none';
+//         })
 
-    //     };
+//     };
 
     contenedorPosts.className = 'contenedor-posts';
     feedSection.appendChild(contenedorPosts);
@@ -197,7 +197,7 @@ export const feed = () => {
             //botones de parte superior
             const userPost = document.createElement('h2');
             userPost.className = 'titulo-post';
-            userPost.innerHTML = `${posts.uid}`; //aquí debe ir enlazado al usuario registrado/logueado
+            userPost.innerHTML = `${posts["nombreUsuario"]}`; //aquí debe ir enlazado al usuario registrado/logueado
             divParteSuperior.appendChild(userPost);
             //console.log(posts);
 
@@ -278,7 +278,7 @@ export const feed = () => {
             //--------------botón que aparece para enviar el post editado (en el div de cada post)---------
             const botonEnviarEditar = document.createElement('button');
             botonEnviarEditar.type = 'button';
-            botonEnviarEditar.className = 'post-btn-save';
+            botonEnviarEditar.className = 'post-btn';
             botonEnviarEditar.textContent = 'Save';
             botonEnviarEditar.style.display = 'none';
             divParteInferior.appendChild(botonEnviarEditar);
@@ -305,10 +305,10 @@ export const feed = () => {
                         const textoEditado = descripcionPost.textContent;
                         try {
                             await updatePost(idPost, {
-                                "descripcion": textoEditado,
-                                "date": Timestamp.fromDate(new Date()),
-                            });
-                            botonEnviarEditar.style.display = 'none'; //al dar click en SEND desaparece el boton
+                                 "descripcion": textoEditado,
+                                 "date": Timestamp.fromDate(new Date()),
+                                });
+                                botonEnviarEditar.style.display = 'none'; //al dar click en SEND desaparece el boton
                             alert('editado con éxito');
                         } catch (error) {
                             console.log(error);
@@ -395,11 +395,13 @@ export const feed = () => {
             if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
 
 
+    return feedSection;
 
-            return feedSection;
-        })
-    })       
-} ;
+}
+        )}
+    )}
+
+
 const getFecha = (dateTime) => {
     const year = dateTime.getFullYear();
     const month = dateTime.getMonth() + 1 < 10 ? `0${dateTime.getMonth() + 1}` : dateTime.getMonth() + 1;
