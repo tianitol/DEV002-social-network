@@ -1,9 +1,9 @@
 // Import the functions of Firestore for posting
 import { auth } from './init.js';
 import { onNavigate } from "./js/routes.js";
-import { login, register, loginWithGoogle, verificarSendingMail, logOut, observador } from "./lib/firebase/methodsAuth.js";
+import { login, register, loginWithGoogle, verificarSendingMail, logOut } from "./lib/firebase/methodsAuth.js";
 import { saveUsers } from "./lib/firebase/methodsFirestore.js";
-
+//, observador
 // const user = auth.currentUser;
 // observador (auth, user).then()
 //   if (user !==null) {

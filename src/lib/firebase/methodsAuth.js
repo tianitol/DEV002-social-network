@@ -4,16 +4,16 @@ const user = auth.currentUser;
 
 
 // construyendo un observador de Auth
-export const observador = async (auth) => {
-    let uid = null; 
-     await onAuthStateChanged(auth, (user) => {
-       //console.log(user);
-       console.log('user', user.uid)
-       uid=user.uid;
-       //return user.uid;
-    });
-    return uid;
-};
+// export const observador = async (auth) => {
+//     let uid = null; 
+//      await onAuthStateChanged(auth, async(user) => {
+//        //console.log(user);
+//        console.log('user', user.uid)
+//        uid=user.uid;
+//        //return user.uid;
+//     });
+//     return uid;
+// };
 
 
 

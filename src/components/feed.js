@@ -1,30 +1,11 @@
 import { savePosts, getPost, deletePost, obtenerPost, updatePost, obtenerUsuario, getUsuarios, toggleLike } from "../lib/firebase/methodsFirestore.js";
-import { Timestamp, auth, onAuthStateChanged } from "../init.js";
+import { Timestamp, auth} from "../init.js";
 import { onNavigate } from "../js/routes.js";
-//obtenerPost
-export const feed = async () => {
+export const feed = () => {
 
     const feedSection = document.createElement('section');
     feedSection.className = 'section-feed';
 
-
-    await onAuthStateChanged(auth, async(user) => {
-        //console.log(user);
-        console.log('user', user.uid)
-        //uid=user.uid;
-        //return user.uid;
-     });
-
-    console.log('auth', auth.currentUser);
-    // if(!auth.currentUser){
-    //     const emptyDiv = document.createElement('div');
-    //     emptyDiv.className = 'none-user';
-    //     onNavigate('/');
-    //      return emptyDiv;
-    //     //window.location.href= '/';
-    // }
-
-   
     const containerHeader = document.createElement('div');
     containerHeader.className = 'feed-container-header';
 
@@ -43,8 +24,10 @@ export const feed = async () => {
 
     const avatarImg = document.createElement('img');
     avatarImg.className = 'avatarImg';
-    avatarImg.src = '/components/imagen/avatar.png';
+    avatarImg.src = '/components/imagen/avatar3.png';
     perfil.appendChild(avatarImg);
+
+   
 
     containerHeader.appendChild(perfil);
 
@@ -192,7 +175,7 @@ export const feed = async () => {
             let posts = item.data()
             //console.log(item.id);
             posts = { ...posts, time: new Date(posts.date.seconds * 1000) }
-            // console.log(posts);
+             console.log(posts);
             const dateTime = getFecha(posts.time); /* trae la fecha como un timestamp, new Date lo convierte a fecha completa en inglés y con la función getFecha convertimos a formato d/m/y h:m */
 
 
@@ -218,7 +201,6 @@ export const feed = async () => {
 
             //obtenerPost(item.id).then(console.log(item._userDataWriter)).catch();
             //console.log(auth.currentUser);
-
             const btnLike = document.createElement('button');
             btnLike.type = 'button';
             btnLike.className = 'boton-like';

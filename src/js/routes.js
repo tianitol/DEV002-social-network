@@ -3,7 +3,7 @@ import { register } from '../components/registro.js';
 import { login } from '../components/login.js';
 import { feed } from '../components/feed.js';
 import { auth, getAuth, initializeApp } from '../init.js';
-import { observador } from '../lib/firebase/methodsAuth.js';
+//import { observador } from '../lib/firebase/methodsAuth.js';
 // import config from '../lib/firebase/config.js';
 
 
