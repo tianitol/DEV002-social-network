@@ -75,7 +75,7 @@ if (signupForm) {
       verificarSendingMail(auth)
 
       saveUsers(usuarioRegistrado, auth.currentUser.uid, auth.currentUser.email).then().catch(error => console.log('fallo la promesa para agregar usuario', error));
-      alert('su correo ya ha sido verificado, inicie sesión');
+      // alert('su correo ya ha sido verificado, inicie sesión');
       signupForm.reset();
       signupForm.querySelector('.message-error-email').innerHTML = '';
       signupForm.querySelector('.message-error-password').innerHTML = '';
@@ -146,7 +146,7 @@ if (signinForm) { console.log('prueba');
 
 // LOGOUT
 const logoutButton = document.getElementById('botonAceptar');
-console.log(logoutButton);
+
 if (logoutButton) {
   logoutButton.addEventListener('click', () => {
     logOut(auth);

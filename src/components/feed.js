@@ -1,4 +1,4 @@
-import { savePosts, getPost, deletePost, obtenerPost, updatePost, obtenerUsuario, getUsuarios } from "../lib/firebase/methodsFirestore.js";
+import { savePosts, getPost, deletePost, updatePost, getUsuarios } from "../lib/firebase/methodsFirestore.js";
 import { Timestamp, auth } from "../init.js";
 import { onNavigate } from "../js/routes.js";
 //obtenerPost
@@ -25,7 +25,7 @@ export const feed = () => {
 
     const avatarImg = document.createElement('img');
     avatarImg.className = 'avatarImg';
-    avatarImg.src = '/components/imagen/avatar.png';
+    avatarImg.src = '/components/imagen/avatar3.png';
     perfil.appendChild(avatarImg);
 
     containerHeader.appendChild(perfil);
@@ -87,33 +87,33 @@ export const feed = () => {
             alert('escriba un mensaje');
         }
         else {
-           getUsuarios(usersCollection => {
-            usersCollection.forEach((itemUser) => {
+            getUsuarios(usersCollection => {
+                usersCollection.forEach((itemUser) => {
 
-                let usuarios = itemUser.data();
-                console.log(usuarios);
-                if (auth.currentUser == null) {
-                    alert('debes iniciar sesión para postear algo')
-                }
-               
-                else if  (auth.currentUser.uid === usuarios.idUsuario){
-                    usuarioActual = auth.currentUser.uid;
-                    const usuarioLogeado = usuarios.usuario
-                    savePosts(textPost, auth.currentUser.uid, usuarioLogeado).then().catch(error => console.log("fallo la promesa para postear", error));
-                    alert('tu post ha sido publicado');
-                    console.log(usuarioActual);
-                }
-                else{}
+                    let usuarios = itemUser.data();
+                    console.log(usuarios);
+                    if (auth.currentUser == null) {
+                        alert('debes iniciar sesión para postear algo')
+                    }
 
-               
-                
-                
-            
-            });
-            textPost = '';
-           })
-            
-            
+                    else if (auth.currentUser.uid === usuarios.idUsuario) {
+                        usuarioActual = auth.currentUser.uid;
+                        const usuarioLogeado = usuarios.usuario
+                        savePosts(textPost, auth.currentUser.uid, usuarioLogeado).then().catch(error => console.log("fallo la promesa para postear", error));
+                        alert('tu post ha sido publicado');
+                        console.log(usuarioActual);
+                    }
+                    else { }
+
+
+
+
+
+                });
+                textPost = '';
+            })
+
+
         }
 
         formulario.reset();
@@ -132,38 +132,38 @@ export const feed = () => {
 
     //----------------------MOSTRANDO POSTS EXISTENTES-----------------------------
 
-    
+
     const contenedorPosts = document.createElement('div');
 
 
-//----SE INTENTA BLOQUEAR EL MURO, VISIBLE SOLO PARA USUARIOS LOGUEADOS----
+    //----SE INTENTA BLOQUEAR EL MURO, VISIBLE SOLO PARA USUARIOS LOGUEADOS----
     // se crea un boton para volver al inicio con onNavigate dandole el click
-//     const botonHome = document.createElement('button');
-//     botonHome.type = 'button';
-//     botonHome.className = 'home-btn';
-//     botonHome.textContent = 'go SignIn';
-//     botonHome.style.display = 'none';
-//     feedSection.appendChild(botonHome);
+    //     const botonHome = document.createElement('button');
+    //     botonHome.type = 'button';
+    //     botonHome.className = 'home-btn';
+    //     botonHome.textContent = 'go SignIn';
+    //     botonHome.style.display = 'none';
+    //     feedSection.appendChild(botonHome);
 
-//     if(auth.currentUser !== null) {
-//        contenedorPosts.style.display = 'block';
-//        createContainerButtons.style.display = 'block';
+    //     if(auth.currentUser !== null) {
+    //        contenedorPosts.style.display = 'block';
+    //        createContainerButtons.style.display = 'block';
 
-//     }
-//     else {
-//         contenedorPosts.style.display = 'none';
-//         createContainerButtons.style.display = 'none';
+    //     }
+    //     else {
+    //         contenedorPosts.style.display = 'none';
+    //         createContainerButtons.style.display = 'none';
 
-//         alert('debes iniciar sesión');
-//         botonHome.style.display = 'flex';
+    //         alert('debes iniciar sesión');
+    //         botonHome.style.display = 'flex';
 
-//         botonHome.addEventListener('click', () => {
-//             console.log('yo, botonHome, hice click');
-// onNavigate('/login');
-// botonHome.style.display = 'none';
-//         })
+    //         botonHome.addEventListener('click', () => {
+    //             console.log('yo, botonHome, hice click');
+    // onNavigate('/login');
+    // botonHome.style.display = 'none';
+    //         })
 
-//     };
+    //     };
 
     contenedorPosts.className = 'contenedor-posts';
     feedSection.appendChild(contenedorPosts);
@@ -277,7 +277,7 @@ export const feed = () => {
             //--------------botón que aparece para enviar el post editado (en el div de cada post)---------
             const botonEnviarEditar = document.createElement('button');
             botonEnviarEditar.type = 'button';
-            botonEnviarEditar.className = 'post-btn';
+            botonEnviarEditar.className = 'post-btn-save';
             botonEnviarEditar.textContent = 'Save';
             botonEnviarEditar.style.display = 'none';
             divParteInferior.appendChild(botonEnviarEditar);
@@ -292,10 +292,10 @@ export const feed = () => {
                 descripcionPost.focus();
 
 
-                botonEnviarEditar.style.display = 'flex';  
-           });
+                botonEnviarEditar.style.display = 'flex';
+            });
 
-           botonEnviarEditar.addEventListener('click', async () => {
+            botonEnviarEditar.addEventListener('click', async () => {
                 const editar = confirm('Do you want to edit this message?');
                 if (editar) {
                     if (editar) {
@@ -308,10 +308,10 @@ export const feed = () => {
                         const textoEditado = descripcionPost.textContent;
                         try {
                             await updatePost(idPost, {
-                                 "descripcion": textoEditado,
-                                 "date": Timestamp.fromDate(new Date()),
-                                });
-                                botonEnviarEditar.style.display = 'none'; //al dar click en SEND desaparece el boton
+                                "descripcion": textoEditado,
+                                "date": Timestamp.fromDate(new Date()),
+                            });
+                            botonEnviarEditar.style.display = 'none'; //al dar click en SEND desaparece el boton
                             alert('editado con éxito');
                         } catch (error) {
                             console.log(error);
@@ -333,33 +333,25 @@ export const feed = () => {
 
 
 
+            //  botonLike.forEach(btn => {
+            //         btn.addEventListener('click', (e) => {
+            //             const idLikePost = e.target.idPost;
+            //             console.log(botonLike)
+            //             getPost(idLikePost)
+            //                 .then((document) => {
+            //                     const postLike = document.idPost
+            //                     console.log(postLike)
+            //                     if (!postLike.userLike.incluides(idLikePost)) {
+            //                         const likes = (postLike.contadorLikes) + 1;
+            //                         likePost(idLikePost, likes)
+            //                     } else {
+            //                         const likes = (postLike.contadorLikes) - 1;
+            //                         dislikePost(idLikePost, likes)
+            //                     }
+            //                 });
 
-
-
-
-
-
-
-
-            botonLike.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const idLikePost = e.target.idPost;
-                    console.log(botonLike)
-                    // getPost(idLikePost)
-                        // .then((document) => {
-                        //     const postLike = document.idPost
-                        //     console.log(postLike)
-                        //     if (!postLike.userLike.incluides(idLikePost)) {
-                        //         const likes = (postLike.contadorLikes) + 1;
-                        //         likePost(idLikePost, likes)
-                        //     } else {
-                        //         const likes = (postLike.contadorLikes) - 1;
-                        //         dislikePost(idLikePost, likes)
-                        //     }
-                        // });
-
-                });
-            })
+            //         });
+            //     })
 
             // .catch(error => console.log("fallo la promesa de firestore", error))
 
@@ -374,15 +366,22 @@ export const feed = () => {
             <button type="button" class ="aceptar-logout" id="botonAceptar"> Ok </button>
             <button type="button" class ="close-modalLogout" id="botonCancelar"> Cancel </button>
 
-       </div>
-      `;
+         </div>
+        `;
             feedSection.appendChild(modalLogOut);
 
-    return feedSection;
+        return feedSection;
 
-}
-        )}
-    )}
+    });
+
+        
+ });
+
+    
+};
+
+
+
 
 
 const getFecha = (dateTime) => {
@@ -394,5 +393,4 @@ const getFecha = (dateTime) => {
 
     return `${day}/${month}/${year} ${hour}:${minutes}`;
 
-};      
-     
+};

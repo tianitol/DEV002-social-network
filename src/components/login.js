@@ -62,6 +62,9 @@ export const login = () => {
     buttonSI.className = 'btnSubmit';
     buttonSI.id = 'btnEnviarSI';
     formSI.appendChild(buttonSI);
+    buttonSI.addEventListener("submit", (e) => {
+        e.preventDefault();
+    });
 
     const buttonGoogle = document.createElement('button');
     buttonGoogle.textContent = 'Sign in with Google'
@@ -75,7 +78,9 @@ export const login = () => {
 
     buttonGoogle.appendChild(imagenGoogle);
     formSI.appendChild(buttonGoogle);
+    buttonGoogle.addEventListener('click',  () => {
+        
   
-
+    });
     return signinSection;
 }

@@ -10,6 +10,7 @@ const db = getFirestore(app);
 
 //Obtener data de un determinado post(para obtener el id del post y usarlo en la eliminación y actualización)
 export const obtenerPost = async (id) => await getDoc(doc(db, 'posts', id));
+
 export const obtenerUsuario = async (id) => await getDoc(doc(db, 'users', id));
 
 export const getUsuarios = (callback) => {
