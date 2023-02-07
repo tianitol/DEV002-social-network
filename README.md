@@ -2,7 +2,6 @@
 ![imagenFondoReadme](https://user-images.githubusercontent.com/113317909/217329340-72b0c578-fee6-4efb-808b-d243038d8bf2.PNG)
 
 
-
 ## Índice
 
 * [1. Preámbulo](#1-preámbulo)
@@ -11,6 +10,8 @@
 * [4. Prototipo de baja calidad](#4-Prototipo-de-alta-calidad)
 * [5. Prototipo de alta calidad](#4-Prototipo-de-alta-calidad)
 * [6. Organización](#6-Organización)
+* [6. Equipo](#7-Equipo)
+
 
 ## 1. Preámbulo
 
@@ -115,11 +116,11 @@ Utilizamos Figma:
 
  [Figma Dad's Power](https://www.figma.com/file/1MHOh4djL5qDU49IhIfA0M/PROTOTIPO-DE-ALTA-RED-SOCIAL-NVJ?node-id=0%3A1&t=YXrYsFT15GoG3kM0-0)
 
-## 5. Organización
+## 6. Organización
 
 [Github Project](https://github.com/users/tianitol/projects/1/views/1)
 
-## 5. Equipo
+## 7. Equipo
 SR9 : Nicole Henriquez , Jhoanna Mera , Valeria Montero
 
 
