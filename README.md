@@ -118,3 +118,8 @@ Utilizamos Figma:
 ## 5. Organización
 
 [Github Project](https://github.com/users/tianitol/projects/1/views/1)
+
+## 5. Equipo
+SR9 : Nicole Henriquez , Jhoanna Mera , Valeria Montero
+
+
