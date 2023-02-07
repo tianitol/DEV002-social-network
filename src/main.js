@@ -1,7 +1,7 @@
 // Import the functions of Firestore for posting
 import { auth } from './init.js';
 import { onNavigate } from "./js/routes.js";
-import { login, register, loginWithGoogle, verificarSendingMail, logOut } from "./lib/firebase/methodsAuth.js";
+import { logini, register, loginWithGoogle, verificarSendingMail, logOut } from "./lib/firebase/methodsAuth.js";
 import { saveUsers } from "./lib/firebase/methodsFirestore.js";
  
 
@@ -73,73 +73,75 @@ if (signupForm) {
 
 // SIGN IN
 
-const signinForm = document.getElementById('formularioSI');
-if (signinForm) {
-  //console.log('prueba', signinForm);
-  signinForm.addEventListener('submit', async (e) => {
-    console.log('click');
-    e.preventDefault();
-    const emailInput = document.getElementById('idCorreoSI').value;
-    const passwordInput = document.getElementById('idContraseñaSI').value;
-    try {
-      const { emailVerified, email } = await login(auth, emailInput, passwordInput)
-      console.log(emailVerified,email);
-      /* permitir acceder a la página a solo los usuarios que hayan verificado su cuenta a través del correo electrónico enviado */
-      if (emailVerified) {
-        onNavigate('/feed');
-        console.log('Bienvenid@', email);
-      } else {
+// const signinForm = document.getElementById('formularioSI');
+// if (signinForm) {
+//   //console.log('prueba', signinForm);
+//   signinForm.addEventListener('submit', async (e) => {
+//     console.log('click');
+//     e.preventDefault();
+//     const emailInput = document.getElementById('idCorreoSI').value;
+//     const passwordInput = document.getElementById('idContraseñaSI').value;
+//     try {
+//       const { emailVerified, email } = await login(auth, emailInput, passwordInput)
+//       console.log(emailVerified,email);
+//       /* permitir acceder a la página a solo los usuarios que hayan verificado su cuenta a través del correo electrónico enviado */
+//       if (emailVerified) {
+//         onNavigate('/feed');
+//         console.log('Bienvenid@', email);
+//       } else {
 
-        /*  auth.signOut();*/
-        console.log('Por favor realiza la verificación de tu cuenta');
-      }
-      // console.log(emailVerified) /* verificando el observador */
-
-
-      signinForm.reset();
-      signinForm.querySelector('.message-error-email-login').innerHTML = '';
-      signinForm.querySelector('.message-error-password-login').innerHTML = '';
+//         /*  auth.signOut();*/
+//         console.log('Por favor realiza la verificación de tu cuenta');
+//       }
+//       // console.log(emailVerified) /* verificando el observador */
 
 
-    } catch ({ code, message }) {
-      // console.log('error', error.message, error.code, error.response)
+//       signinForm.reset();
+//       signinForm.querySelector('.message-error-email-login').innerHTML = '';
+//       signinForm.querySelector('.message-error-password-login').innerHTML = '';
 
-      if (code === 'auth/user-not-found') {
-        signinForm.querySelector('.message-error-email-login').innerHTML = 'El Usuario no se encuentra registrado';
-      } else if (code === 'auth/wrong-password') {
-        signinForm.querySelector('.message-error-password-login').innerHTML = 'La Contraseña no corresponde al usuario';
-        // } else {
-        //  signinForm.querySelector('.message-error').innerHTML = message; //mensajes por defecto de los otros posibles errores
-        // }
-      }
 
-      console.log('signIn');
-    };
-  });
-};
+//     } catch ({ code, message }) {
+//       // console.log('error', error.message, error.code, error.response)
+
+//       if (code === 'auth/user-not-found') {
+//         signinForm.querySelector('.message-error-email-login').innerHTML = 'El Usuario no se encuentra registrado';
+//       } else if (code === 'auth/wrong-password') {
+//         signinForm.querySelector('.message-error-password-login').innerHTML = 'La Contraseña no corresponde al usuario';
+//         // } else {
+//         //  signinForm.querySelector('.message-error').innerHTML = message; //mensajes por defecto de los otros posibles errores
+//         // }
+//       }
+
+//       console.log('signIn');
+//     };
+//   });
+// };
+
+
 
 
 // GOOGLE LOGIN
-const googleButton = document.getElementById('entrarGoogle')
-if (googleButton) {
-  googleButton.addEventListener('click', async (e) => {
-    e.preventDefault();
-    try {
-      const { emailVerified, email } = await loginWithGoogle(auth);
-      signinForm.reset();
-      if (emailVerified) {
-        onNavigate('/feed');
-        console.log('Bienvenid@', email);
-      } else {
+// const googleButton = document.getElementById('entrarGoogle')
+// if (googleButton) {
+//   googleButton.addEventListener('click', async (e) => {
+//     e.preventDefault();
+//     try {
+//       const { emailVerified, email } = await loginWithGoogle(auth);
+//       signinForm.reset();
+//       if (emailVerified) {
+//         onNavigate('/feed');
+//         console.log('Bienvenid@', email);
+//       } else {
 
-        /*  auth.signOut();*/
-        console.log('Por favor realiza la verificación de tu cuenta');
-      }
-    }
+//         /*  auth.signOut();*/
+//         console.log('Por favor realiza la verificación de tu cuenta');
+//       }
+//     }
 
-    catch (error) {
+//     catch (error) {
 
-    };
-  });
+//     };
+//   });
 
-};
+// };

@@ -1,4 +1,4 @@
-import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, sendEmailVerification } from '../../init.js'
+import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, sendEmailVerification, signOut } from '../../init.js'
 
 const user = auth.currentUser;
 
@@ -15,41 +15,6 @@ const user = auth.currentUser;
 //     return uid;
 // };
 
-// construyendo un observador de Auth
-export const verifiedWithEmail = (auth) => {
-    onAuthStateChanged(auth, (user) => {
-       
-        if (user) {
-            // User is signed in, see docs for a list of available properties
-            // https://firebase.google.com/docs/reference/js/firebase.User
-            var email = user.email;
-            const uid = user.uid; // código único del usuario asignado por Firebase
-
-            // El usuario se encuentra logueado
-            console.log('auth:sign in');
-
-            var emailVerified = user.emailVerified;
-            if (emailVerified === false) {
-                console.log('Email no verificado');
-            } else {
-                console.log('Email verificado');
-            }
-            // ...
-        } else {      // el suusario no se encuentra logueado
-        }
-    });
-}
-
-export const verificarSendingMail = async (auth) => {
-    try {
-        const enviarCorreoVerificado = await sendEmailVerification (auth.currentUser)
-        alert('por favor verifique su correo')
-        return enviarCorreoVerificado;
-    }catch(error){
-        return error
-    }
-};
-
 // export const verificarSendingMail = (auth) => {
 //     sendEmailVerification(auth.currentUser)
 //         .then(() => {
@@ -58,6 +23,16 @@ export const verificarSendingMail = async (auth) => {
 //             // ...
 //         });
 // }
+
+export const verificarSendingMail = async (auth) => {
+    try{
+        const enviarCorreoVerificado= await sendEmailVerification(auth.currentUser)
+        alert('por favor verifique su correo');
+        return enviarCorreoVerificado;    
+    }catch(error){
+            return error;
+    }
+}
 
 // export const register = (auth, signupEmail, signupPassword) => {
 //     return new Promise((resolve, reject) => {    //resolve para retornar el valor deseado cuando una función se ejecute y reject para cuando una función retorna un valor no deseado./
@@ -90,7 +65,7 @@ export const verificarSendingMail = async (auth) => {
 //         })
 //     }
 
-export const login = async(auth, email, password) => {
+export const logini = async(auth, email, password) => {
     try{
        const user = await signInWithEmailAndPassword(auth, email, password)
        return user.user;
@@ -99,25 +74,49 @@ export const login = async(auth, email, password) => {
     }
 }
     
+//    export const logOut = (auth) => {
+//         auth.signOut().then(() => {
+//             console.log('sign out');})
+//             .catch((error) => {
+//              // An error happened.
+//              });
+//     };
 
-   export const logOut = (auth) => {
-        auth.signOut().then(() => {
-        });
-    };
+
+export const logOut =async  (auth) => {
+   try {
+    await signOut(auth)
+    return Promise.resolve(true)
+    // Sign-out successful.
+  } catch(error)  {
+    return Promise.reject(error) 
+    // An error happened.
+  };
+};
 
 
-    export const loginWithGoogle = (auth) => {
-        return new Promise((resolve, reject) => {    //resolve para retornar el valor deseado cuando una función se ejecute y reject para cuando una función retorna un valor no deseado./
+    // export const loginWithGoogle = (auth) => {
+    //     return new Promise((resolve, reject) => {    //resolve para retornar el valor deseado cuando una función se ejecute y reject para cuando una función retorna un valor no deseado./
 
-        const provider = new GoogleAuthProvider();
+    //     const provider = new GoogleAuthProvider();
 
-       return signInWithPopup(auth, provider)
-        .then(({ user }) => resolve(user))
-        .catch(error => reject(error))
+    //    return signInWithPopup(auth, provider)
+    //     .then(({ user }) => resolve(user))
+    //     .catch(error => reject(error))
               
-        });
-    };
+    //     });
+    // };
 
+
+    export const loginWithGoogle = async (auth) => {
+        try{
+        const provider = new GoogleAuthProvider();
+        const user = await signInWithPopup(auth, provider)
+        return user.user;
+        }catch(error){
+        return error
+        }
+    }
 
 
     // export const loginWithGoogle = (auth) => {

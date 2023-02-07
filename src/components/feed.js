@@ -95,11 +95,7 @@ export const feed = () => {
 
                     let usuarios = itemUser.data();
                     console.log(usuarios);
-                    if (auth.currentUser == null) {
-                        alert('debes iniciar sesión para postear algo')
-                    }
-
-                    else if (auth.currentUser.uid === usuarios.idUsuario) {
+                    if (auth.currentUser.uid === usuarios.idUsuario) {
                         usuarioActual = auth.currentUser.uid;
                         const usuarioLogeado = usuarios.usuario;
                         console.log(usuarioLogeado);
@@ -138,33 +134,35 @@ export const feed = () => {
 
 
     //----SE INTENTA BLOQUEAR EL MURO, VISIBLE SOLO PARA USUARIOS LOGUEADOS----
-    // se crea un boton para volver al inicio con onNavigate dandole el click
-    //     const botonHome = document.createElement('button');
-    //     botonHome.type = 'button';
-    //     botonHome.className = 'home-btn';
-    //     botonHome.textContent = 'go SignIn';
-    //     botonHome.style.display = 'none';
-    //     feedSection.appendChild(botonHome);
+    //se crea un boton para volver al inicio con onNavigate dandole el click
+        const botonHome = document.createElement('button');
+        botonHome.type = 'button';
+        botonHome.className = 'home-btn';
+        botonHome.textContent = 'go Home';
+        botonHome.style.display = 'none';
+        feedSection.appendChild(botonHome);
 
-    //     if(auth.currentUser !== null) {
-    //        contenedorPosts.style.display = 'block';
-    //        createContainerButtons.style.display = 'block';
+        if(auth.currentUser !== null) {
+           contenedorPosts.style.display = 'block';
+           createContainerButtons.style.display = 'block';
 
-    //     }
-    //     else {
-    //         contenedorPosts.style.display = 'none';
-    //         createContainerButtons.style.display = 'none';
+        }
+        else {
+            contenedorPosts.style.display = 'none';
+            createContainerButtons.style.display = 'none';
 
-    //         alert('debes iniciar sesión');
-    //         botonHome.style.display = 'flex';
+            alert('debes iniciar sesión');
+            botonHome.style.display = 'flex';
 
-    //         botonHome.addEventListener('click', () => {
-    //             console.log('yo, botonHome, hice click');
-    // onNavigate('/login');
-    // botonHome.style.display = 'none';
-    //         })
+            botonHome.addEventListener('click', () => {
+                console.log('yo, botonHome, hice click');
+    onNavigate('/');
+    botonHome.style.display = 'none';
+            })
 
-    //     };
+        };
+//----------------------------------------------------------
+
 
     contenedorPosts.className = 'contenedor-posts';
     feedSection.appendChild(contenedorPosts);
