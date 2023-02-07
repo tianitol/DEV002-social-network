@@ -7,8 +7,8 @@
 * [1. Preámbulo](#1-preámbulo)
 * [2.Investigación UX](#2-Ivestigación-UX)
 * [3. Historias de usuario](#3-Hstorias-de-usuario)
-* [4. Prototipo de baja calidad](#4-Prototipo-de-alta-calidad)
-* [5. Prototipo de alta calidad](#4-Prototipo-de-alta-calidad)
+* [4. Prototipo de baja fidelidad](#4-Prototipo-de-alta-calidad)
+* [5. Prototipo de alta fidelidad](#4-Prototipo-de-alta-calidad)
 * [6. Organización](#6-Organización)
 * [6. Equipo](#7-Equipo)
 
@@ -77,6 +77,7 @@ Implementación del logout
 
 Definición determinada:  
 Ver los post existentes en tiempo real.
+
 HU 5 :📝
 Como usuario logueado quiero poder editar mi propio post, para poder corregir y complementar lo escrito.
 Criterios de aceptación:
@@ -90,7 +91,7 @@ Criterios de aceptación:
 Se muestra un alert donde te pregunta ¿Estás seguro de eliminar el post?
 Se elimina el post y se actualiza en tiempo real.
 
-HU 7 :
+HU 7 :📝
 Como usuario logueado quiero poder dar like a un post y visualizar los likes que tiene un post, para demostrar que me agrado el post publicado y saber cuales son los post con mas interacción. 
 Criterios de aceptación:
 Poder visualizar el botón del like.
@@ -101,12 +102,12 @@ Criterios de aceptación:
 Solo poder dar like una vez por usuario.
 Poder quitar el like con el mismo botón al presionar por segunda vez.
 
-## 4. Prototipo de baja calidad
+## 4. Prototipo de baja fidelidad
 Utilizamos la aplicación Miro:
 ![Prototipo de baja fidelidad ](https://user-images.githubusercontent.com/113317909/217308821-e4b535d8-6dd7-43d6-9ec9-8dd066bfef6c.png)
 
 
-## 5. Prototipo de alta calidad
+## 5. Prototipo de alta fidelidad movil 
 Utilizamos Figma: 
 
 ![prototipo1 readme](https://user-images.githubusercontent.com/113317909/217311707-00d1802b-2776-4446-a699-57211640b0dd.PNG)
@@ -115,8 +116,19 @@ Utilizamos Figma:
 
 
  [Figma Dad's Power](https://www.figma.com/file/1MHOh4djL5qDU49IhIfA0M/PROTOTIPO-DE-ALTA-RED-SOCIAL-NVJ?node-id=0%3A1&t=YXrYsFT15GoG3kM0-0)
+ 
+ ## 6. Prototipo final desktop
+ ![final proyecto](https://user-images.githubusercontent.com/108588943/217341298-51875e2d-0458-4b3d-a1c3-c0a79dcb436c.png)
 
-## 6. Organización
+
+ ## 8 . Testeo de usabilidad 
+Como usuario puedo registrarse con exito.
+lo cual me  permite ingresar al feed y ver todas las publicaciones.
+Tambien mpuedo publicar y reaccionar a un post.
+Por lo tanto tambien me brinda la opcion de salir de la app.
+
+
+ ## 8. Organización
 
 [Github Project](https://github.com/users/tianitol/projects/1/views/1)
 
