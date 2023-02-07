@@ -1,5 +1,7 @@
 # DAD'S POWER
-    ![imagenFondoReadme](https://user-images.githubusercontent.com/113317909/217328664-e7c8002a-45af-46f5-b6df-9dd7acb2872d.PNG)
+![imagenFondoReadme](https://user-images.githubusercontent.com/113317909/217329340-72b0c578-fee6-4efb-808b-d243038d8bf2.PNG)
+
+
 
 ## Índice
 
