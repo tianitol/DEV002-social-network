@@ -1,6 +1,6 @@
 import { savePosts, getPost, deletePost, obtenerPost, updatePost, obtenerUsuario, getUsuarios, toggleLike } from "../lib/firebase/methodsFirestore.js";
 import { logOut } from "../lib/firebase/methodsAuth.js";
-import { Timestamp, auth} from "../init.js";
+import { Timestamp, auth } from "../init.js";
 import { onNavigate } from "../js/routes.js";
 export const feed = () => {
 
@@ -29,7 +29,7 @@ export const feed = () => {
     avatarImg.src = '/components/imagen/avatar3.png';
     perfil.appendChild(avatarImg);
 
-   
+
 
     containerHeader.appendChild(perfil);
 
@@ -109,8 +109,6 @@ export const feed = () => {
                 });
                 textPost = '';
             })
-
-
         }
 
         formulario.reset();
@@ -135,33 +133,33 @@ export const feed = () => {
 
     //----SE INTENTA BLOQUEAR EL MURO, VISIBLE SOLO PARA USUARIOS LOGUEADOS----
     //se crea un boton para volver al inicio con onNavigate dandole el click
-        const botonHome = document.createElement('button');
-        botonHome.type = 'button';
-        botonHome.className = 'home-btn';
-        botonHome.textContent = 'go Home';
-        botonHome.style.display = 'none';
-        feedSection.appendChild(botonHome);
-
-        if(auth.currentUser !== null) {
-           contenedorPosts.style.display = 'block';
-           createContainerButtons.style.display = 'block';
-
-        }
-        else {
-            contenedorPosts.style.display = 'none';
-            createContainerButtons.style.display = 'none';
-
-            alert('debes iniciar sesión');
-            botonHome.style.display = 'flex';
-
-            botonHome.addEventListener('click', () => {
-                console.log('yo, botonHome, hice click');
-    onNavigate('/');
+    const botonHome = document.createElement('button');
+    botonHome.type = 'button';
+    botonHome.className = 'home-btn';
+    botonHome.textContent = 'go Home';
     botonHome.style.display = 'none';
-            })
+    feedSection.appendChild(botonHome);
 
-        };
-//----------------------------------------------------------
+    if (auth.currentUser !== null) {
+        contenedorPosts.style.display = 'block';
+        createContainerButtons.style.display = 'block';
+
+    }
+    else {
+        contenedorPosts.style.display = 'none';
+        createContainerButtons.style.display = 'none';
+
+        alert('debes iniciar sesión');
+        botonHome.style.display = 'flex';
+
+        botonHome.addEventListener('click', () => {
+            console.log('yo, botonHome, hice click');
+            onNavigate('/');
+            botonHome.style.display = 'none';
+        })
+
+    };
+    //----------------------------------------------------------
 
 
     contenedorPosts.className = 'contenedor-posts';
@@ -175,7 +173,7 @@ export const feed = () => {
             let posts = item.data()
             //console.log(item.id);
             posts = { ...posts, time: new Date(posts.date.seconds * 1000) }
-             console.log(posts);
+            console.log(posts);
             const dateTime = getFecha(posts.time); /* trae la fecha como un timestamp, new Date lo convierte a fecha completa en inglés y con la función getFecha convertimos a formato d/m/y h:m */
 
 
@@ -341,7 +339,7 @@ export const feed = () => {
                 const editar = confirm('Do you want to edit this message?');
                 if (editar) {
                     if (editar) {
-                       let textPostEdit = item.data().descripcion;
+                        let textPostEdit = item.data().descripcion;
                         // obtenerPost(item.id).then(console.log(item.id)).catch();
                         let idPost = '';
                         if (item.id) {
@@ -407,14 +405,14 @@ export const feed = () => {
         openModal();
         const aceptarLogout = document.getElementById('botonAceptar');
         console.log(aceptarLogout);
-    //console.log(logoutButton);
-    if (aceptarLogout) {
-      aceptarLogout.addEventListener('click', () => {
-        logOut(auth);
-        onNavigate('/');
-    console.log('aceptar Logout');
-      });
-    }
+        //console.log(logoutButton);
+        if (aceptarLogout) {
+            aceptarLogout.addEventListener('click', () => {
+                logOut(auth);
+                onNavigate('/');
+                console.log('aceptar Logout');
+            });
+        }
     });
 
 
