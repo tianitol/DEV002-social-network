@@ -419,6 +419,10 @@ export const feed = () => {
 
     const closeModalLogout = modalLogOut.querySelector('#botonCancelar'); //no se puede usar getElementById porque aun no existe
     if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
+    
+
+    return feedSection;
+
 
     return feedSection;
 
