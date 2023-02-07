@@ -1,5 +1,5 @@
-import { login, logOut, register } from "../src/lib/firebase/methodsAuth.js";
-import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "../src/init.js";
+import { logini, logOut, register, loginWithGoogle} from "../src/lib/firebase/methodsAuth.js";
+import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "../src/init.js";
 
 jest.mock('../src/init.js', () => {
     return {
@@ -24,27 +24,35 @@ jest.mock('../src/init.js', () => {
             if (!auth)
                 return Promise.reject('no auth parameter')
         }),
+
+        // const provider = new GoogleAuthProvider()
+        signInWithPopup: jest.fn((auth, GoogleAuthProvider) => {
+            if (!auth) {
+                throw new Error('ERROR')
+            }
+            Promise.resolve({ user: 'Jhoann' })
+        }),
         //siguiente funcion
     }
 })
 
-describe('Tests for the login function', () => {
+describe('Tests for the logini function', () => {
     const email = "admin@test.com";
     const pass = "admin123";
 
     it('Should call signInWithEmailAndPasword', async () => {
-        await login(auth, email, pass)
+        await logini(auth, email, pass)
         expect(signInWithEmailAndPassword).toHaveBeenCalled()
     })
 
     it('Shoul call signInWithEmailAndPassword', async () => {
-        await login(auth, email, pass)
+        await logini(auth, email, pass)
         expect(signInWithEmailAndPassword).toHaveBeenCalledWith(auth, email, pass)
     })
 
     it('Should throw an error if executed without arguments', async () => {
         try {
-            await login()
+            await logini()
         }
         catch (error) {
             expect(error).toMatch('ERROR')
@@ -96,6 +104,31 @@ describe('Tests for the logOut function', () => {
         }
         catch (error) {
             expect(error).toBe('no auth parameter')
+        }
+    })
+})
+
+
+describe('Tests for the loginWithGoogle function', () => {
+    const email = "admin@test.com";
+    const pass = "admin123";
+
+    // it('Should call signInWithPopup', async () => {
+    //     await loginWithGoogle(auth)
+    //     expect(signInWithPopup).toHaveBeenCalled()
+    // })
+
+    // it('Shoul call signInWithPopup', async () => {
+    //     await loginWithGoogle(auth)
+    //     expect(signInWithPopup).toHaveBeenCalledWith(auth, GoogleAuthProvider)
+    // })
+
+    it('Should throw an error if executed without arguments', async () => {
+        try {
+            await loginWithGoogle()
+        }
+        catch (error) {
+            expect(error).toMatch('ERROR')
         }
     })
 })

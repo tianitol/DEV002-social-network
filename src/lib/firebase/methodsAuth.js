@@ -57,7 +57,7 @@ export const verificarSendingMail = (auth) => {
 //         })
 //     }
 
-export const login = async(auth, email, password) => {
+export const logini = async(auth, email, password) => {
     try{
        const user = await signInWithEmailAndPassword(auth, email, password)
        return user.user;
@@ -66,7 +66,6 @@ export const login = async(auth, email, password) => {
     }
 }
     
-
 //    export const logOut = (auth) => {
 //         auth.signOut().then(() => {
 //             console.log('sign out');})
@@ -88,18 +87,28 @@ export const logOut =async  (auth) => {
 };
 
 
-    export const loginWithGoogle = (auth) => {
-        return new Promise((resolve, reject) => {    //resolve para retornar el valor deseado cuando una función se ejecute y reject para cuando una función retorna un valor no deseado./
+    // export const loginWithGoogle = (auth) => {
+    //     return new Promise((resolve, reject) => {    //resolve para retornar el valor deseado cuando una función se ejecute y reject para cuando una función retorna un valor no deseado./
 
-        const provider = new GoogleAuthProvider();
+    //     const provider = new GoogleAuthProvider();
 
-       return signInWithPopup(auth, provider)
-        .then(({ user }) => resolve(user))
-        .catch(error => reject(error))
+    //    return signInWithPopup(auth, provider)
+    //     .then(({ user }) => resolve(user))
+    //     .catch(error => reject(error))
               
-        });
-    };
+    //     });
+    // };
 
+
+    export const loginWithGoogle = async (auth) => {
+        try{
+        const provider = new GoogleAuthProvider();
+        const user = await signInWithPopup(auth, provider)
+        return user.user;
+        }catch(error){
+        return error
+        }
+    }
 
 
     // export const loginWithGoogle = (auth) => {
