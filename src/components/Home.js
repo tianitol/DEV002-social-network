@@ -2,6 +2,14 @@ import { onNavigate } from '../js/routes.js'
 
 export const home = () => {
    const homeDiv = document.createElement('div');
+   homeDiv.className = 'divHome';
+   // const imgPoster = document.createElement('img');
+   // imgPoster.src = '/components/imagen/dadPoster0.png';
+   // imgPoster.alt = 'collage de imagenes que muestra a padres con sus hijos en diversas situaciones cotidianas';
+   // imgPoster.className = 'imgPoster';
+
+   // homeDiv.appendChild(imgPoster);
+
 
    const barraNavegacion = document.createElement('nav');
    barraNavegacion.className = 'navBarHome';

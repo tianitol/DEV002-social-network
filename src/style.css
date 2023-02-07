@@ -543,7 +543,7 @@ input::placeholder {
 .container-buttons button {
   padding: 1rem;
   border: none;
-  background: transparent;
+  /* background: transparent; */
 }
 
 .perfil-button {
@@ -773,6 +773,10 @@ h4.fecha-post {
     /*para que el hijo posicionarse respecto al section-feed*/
     /* justify-content: center; */
     background: linear-gradient(180deg, #334E6F 0%, #8F9CA3 100%)
+  }
+
+  imgPoster{
+    
   }
 
   .tituloh2-feed {

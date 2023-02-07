@@ -229,6 +229,8 @@ export const feed = () => {
             btnEditar.className = 'boton-editar';
             btnEditar.id = 'botonEditar';
             btnEditar.innerHTML = '<i class="fa-solid fa-pencil fa-lg"></i>';
+            btnEditar.style.display = 'none';
+
             divParteSuperior.appendChild(btnEditar);
 
             const btnEliminar = document.createElement('button');
@@ -236,8 +238,19 @@ export const feed = () => {
             btnEliminar.className = 'boton-eliminar';
             btnEliminar.id = 'botonEliminar';
             btnEliminar.innerHTML = '<i class="fa-solid fa-trash-can fa-lg"></i>';
+            btnEliminar.style.display = 'none';
+
             divParteSuperior.appendChild(btnEliminar);
 
+            if (auth.currentUser.uid === posts.idUsuarioLogueado) {
+                btnEditar.style.display = 'flex';
+                btnEliminar.style.display = 'flex';
+
+            } else {
+                btnEditar.style.display = 'none';
+                btnEliminar.style.display = 'none';
+
+            }
             const divParteInferior = document.createElement('div');
             divParteInferior.className = 'parte-inferior-post';
             divContainerPost.appendChild(divParteInferior);
@@ -419,13 +432,9 @@ export const feed = () => {
 
     const closeModalLogout = modalLogOut.querySelector('#botonCancelar'); //no se puede usar getElementById porque aun no existe
     if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
-    
-
-    return feedSection;
 
 
     return feedSection;
-
 };
 
 
