@@ -1,11 +1,11 @@
 #  Red Social DAD'S POWER
-![inicioApp](https://user-images.githubusercontent.com/113317909/217306786-1951a285-1336-4a17-9e9f-b9b0410c95ae.png)
+![imagenFondoReadme](https://user-images.githubusercontent.com/113317909/217308131-5cb279a3-da88-41d6-9126-ce31ff314438.PNG)
 
 ## Índice
 
 * [1. Preámbulo](#1-preámbulo)
 * [2.Investigación UX](#2-Ivestigación-UX)
-* [3. Historias de usuario](#3-historias-de-usuario)
+* [3. Historias de usuario](#3-Hstorias-de-usuario)
 * [4. Prototipo de baja calidad](#4-Prototipo-de-alta-calidad)
 * [5. Prototipo de alta calidad](#4-Prototipo-de-alta-calidad)
 * [6. Organización](#6-Organización)
@@ -99,12 +99,17 @@ Solo poder dar like una vez por usuario.
 Poder quitar el like con el mismo botón al presionar por segunda vez.
 
 ## 4. Prototipo de baja calidad
-
+Utilizamos la aplicación Miro:
+![Prototipo de baja fidelidad ](https://user-images.githubusercontent.com/113317909/217308821-e4b535d8-6dd7-43d6-9ec9-8dd066bfef6c.png)
 
 
 ## 5. Prototipo de alta calidad
+Utilizamos Figma: 
 
-[PROTOTIPO DE ALTA CALIDAD](http://https://www.figma.com/file/1MHOh4djL5qDU49IhIfA0M/PROTOTIPO-DE-ALTA-RED-SOCIAL-NVJ?node-id=0%3A1&t=YXrYsFT15GoG3kM0-0 "PROTOTIPO DE ALTA CALIDAD")### Features
+![prototipo1 readme](https://user-images.githubusercontent.com/113317909/217311707-00d1802b-2776-4446-a699-57211640b0dd.PNG)
+
+![prototipo2 readme](https://user-images.githubusercontent.com/113317909/217311792-607fd0e4-79eb-46bf-a710-7abfc39e97c9.PNG)
+
 
  [Figma Dad's Power](https://www.figma.com/file/1MHOh4djL5qDU49IhIfA0M/PROTOTIPO-DE-ALTA-RED-SOCIAL-NVJ?node-id=0%3A1&t=YXrYsFT15GoG3kM0-0)
 
