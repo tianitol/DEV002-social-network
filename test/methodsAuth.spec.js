@@ -1,5 +1,5 @@
-import { logini, logOut, register, loginWithGoogle} from "../src/lib/firebase/methodsAuth.js";
-import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "../src/init.js";
+import { logini, logOut, register, loginWithGoogle, verificarSendingMail} from "../src/lib/firebase/methodsAuth.js";
+import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, sendEmailVerification } from "../src/init.js";
 
 jest.mock('../src/init.js', () => {
     return {
@@ -32,6 +32,10 @@ jest.mock('../src/init.js', () => {
             }
             Promise.resolve({ user: 'Jhoann' })
         }),
+
+        sendEmailVerification: jest.fn((auth)=>{
+            if(!auth) return Promise.reject()
+        })
         //siguiente funcion
     }
 })
@@ -110,17 +114,15 @@ describe('Tests for the logOut function', () => {
 
 
 describe('Tests for the loginWithGoogle function', () => {
-    const email = "admin@test.com";
-    const pass = "admin123";
 
-    // it('Should call signInWithPopup', async () => {
-    //     await loginWithGoogle(auth)
-    //     expect(signInWithPopup).toHaveBeenCalled()
+    // it('Should call verificarSendingMail', async () => {
+    //     await verificarSendingMail(auth)
+    //     expect(sendEmailVerification).toHaveBeenCalled()
     // })
 
     // it('Shoul call signInWithPopup', async () => {
-    //     await loginWithGoogle(auth)
-    //     expect(signInWithPopup).toHaveBeenCalledWith(auth, GoogleAuthProvider)
+    //     await verificarSendingMail(auth)
+    //     expect(sendEmailVerification).toHaveBeenCalledWith(auth, GoogleAuthProvider)
     // })
 
     it('Should throw an error if executed without arguments', async () => {
@@ -131,4 +133,37 @@ describe('Tests for the loginWithGoogle function', () => {
             expect(error).toMatch('ERROR')
         }
     })
+})
+
+
+describe('Tests for the verificarSendingMail function', () => {
+
+    // it('Should call sendEmailVerification', async () => {
+    //     await verificarSendingMail(auth)
+    //     expect(sendEmailVerification).toHaveBeenCalled()
+    // })
+
+    // it('Shoul call sendEmailVerification', async () => {
+    //     await verificarSendingMail(auth)
+    //     expect(sendEmailVerification).toHaveBeenCalledWith(auth, GoogleAuthProvider)
+    // })
+
+    // it('Should throw an error if executed without arguments', async () => {
+    //     try {
+    //         await verificarSendingMail()
+    //     }
+    //     catch (error) {
+    //         expect(error).toMatch('ERROR')
+    //     }
+    // })
+
+it('Should throw an error if executed without arguments', async () => {
+        try {
+            await register()
+        }
+        catch (error) {
+            expect(error).toBe('generic_failure')
+        }
+    })
+    
 })

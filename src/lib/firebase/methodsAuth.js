@@ -15,15 +15,23 @@ const user = auth.currentUser;
 //     return uid;
 // };
 
+// export const verificarSendingMail = (auth) => {
+//     sendEmailVerification(auth.currentUser)
+//         .then(() => {
+//             // Email verification sent!
+//             alert('por favor verifique su correo');
+//             // ...
+//         });
+// }
 
-
-export const verificarSendingMail = (auth) => {
-    sendEmailVerification(auth.currentUser)
-        .then(() => {
-            // Email verification sent!
-            alert('por favor verifique su correo');
-            // ...
-        });
+export const verificarSendingMail = async (auth) => {
+    try{
+        const enviarCorreoVerificado= await sendEmailVerification(auth.currentUser)
+        alert('por favor verifique su correo');
+        return enviarCorreoVerificado;    
+    }catch(error){
+            return error;
+    }
 }
 
 // export const register = (auth, signupEmail, signupPassword) => {
