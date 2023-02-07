@@ -177,7 +177,7 @@ export const feed = () => {
             let posts = item.data()
             //console.log(item.id);
             posts = { ...posts, time: new Date(posts.date.seconds * 1000) }
-             console.log(posts);
+             //console.log(posts);
             const dateTime = getFecha(posts.time); /* trae la fecha como un timestamp, new Date lo convierte a fecha completa en inglés y con la función getFecha convertimos a formato d/m/y h:m */
 
 
@@ -423,6 +423,10 @@ export const feed = () => {
 
     const closeModalLogout = modalLogOut.querySelector('#botonCancelar'); //no se puede usar getElementById porque aun no existe
     if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
+    
+
+    return feedSection;
+
 
 
 };
