@@ -106,8 +106,7 @@ Poder quitar el like con el mismo botón al presionar por segunda vez.
 [PROTOTIPO DE ALTA CALIDAD](http://https://www.figma.com/file/1MHOh4djL5qDU49IhIfA0M/PROTOTIPO-DE-ALTA-RED-SOCIAL-NVJ?node-id=0%3A1&t=YXrYsFT15GoG3kM0-0 "PROTOTIPO DE ALTA CALIDAD")### Features
 
  [Figma Dad's Power](https://www.figma.com/file/1MHOh4djL5qDU49IhIfA0M/PROTOTIPO-DE-ALTA-RED-SOCIAL-NVJ?node-id=0%3A1&t=YXrYsFT15GoG3kM0-0)
-https://www.figma.com/file/1MHOh4djL5qDU49IhIfA0M/PROTOTIPO-DE-ALTA-RED-SOCIAL-NVJ?node-id=0%3A1&t=YXrYsFT15GoG3kM0-0
 
-## 5. Prototipo de alta calidad
+## 5. Organización
 
 [Github Project](https://github.com/users/tianitol/projects/1/views/1)
