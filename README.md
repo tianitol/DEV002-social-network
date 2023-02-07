@@ -1,5 +1,5 @@
 #  Red Social DAD'S POWER
-![imagenFondoReadme](https://user-images.githubusercontent.com/113317909/217308131-5cb279a3-da88-41d6-9126-ce31ff314438.PNG)
+![logoReadme](https://user-images.githubusercontent.com/113317909/217327816-9303188f-4efa-454e-a827-72170aa49c0e.PNG)
 
 ## Índice
 
