@@ -1,5 +1,5 @@
-import { login } from "../src/lib/firebase/methodsAuth.js";
-import { auth, signInWithEmailAndPassword } from "../src/init.js";
+import { login, register, verificarSendingMail,  } from "../src/lib/firebase/methodsAuth.js";
+import { auth, signInWithEmailAndPassword, sendEmailVerification } from "../src/init.js";
 
 jest.mock('../src/init.js', () => {
     return {
@@ -12,6 +12,10 @@ jest.mock('../src/init.js', () => {
             }
             Promise.resolve({ user: 'Jhoann' })
         }),
+        sendEmailVerification: jest.fn((auth) => {
+            if (!auth) return Promise.reject()
+        }),
+        
         //siguiente funcion
     }
 })
@@ -38,5 +42,15 @@ describe('Tests for the login function', ()=> {
             expect(error).toMatch('ERROR')
         }
     })
-})
+
+
+    it('should throw an error sendEmailVerification firebase function', async()=>{
+        try {
+            await register()
+        } catch (error) {
+            expect(error).toBe('generic_failure')
+        }
+    })
+});
+
 

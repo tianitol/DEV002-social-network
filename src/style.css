@@ -804,6 +804,9 @@ h4.fecha-post {
 
   .container-buttons {
     background-color: transparent;
+    width: 100%;
+    bottom: 0px;
+    margin: 0px 20px 0px 20px;
   }
 
   .perfil-button {

@@ -343,7 +343,7 @@ export const feed = () => {
                 const editar = confirm('Do you want to edit this message?');
                 if (editar) {
                     if (editar) {
-                        textPostEdit = item.data().descripcion;
+                       let textPostEdit = item.data().descripcion;
                         // obtenerPost(item.id).then(console.log(item.id)).catch();
                         let idPost = '';
                         if (item.id) {
@@ -424,6 +424,7 @@ export const feed = () => {
     const closeModalLogout = modalLogOut.querySelector('#botonCancelar'); //no se puede usar getElementById porque aun no existe
     if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
 
+    return feedSection;
 
 };
 

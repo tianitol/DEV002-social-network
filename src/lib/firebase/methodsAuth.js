@@ -35,23 +35,29 @@ export const verifiedWithEmail = (auth) => {
                 console.log('Email verificado');
             }
             // ...
-        } else {
-            // el suusario no se encuentra logueado
-            console.log('auth: log out');
+        } else {      // el suusario no se encuentra logueado
         }
     });
 }
 
+export const verificarSendingMail = async (auth) => {
+    try {
+        const enviarCorreoVerificado = await sendEmailVerification (auth.currentUser)
+        alert('por favor verifique su correo')
+        return enviarCorreoVerificado;
+    }catch(error){
+        return error
+    }
+};
 
-
-export const verificarSendingMail = (auth) => {
-    sendEmailVerification(auth.currentUser)
-        .then(() => {
-            // Email verification sent!
-            alert('por favor verifique su correo');
-            // ...
-        });
-}
+// export const verificarSendingMail = (auth) => {
+//     sendEmailVerification(auth.currentUser)
+//         .then(() => {
+//             // Email verification sent!
+//             alert('por favor verifique su correo');
+//             // ...
+//         });
+// }
 
 // export const register = (auth, signupEmail, signupPassword) => {
 //     return new Promise((resolve, reject) => {    //resolve para retornar el valor deseado cuando una función se ejecute y reject para cuando una función retorna un valor no deseado./
