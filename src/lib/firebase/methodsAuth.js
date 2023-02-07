@@ -1,4 +1,4 @@
-import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, sendEmailVerification } from '../../init.js'
+import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, sendEmailVerification, signOut } from '../../init.js'
 
 const user = auth.currentUser;
 
@@ -67,11 +67,25 @@ export const login = async(auth, email, password) => {
 }
     
 
-   export const logOut = (auth) => {
-        auth.signOut().then(() => {
-            console.log('sign out');
-        });
-    };
+//    export const logOut = (auth) => {
+//         auth.signOut().then(() => {
+//             console.log('sign out');})
+//             .catch((error) => {
+//              // An error happened.
+//              });
+//     };
+
+
+export const logOut =async  (auth) => {
+   try {
+    await signOut(auth)
+    return Promise.resolve(true)
+    // Sign-out successful.
+  } catch(error)  {
+    return Promise.reject(error) 
+    // An error happened.
+  };
+};
 
 
     export const loginWithGoogle = (auth) => {
