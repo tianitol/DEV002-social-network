@@ -11,6 +11,7 @@ const db = getFirestore(app);
 
 //Obtener data de un determinado post(para obtener el id del post y usarlo en la eliminación y actualización)
 export const obtenerPost = async (id) => await getDoc(doc(db, 'posts', id));
+
 export const obtenerUsuario = async (id) => await getDoc(doc(db, 'users', id));
 
 export const getUsuarios = (callback) => {
@@ -28,16 +29,6 @@ export const getPost = (callback) => {
   const qs = query(collection(db, 'posts'), orderBy('date', 'desc'));
   onSnapshot(qs, (callback))
 }
-
-// mostrar tiempo  del post 
-// const date = new Date().toLocaleDateString('es-es', {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'})
-
-//-----------------------------Eliminando post---------------------------
-
-
-
-// mostrar tiempo  del post 
-// const date = new Date().toLocaleDateString('es-es', {month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'})
 
 //-----------------------------Eliminando post---------------------------
 export const deletePost = async (id) => await deleteDoc(doc(db, 'posts', id));
@@ -59,6 +50,7 @@ export const updatePost = async (id, newFile) => await updateDoc(doc(db, 'posts'
 // (click en boton <3 sea un push con if(UserID no se encuentre en el array) else(si UserID está presente) se borre del array)
 
 
+export const likePost = async (id, likes , userLike)=> await updateDoc(doc(db, 'posts' , id), {contadorLikes: likes , userLike: userArray(userLike)} )
 
 // export const Likear = (id, like, uid) => updateDoc(doc(db, 'posts', id), {
 //   likes: like,

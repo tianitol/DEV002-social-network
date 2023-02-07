@@ -67,6 +67,9 @@ export const login = () => {
     buttonSI.className = 'btnSubmit';
     buttonSI.id = 'btnEnviarSI';
     formSI.appendChild(buttonSI);
+    buttonSI.addEventListener("submit", (e) => {
+        e.preventDefault();
+    });
 
     
     if (formSI) {
@@ -164,7 +167,9 @@ export const login = () => {
 
     buttonGoogle.appendChild(imagenGoogle);
     formSI.appendChild(buttonGoogle);
+    buttonGoogle.addEventListener('click',  () => {
+        
   
-
+    });
     return signinSection;
 }

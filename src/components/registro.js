@@ -9,6 +9,12 @@ export const register = () => {
     titulo.className = 'tituloh2register-login';
     signupSection.appendChild(titulo);
 
+    // const fondo2= document.createElement('img');
+    // fondo2.className = 'fondo-2';
+    // fondo2.src = 'components/imagen/fondo2.jpg';
+    // signupSection.appendChild(fondo2)
+
+
     const formSU = document.createElement('form');
     formSU.className = 'form';
     formSU.method = 'post';
@@ -90,6 +96,7 @@ export const register = () => {
     buttonLogin.textContent = 'Sign in';
     buttonLogin.id = 'botonLoguear'; 
 
+   
 
 
     tienesCuenta.appendChild(buttonLogin);

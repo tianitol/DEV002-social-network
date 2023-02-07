@@ -19,6 +19,7 @@ export const feed = () => {
 
     containerHeader.appendChild(titulo);
 
+
     const perfil = document.createElement('div')
     perfil.className = 'avatarUser';
 
@@ -222,6 +223,11 @@ export const feed = () => {
             })
             divParteSuperior.appendChild(btnLike);
 
+            // const numberLike = document.createElement('span')
+            // numberLike.className = 'number-like';
+            // numberLike.innerHTML = "";
+            // divParteSuperior.appendChild(numberLike);
+
             const btnEditar = document.createElement('button');
             btnEditar.type = 'button';
             btnEditar.className = 'boton-editar';
@@ -315,7 +321,7 @@ export const feed = () => {
             //--------------botón que aparece para enviar el post editado (en el div de cada post)---------
             const botonEnviarEditar = document.createElement('button');
             botonEnviarEditar.type = 'button';
-            botonEnviarEditar.className = 'post-btn';
+            botonEnviarEditar.className = 'post-btn-save';
             botonEnviarEditar.textContent = 'Save';
             botonEnviarEditar.style.display = 'none';
             divParteInferior.appendChild(botonEnviarEditar);
@@ -337,6 +343,7 @@ export const feed = () => {
                 const editar = confirm('Do you want to edit this message?');
                 if (editar) {
                     if (editar) {
+                        textPostEdit = item.data().descripcion;
                         // obtenerPost(item.id).then(console.log(item.id)).catch();
                         let idPost = '';
                         if (item.id) {
@@ -418,9 +425,7 @@ export const feed = () => {
     if (closeModalLogout) { closeModalLogout.addEventListener('click', () => { closeModal() }); }
 
 
-    return feedSection;
-
-}
+};
 
 
 const getFecha = (dateTime) => {
@@ -431,4 +436,5 @@ const getFecha = (dateTime) => {
     const minutes = dateTime.getMinutes() < 10 ? `0${dateTime.getMinutes()}` : dateTime.getMinutes();
 
     return `${day}/${month}/${year} ${hour}:${minutes}`;
-}
+
+};
