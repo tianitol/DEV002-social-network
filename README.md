@@ -1,11 +1,11 @@
                                                                      # DAD'S POWER
-![imagenFondoReadme](https://user-images.githubusercontent.com/113317909/217329340-72b0c578-fee6-4efb-808b-d243038d8bf2.PNG)
+
 
 
 ## Índice
 
-* [1. Preámbulo](#1-preámbulo)
-* [2.Investigación UX](#2-Ivestigación-UX)
+* [1. Resumen](#1-preámbulo)
+* [2. Investigación UX](#2-Ivestigación-UX)
 * [3. Historias de usuario](#3-Hstorias-de-usuario)
 * [4. Prototipo de baja fidelidad](#4-Prototipo-de-alta-calidad)
 * [5. Prototipo de alta fidelidad](#4-Prototipo-de-alta-calidad)
@@ -13,7 +13,7 @@
 * [6. Equipo](#7-Equipo)
 
 
-## 1. Preámbulo
+## 1. Resumen 
 
 Dad’s power es una comunidad para padres primerizos lo cual el propósito del App es crear un espacio de apoyo entre ellos mismos logrando  resolver dudas y reír mientras lo haces.
 Cada consejo y tip será de gran ayuda para cada uno. Dad’s power valora tu opinión..
@@ -123,8 +123,11 @@ Utilizamos Figma:
 
  ## 8 . Testeo de usabilidad 
 Como usuario puedo registrarse con exito.
+
 lo cual me  permite ingresar al feed y ver todas las publicaciones.
-Tambien mpuedo publicar y reaccionar a un post.
+
+Tambien puedo publicar y reaccionar a un post.
+
 Por lo tanto tambien me brinda la opcion de salir de la app.
 
 
