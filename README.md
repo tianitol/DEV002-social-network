@@ -10,7 +10,10 @@
 * [4. Prototipo de baja fidelidad](#4-Prototipo-de-alta-calidad)
 * [5. Prototipo de alta fidelidad](#5-Prototipo-de-alta-calidad)
 * [6. Organización](#6-Organización)
-* [7. Equipo](#7-Equipo)
+* [7. Testeo de Usabilidad](#7-Testeo-de-usabilidad)
+* [8. Organización](#8-Organización)
+* [9. Equipo](#9-Equipo)
+
 
 
 ## 1. Resumen 
@@ -121,7 +124,7 @@ Utilizamos Figma:
  ![final proyecto](https://user-images.githubusercontent.com/108588943/217341298-51875e2d-0458-4b3d-a1c3-c0a79dcb436c.png)
 
 
- ## 8 . Testeo de usabilidad 
+ ## 7 . Testeo de usabilidad 
 Como usuario puedo registrarse con exito.
 
 lo cual me  permite ingresar al feed y ver todas las publicaciones.
@@ -135,7 +138,7 @@ Por lo tanto tambien me brinda la opcion de salir de la app.
 
 [Github Project](https://github.com/users/tianitol/projects/1/views/1)
 
-## 7. Equipo
+## 9. Equipo
 SR9 : Nicole Henriquez , Jhoanna Mera , Valeria Montero
 
 
