@@ -1,4 +1,4 @@
-                                                                     # DAD'S POWER
+# DAD'S POWER
 
 
 
@@ -8,9 +8,9 @@
 * [2. Investigación UX](#2-Ivestigación-UX)
 * [3. Historias de usuario](#3-Hstorias-de-usuario)
 * [4. Prototipo de baja fidelidad](#4-Prototipo-de-alta-calidad)
-* [5. Prototipo de alta fidelidad](#4-Prototipo-de-alta-calidad)
+* [5. Prototipo de alta fidelidad](#5-Prototipo-de-alta-calidad)
 * [6. Organización](#6-Organización)
-* [6. Equipo](#7-Equipo)
+* [7. Equipo](#7-Equipo)
 
 
 ## 1. Resumen 
