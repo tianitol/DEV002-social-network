@@ -134,9 +134,14 @@ Tambien puedo publicar y reaccionar a un post.
 Por lo tanto tambien me brinda la opcion de salir de la app.
 
 
+
  ## 8. Organización
 
 [Github Project](https://github.com/users/tianitol/projects/1/views/1)
+
+## 10. Flowchart
+![Flowchart de Social Network(Jhoanna)](https://user-images.githubusercontent.com/113317909/232617154-d47e9a03-7316-4867-b003-5554524e1345.PNG)
+
 
 ## 9. Equipo
 SR9 : Nicole Henriquez , Jhoanna Mera , Valeria Montero
