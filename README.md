@@ -105,12 +105,15 @@ Criterios de aceptación:
 Solo poder dar like una vez por usuario.
 Poder quitar el like con el mismo botón al presionar por segunda vez.
 
-## 4. Prototipo de baja fidelidad
+## 4. Flowchart
+![Flowchart de Social Network(Jhoanna)](https://user-images.githubusercontent.com/113317909/232617842-3a3cc04a-feb5-410e-9e7c-dc11684ec182.PNG)
+
+## 5. Prototipo de baja fidelidad
 Utilizamos la aplicación Miro:
 ![Prototipo de baja fidelidad ](https://user-images.githubusercontent.com/113317909/217308821-e4b535d8-6dd7-43d6-9ec9-8dd066bfef6c.png)
 
 
-## 5. Prototipo de alta fidelidad movil 
+## 6. Prototipo de alta fidelidad movil 
 Utilizamos Figma: 
 
 ![prototipo1 readme](https://user-images.githubusercontent.com/113317909/217311707-00d1802b-2776-4446-a699-57211640b0dd.PNG)
@@ -138,9 +141,6 @@ Por lo tanto tambien me brinda la opcion de salir de la app.
  ## 8. Organización
 
 [Github Project](https://github.com/users/tianitol/projects/1/views/1)
-
-## 10. Flowchart
-![Flowchart de Social Network(Jhoanna)](https://user-images.githubusercontent.com/113317909/232617842-3a3cc04a-feb5-410e-9e7c-dc11684ec182.PNG)
 
 
 ## 9. Equipo
