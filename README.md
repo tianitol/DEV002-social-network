@@ -106,7 +106,7 @@ Solo poder dar like una vez por usuario.
 Poder quitar el like con el mismo botón al presionar por segunda vez.
 
 ## 4. Flowchart
-![Flowchart de Social Network(Jhoanna)](https://user-images.githubusercontent.com/113317909/232617842-3a3cc04a-feb5-410e-9e7c-dc11684ec182.PNG)
+![Flowchart de Social Network(Jhoanna)](https://user-images.githubusercontent.com/113317909/233809441-d0ea4e58-5d05-4e84-b7c3-821e5a58dfac.PNG)
 
 ## 5. Prototipo de baja fidelidad
 Utilizamos la aplicación Miro:
